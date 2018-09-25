@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon -w ./ -e ts,json --exec ts-node server/server.ts",
+		"start": "nodemon -w ./ -e ts,json --exec ts-node src/server.ts",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"private": true,
@@ -15,6 +15,9 @@
 	"author": "Ali Riza Dikici",
 	"license": "ISC",
 	"homepage": "https://bitbucket.org/alirizadikici/com.epmvirtual.node#readme",
+	"dependencies": {
+		"node-pty": "^0.7.7"
+	},
 	"devDependencies": {
 		"ts-node": "^7.0.1",
 		"tslint": "^5.11.0",
