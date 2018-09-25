@@ -1,0 +1,12 @@
+{
+	"editor.minimap.enabled": false,
+	"editor.fontLigatures": true,
+	"html.format.wrapLineLength": 180,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"editor.formatOnType": true,
+	"workbench.editor.enablePreview": false
+}
