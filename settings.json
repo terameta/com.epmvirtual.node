@@ -1,0 +1,9 @@
+{
+	"firebase": {
+		"apiKey": "AIzaSyDohq4yWueCGncjlFJu9ScD1nMHQJ_LeZw",
+		"authDomain": "epmvirtual-d8014.firebaseapp.com",
+		"databaseURL": "https://epmvirtual-d8014.firebaseio.com",
+		"projectId": "epmvirtual-d8014",
+		"timestampsInSnapshots": true
+	}
+}
