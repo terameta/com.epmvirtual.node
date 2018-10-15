@@ -4,6 +4,7 @@ import { Settings } from "models/settings";
 import * as uuid from 'uuid/v4';
 import { firestore, initializeApp, app } from 'firebase';
 import { BehaviorSubject } from 'rxjs';
+import * as os from 'os';
 
 export class EPMNode {
 	private settings: Settings = null;
@@ -59,7 +60,14 @@ export class EPMNode {
 	private thisisaNewNode = ( isit: boolean ) => {
 		if ( isit ) {
 			this.database.doc( 'nodecandidates/list' ).update( {
-				items: firestore.FieldValue.arrayUnion( this.nodeid )
+				items: firestore.FieldValue.arrayUnion( {
+					id: this.nodeid,
+					hostname: os.hostname(),
+					ostype: os.type(),
+					osplatform: os.platform(),
+					osarch: os.arch(),
+					osrelease: os.release()
+				} )
 			} );
 		}
 	}
