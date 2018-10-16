@@ -13,6 +13,9 @@ export class EPMNode {
 	private database: firestore.Firestore = null;
 	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( false );
 	private nodeReference: firestore.DocumentReference = null;
+	private shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+
+
 
 	constructor() {
 		console.clear();
@@ -49,6 +52,24 @@ export class EPMNode {
 		// this.database.doc( 'nodes/' + this.nodeid ).onSnapshot( this.nodeChange );
 		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
 		this.nodeReference.onSnapshot( this.nodeChange );
+
+
+		// const ptyProcess = pty.spawn( shell, [], {
+		// 	name: 'xterm-color',
+		// 	cols: 80,
+		// 	rows: 30,
+		// 	cwd: process.env.HOME,
+		// 	env: process.env
+		// } );
+
+		// ptyProcess.on( 'data', ( data ) => {
+		// 	console.log( data );
+		// } );
+
+		// ptyProcess.write( 'ls\r' );
+		// ptyProcess.resize( 100, 40 );
+		// ptyProcess.write( 'top\r' );
+
 	}
 
 	private nodeChange = ( change: firestore.DocumentSnapshot ) => {
