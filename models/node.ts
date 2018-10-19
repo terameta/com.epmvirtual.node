@@ -28,6 +28,7 @@ export interface KeyPress {
 }
 
 export interface PtyResponse {
-	date: Date | any,
-	datum: string
+	date: any,
+	datum: string,
+	dateValue?: Date
 }

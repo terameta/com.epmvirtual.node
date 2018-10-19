@@ -3,7 +3,7 @@ import { defaultNode, Node, KeyPress } from "../models/node";
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { initializeApp, app, firestore } from 'firebase';
-import { doc } from 'rxfire/firestore';
+import { fromDocRef } from 'rxfire/firestore';
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { waiter, JSONDeepCopy, SortByDateValue } from "./utilities";
 import { Settings } from "models/settings";
@@ -52,7 +52,9 @@ export class EPMNode {
 
 		this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
 		this.ptyProcess.on( 'data', ( data ) => {
-			console.log( data );
+			this.nodeReference.update( {
+				responses: firestore.FieldValue.arrayUnion( { date: new Date(), datum: data } )
+			} );
 		} );
 
 		this.databaseApp = initializeApp( this.settings.firebase );
@@ -60,7 +62,9 @@ export class EPMNode {
 		this.database.settings( { timestampsInSnapshots: true } );
 
 		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
-		doc( this.nodeReference ).pipe( debounceTime( 500 ) ).subscribe( this.nodeChange );
+		fromDocRef( this.nodeReference ).
+			// pipe( debounceTime( 100 ) ).
+			subscribe( this.nodeChange );
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
@@ -84,7 +88,7 @@ export class EPMNode {
 			this.isThisaNewNode.next( true );
 		} else {
 			if ( this.node.keypresses ) {
-				this.node.keypresses.forEach( kp => { kp.dateValue = kp.date.toDate(); } );
+				this.node.keypresses.forEach( kp => kp.dateValue = kp.date.toDate() );
 				this.node.keypresses.sort( SortByDateValue );
 				if ( this.node.keypresses.length > 0 ) {
 					const keyPress: KeyPress = this.node.keypresses.shift();
