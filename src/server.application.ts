@@ -57,6 +57,8 @@ export class EPMNode {
 			} );
 		} );
 
+		console.log( 'We should be handling exit as well' );
+
 		this.databaseApp = initializeApp( this.settings.firebase );
 		this.database = this.databaseApp.firestore();
 		this.database.settings( { timestampsInSnapshots: true } );
