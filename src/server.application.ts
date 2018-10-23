@@ -64,9 +64,7 @@ export class EPMNode {
 		this.database.settings( { timestampsInSnapshots: true } );
 
 		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
-		fromDocRef( this.nodeReference ).
-			// pipe( debounceTime( 100 ) ).
-			subscribe( this.nodeChange );
+		fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
@@ -101,34 +99,7 @@ export class EPMNode {
 					} );
 				}
 			}
-			// console.log( 'nodeChange', this.node );
+			this.ptyProcess.resize( this.node.terminal.dimensions.cols | 80, this.node.terminal.dimensions.rows | 10 );
 		}
 	}
 }
-
-// // import { Node, defaultNode, KeyPress } from '../models/node';
-
-// // import { firebase } from 'firebase/app';// // import 'firebase/firestore';// import { docData } from 'rxfire/firestore';
-
-// export class EPMNode {
-// 	public node: Node = defaultNode();
-// 	private settings: Settings = null;
-// 	private nodeid: string = null;
-// 	private databaseApp: app.App = null;
-// 	private database: firestore.Firestore = null;
-// 	private nodeReference: firestore.DocumentReference = null;
-
-
-// 	private initiate = async () => {
-// 		this.database.settings( { timestampsInSnapshots: true } );
-
-// 		// this.database.doc( 'nodes/' + this.nodeid ).onSnapshot( this.nodeChange );
-// 		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
-// 		this.nodeReference.onSnapshot( this.nodeChange );
-
-// 		// ptyProcess.write( 'ls\r' );
-// 		// ptyProcess.resize( 100, 40 );
-// 		// ptyProcess.write( 'top\r' );
-
-// 	}
-// }
