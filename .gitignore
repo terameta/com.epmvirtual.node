@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# These files shouldn't be pushed
+/settings.json
+/nodeid.json
+
 # compiled output
 /dist
 /tmp
@@ -37,6 +41,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-# These files shouldn't be pushed
-/settings.json
