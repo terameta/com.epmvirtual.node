@@ -1,0 +1,16 @@
+[Unit]
+Description=EPMVirtual Node Service
+Documentation=https://epmvirtual.com
+After=network.target
+
+[Service]
+Environment=NODE_PORT=8000
+Type=simple
+User=<write the username here>
+SyslogIdentifier=epmtools
+WorkingDirectory=/write/the/path/of/the/files/here
+ExecStart=/usr/bin/node server/app.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
