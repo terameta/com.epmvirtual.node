@@ -92,7 +92,9 @@ export class EPMNode {
 	}
 
 	private nodeChange = ( change: firestore.DocumentSnapshot ) => {
+		console.log( 'We have reached here as well' );
 		this.node = change.data() as Node;
+		console.log( 'We have reached here as well', this.node );
 		if ( !this.node ) {
 			this.isThisaNewNode.next( true );
 		} else {
