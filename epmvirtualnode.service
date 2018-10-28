@@ -9,7 +9,7 @@ Type=simple
 User=<write the username here>
 SyslogIdentifier=epmvirtualnode
 WorkingDirectory=/write/the/path/of/the/files/here
-ExecStart=/usr/bin/node server/app.js
+ExecStart=/usr/bin/ts-node src/server.js
 Restart=on-failure
 
 [Install]
