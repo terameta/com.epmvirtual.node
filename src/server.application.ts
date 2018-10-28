@@ -12,7 +12,7 @@ import * as pty from 'node-pty';
 
 export class EPMNode {
 	public node: Node = defaultNode();
-	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( false );
+	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( true );
 	private settings: Settings = null;
 	private nodeid: string = null;
 	private databaseApp: app.App = null;
