@@ -55,8 +55,8 @@ export class EPMNode {
 		this.database = this.databaseApp.firestore();
 		this.database.settings( { timestampsInSnapshots: true } );
 
-		// this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
-		// fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
+		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
+		fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
@@ -86,9 +86,14 @@ export class EPMNode {
 				console.log( 'We will now create th ptyProcess' );
 				this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
 				this.ptyProcess.on( 'data', ( data ) => {
-					this.nodeReference.update( {
-						responses: firestore.FieldValue.arrayUnion( { date: new Date(), datum: data } )
-					} );
+					console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
+					console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
+					console.log( data );
+					console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
+					console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
+					// this.nodeReference.update( {
+					// 	responses: firestore.FieldValue.arrayUnion( { date: new Date(), datum: data } )
+					// } );
 				} );
 				console.log( 'We should be handling exit as well' );
 			}
