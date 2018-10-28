@@ -10,3 +10,5 @@
 	* sudo systemctl daemon-reload
 	* sudo systemctl enable epmvirtualnode.service
 	* sudo systemctl start epmvirtualnode.service
+* Create a crontab entry with the following line (after updating to the correct folder):
+	* \* \* \* \* \* sudo sh -c "chmod +x ~/com.epmvirtual.node/croner.sh;  sh ~/com.epmvirtual.node/croner.sh  >> ~/croner.log"
