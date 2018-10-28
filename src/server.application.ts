@@ -55,8 +55,8 @@ export class EPMNode {
 		this.database = this.databaseApp.firestore();
 		this.database.settings( { timestampsInSnapshots: true } );
 
-		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
-		fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
+		// this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
+		// fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
