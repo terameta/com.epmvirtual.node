@@ -81,7 +81,9 @@ export class EPMNode {
 				console.log( '===========================================' );
 			} );
 		} else {
+			console.log( 'This is not a new node' );
 			if ( !this.ptyProcess ) {
+				console.log( 'We will now create th ptyProcess' );
 				this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
 				this.ptyProcess.on( 'data', ( data ) => {
 					this.nodeReference.update( {
