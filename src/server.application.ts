@@ -50,14 +50,6 @@ export class EPMNode {
 			writeFileSync( 'nodeid.json', toWrite );
 		}
 
-		this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
-		this.ptyProcess.on( 'data', ( data ) => {
-			this.nodeReference.update( {
-				responses: firestore.FieldValue.arrayUnion( { date: new Date(), datum: data } )
-			} );
-		} );
-
-		console.log( 'We should be handling exit as well' );
 
 		this.databaseApp = initializeApp( this.settings.firebase );
 		this.database = this.databaseApp.firestore();
@@ -88,6 +80,16 @@ export class EPMNode {
 				console.log( '===========================================' );
 				console.log( '===========================================' );
 			} );
+		} else {
+			if ( !this.ptyProcess ) {
+				this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
+				this.ptyProcess.on( 'data', ( data ) => {
+					this.nodeReference.update( {
+						responses: firestore.FieldValue.arrayUnion( { date: new Date(), datum: data } )
+					} );
+				} );
+				console.log( 'We should be handling exit as well' );
+			}
 		}
 	}
 
@@ -98,6 +100,7 @@ export class EPMNode {
 		if ( !this.node ) {
 			this.isThisaNewNode.next( true );
 		} else {
+			this.isThisaNewNode.next( false );
 			if ( this.node.keypresses ) {
 				this.node.keypresses.forEach( kp => kp.dateValue = kp.date.toDate() );
 				this.node.keypresses.sort( SortByDateValue );
