@@ -80,6 +80,13 @@ export class EPMNode {
 					osarch: os.arch(),
 					osrelease: os.release()
 				} )
+			} ).catch( ( error ) => {
+				console.log( '===========================================' );
+				console.log( '===========================================' );
+				console.log( 'We could not register the new node. Below is the error trace' );
+				console.error( error );
+				console.log( '===========================================' );
+				console.log( '===========================================' );
 			} );
 		}
 	}
