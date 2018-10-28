@@ -63,23 +63,23 @@ export class EPMNode {
 		console.log( 'we are at thisisanewnode' );
 		if ( isit ) {
 			console.log( 'And it is a new node' );
-			this.database.doc( 'nodecandidates/list' ).update( {
-				items: firestore.FieldValue.arrayUnion( {
-					id: this.nodeid,
-					hostname: os.hostname(),
-					ostype: os.type(),
-					osplatform: os.platform(),
-					osarch: os.arch(),
-					osrelease: os.release()
-				} )
-			} ).catch( ( error ) => {
-				console.log( '===========================================' );
-				console.log( '===========================================' );
-				console.log( 'We could not register the new node. Below is the error trace' );
-				console.error( error );
-				console.log( '===========================================' );
-				console.log( '===========================================' );
-			} );
+			// this.database.doc( 'nodecandidates/list' ).update( {
+			// 	items: firestore.FieldValue.arrayUnion( {
+			// 		id: this.nodeid,
+			// 		hostname: os.hostname(),
+			// 		ostype: os.type(),
+			// 		osplatform: os.platform(),
+			// 		osarch: os.arch(),
+			// 		osrelease: os.release()
+			// 	} )
+			// } ).catch( ( error ) => {
+			// 	console.log( '===========================================' );
+			// 	console.log( '===========================================' );
+			// 	console.log( 'We could not register the new node. Below is the error trace' );
+			// 	console.error( error );
+			// 	console.log( '===========================================' );
+			// 	console.log( '===========================================' );
+			// } );
 		} else {
 			console.log( 'This is not a new node' );
 			if ( !this.ptyProcess ) {
