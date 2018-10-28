@@ -13,6 +13,7 @@ import * as pty from 'node-pty';
 export class EPMNode {
 	public node: Node = defaultNode();
 	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( true );
+	private nodeReceived = false;
 	private settings: Settings = null;
 	private nodeid: string = null;
 	private databaseApp: app.App = null;
@@ -62,24 +63,26 @@ export class EPMNode {
 	private thisisaNewNode = ( isit: boolean ) => {
 		console.log( 'we are at thisisanewnode' );
 		if ( isit ) {
-			console.log( 'And it is a new node' );
-			// this.database.doc( 'nodecandidates/list' ).update( {
-			// 	items: firestore.FieldValue.arrayUnion( {
-			// 		id: this.nodeid,
-			// 		hostname: os.hostname(),
-			// 		ostype: os.type(),
-			// 		osplatform: os.platform(),
-			// 		osarch: os.arch(),
-			// 		osrelease: os.release()
-			// 	} )
-			// } ).catch( ( error ) => {
-			// 	console.log( '===========================================' );
-			// 	console.log( '===========================================' );
-			// 	console.log( 'We could not register the new node. Below is the error trace' );
-			// 	console.error( error );
-			// 	console.log( '===========================================' );
-			// 	console.log( '===========================================' );
-			// } );
+			if ( this.nodeReceived ) {
+				console.log( 'And it is a new node' );
+				this.database.doc( 'nodecandidates/list' ).update( {
+					items: firestore.FieldValue.arrayUnion( {
+						id: this.nodeid,
+						hostname: os.hostname(),
+						ostype: os.type(),
+						osplatform: os.platform(),
+						osarch: os.arch(),
+						osrelease: os.release()
+					} )
+				} ).catch( ( error ) => {
+					console.log( '===========================================' );
+					console.log( '===========================================' );
+					console.log( 'We could not register the new node. Below is the error trace' );
+					console.error( error );
+					console.log( '===========================================' );
+					console.log( '===========================================' );
+				} );
+			}
 		} else {
 			console.log( 'This is not a new node' );
 			if ( !this.ptyProcess ) {
@@ -103,6 +106,7 @@ export class EPMNode {
 	private nodeChange = ( change: firestore.DocumentSnapshot ) => {
 		console.log( 'We have reached here as well' );
 		this.node = change.data() as Node;
+		this.nodeReceived = true;
 		console.log( 'We have reached here as well', this.node );
 		if ( !this.node ) {
 			this.isThisaNewNode.next( true );
