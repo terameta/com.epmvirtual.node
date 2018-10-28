@@ -89,14 +89,9 @@ export class EPMNode {
 				console.log( 'We will now create th ptyProcess' );
 				this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
 				this.ptyProcess.on( 'data', ( data ) => {
-					console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
-					console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
-					console.log( data );
-					console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
-					console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
-					// this.nodeReference.update( {
-					// 	responses: firestore.FieldValue.arrayUnion( { date: new Date(), datum: data } )
-					// } );
+					this.nodeReference.update( {
+						responses: firestore.FieldValue.arrayUnion( { date: new Date(), datum: data } )
+					} );
 				} );
 				console.log( 'We should be handling exit as well' );
 			}
