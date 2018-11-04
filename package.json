@@ -20,10 +20,12 @@
 		"node-pty": "^0.7.8",
 		"rxfire": "^3.0.7",
 		"rxjs": "^6.3.3",
+		"systeminformation": "^3.45.10",
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
 		"@types/node": "^10.12.0",
+		"@types/systeminformation": "^3.23.0",
 		"@types/uuid": "^3.4.4",
 		"ts-node": "^7.0.1",
 		"tslint": "^5.11.0",
