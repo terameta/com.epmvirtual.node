@@ -29,7 +29,7 @@ export class EPMNode {
 		// si.cpu().then( console.log );
 		// si.battery().then( console.log );
 		// si.blockDevices().then( console.log );
-		si.diskLayout().then( console.log );
+		// si.diskLayout().then( console.log );
 
 	}
 
@@ -106,7 +106,6 @@ export class EPMNode {
 
 	private nodeChange = ( change: firestore.DocumentSnapshot ) => {
 		// console.log( 'We have reached here as well' );
-		si.diskLayout().then( console.log );
 		this.node = change.data() as Node;
 		this.nodeReceived = true;
 		// console.log( 'We have reached here as well', this.node );
