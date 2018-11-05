@@ -105,11 +105,11 @@ export class EPMNode {
 	}
 
 	private nodeChange = ( change: firestore.DocumentSnapshot ) => {
-		console.log( 'We have reached here as well' );
+		// console.log( 'We have reached here as well' );
 		si.diskLayout().then( console.log );
 		this.node = change.data() as Node;
 		this.nodeReceived = true;
-		console.log( 'We have reached here as well', this.node );
+		// console.log( 'We have reached here as well', this.node );
 		if ( !this.node ) {
 			this.isThisaNewNode.next( true );
 		} else {
