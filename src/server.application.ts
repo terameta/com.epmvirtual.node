@@ -27,6 +27,8 @@ export class EPMNode {
 		console.clear();
 		this.initiate();
 		si.cpu().then( console.log );
+		si.battery().then( console.log );
+
 	}
 
 	private initiate = async () => {
