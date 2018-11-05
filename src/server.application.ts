@@ -9,6 +9,7 @@ import { waiter, JSONDeepCopy, SortByDateValue } from "./utilities";
 import { Settings } from "models/settings";
 import * as uuid from 'uuid/v4';
 import * as pty from 'node-pty';
+import * as si from 'systeminformation';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -25,6 +26,7 @@ export class EPMNode {
 	constructor() {
 		console.clear();
 		this.initiate();
+		si.cpu().then( console.log );
 	}
 
 	private initiate = async () => {
