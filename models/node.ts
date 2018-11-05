@@ -24,7 +24,8 @@ export interface NodeCandidate {
 	osarch: string,
 	osrelease: string,
 	keypresses: KeyPress[],
-	responses: PtyResponse[]
+	responses: PtyResponse[],
+	commands: NodeCommand[]
 }
 
 export interface KeyPress {
@@ -36,5 +37,11 @@ export interface KeyPress {
 export interface PtyResponse {
 	date: any,
 	datum: string,
+	dateValue?: Date
+}
+
+export interface NodeCommand {
+	date: any,
+	command: string,
 	dateValue?: Date
 }

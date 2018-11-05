@@ -89,7 +89,7 @@ export class EPMNode {
 				} );
 			}
 		} else {
-			console.log( 'This is not a new node' );
+			// console.log( 'This is not a new node' );
 			if ( !this.ptyProcess ) {
 				console.log( 'We will now create the ptyProcess' );
 				this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
@@ -112,6 +112,7 @@ export class EPMNode {
 			this.isThisaNewNode.next( true );
 		} else {
 			this.isThisaNewNode.next( false );
+			this.ptyProcess.resize( this.node.terminal.dimensions.cols | 80, this.node.terminal.dimensions.rows | 30 );
 			if ( this.node.keypresses ) {
 				this.node.keypresses.forEach( kp => kp.dateValue = kp.date.toDate() );
 				this.node.keypresses.sort( SortByDateValue );
@@ -123,8 +124,19 @@ export class EPMNode {
 						keypresses: firestore.FieldValue.arrayRemove( keyPress )
 					} );
 				}
+			} else if ( this.node.commands ) {
+				if ( this.node.commands.length > 0 ) {
+					this.node.commands.forEach( c => c.dateValue = c.date.toDate() );
+					this.node.commands.sort( SortByDateValue );
+					const command = this.node.commands.shift();
+					console.log( 'We should now execute below command' );
+					console.log( command.command, command.dateValue );
+					delete command.dateValue;
+					this.nodeReference.update( {
+						commands: firestore.FieldValue.arrayRemove( command )
+					} );
+				}
 			}
-			this.ptyProcess.resize( this.node.terminal.dimensions.cols | 80, this.node.terminal.dimensions.rows | 10 );
 		}
 	}
 }
