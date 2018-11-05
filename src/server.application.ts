@@ -92,7 +92,7 @@ export class EPMNode {
 		} else {
 			console.log( 'This is not a new node' );
 			if ( !this.ptyProcess ) {
-				console.log( 'We will now create th ptyProcess' );
+				console.log( 'We will now create the ptyProcess' );
 				this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
 				this.ptyProcess.on( 'data', ( data ) => {
 					this.nodeReference.update( {
@@ -106,6 +106,7 @@ export class EPMNode {
 
 	private nodeChange = ( change: firestore.DocumentSnapshot ) => {
 		console.log( 'We have reached here as well' );
+		si.diskLayout().then( console.log );
 		this.node = change.data() as Node;
 		this.nodeReceived = true;
 		console.log( 'We have reached here as well', this.node );
