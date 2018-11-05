@@ -26,8 +26,9 @@ export class EPMNode {
 	constructor() {
 		console.clear();
 		this.initiate();
-		si.cpu().then( console.log );
-		si.battery().then( console.log );
+		// si.cpu().then( console.log );
+		// si.battery().then( console.log );
+		si.blockDevices().then( console.log );
 
 	}
 
