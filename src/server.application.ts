@@ -67,10 +67,9 @@ export class EPMNode {
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
-		console.log( 'we are at thisisanewnode' );
 		if ( isit ) {
 			if ( this.nodeReceived ) {
-				console.log( 'And it is a new node' );
+				console.log( 'This is a new node' );
 				this.database.doc( 'nodecandidates/list' ).update( {
 					items: firestore.FieldValue.arrayUnion( {
 						id: this.nodeid,
