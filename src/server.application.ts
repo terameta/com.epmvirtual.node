@@ -1,5 +1,5 @@
 import * as os from 'os';
-import { defaultNode, Node, KeyPress } from "../models/node";
+import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { initializeApp, app, firestore } from 'firebase';
@@ -103,7 +103,7 @@ export class EPMNode {
 		}
 	}
 
-	private nodeChange = ( change: firestore.DocumentSnapshot ) => {
+	private nodeChange = async ( change: firestore.DocumentSnapshot ) => {
 		// console.log( 'We have reached here as well' );
 		this.node = change.data() as Node;
 		this.nodeReceived = true;
@@ -113,7 +113,7 @@ export class EPMNode {
 		} else {
 			this.isThisaNewNode.next( false );
 			this.ptyProcess.resize( this.node.terminal.dimensions.cols | 80, this.node.terminal.dimensions.rows | 30 );
-			if ( this.node.keypresses ) {
+			if ( this.node.keypresses && this.node.keypresses.length > 0 ) {
 				this.node.keypresses.forEach( kp => kp.dateValue = kp.date.toDate() );
 				this.node.keypresses.sort( SortByDateValue );
 				if ( this.node.keypresses.length > 0 ) {
@@ -124,19 +124,39 @@ export class EPMNode {
 						keypresses: firestore.FieldValue.arrayRemove( keyPress )
 					} );
 				}
-			} else if ( this.node.commands ) {
-				if ( this.node.commands.length > 0 ) {
-					this.node.commands.forEach( c => c.dateValue = c.date.toDate() );
-					this.node.commands.sort( SortByDateValue );
-					const command = this.node.commands.shift();
-					console.log( 'We should now execute below command' );
-					console.log( command.command, command.dateValue );
-					delete command.dateValue;
-					this.nodeReference.update( {
-						commands: firestore.FieldValue.arrayRemove( command )
-					} );
-				}
+			} else if ( this.node.commands && this.node.commands.length > 0 ) {
+				const command = this.getFirstInArray( this.node.commands );
+				await this.executeCommand( command );
+				this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( { date: command.date } ) } );
+
+				// if ( this.node.commands.length > 0 ) {
+				// 	this.node.commands.forEach( c => c.dateValue = c.date.toDate() );
+				// 	this.node.commands.sort( SortByDateValue );
+				// 	const command = this.node.commands.shift();
+				// 	await this.executeCommand( command );
+				// 	delete command.dateValue;
+				// 	this.nodeReference.update( {
+				// 		commands: firestore.FieldValue.arrayRemove( command )
+				// 	} );
+				// }
 			}
 		}
+	}
+
+	private executeCommand = async ( command: NodeCommand ) => {
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( 'We sholud now execute below command' );
+		console.log( command );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+	}
+
+	private getFirstInArray = ( items: any[] ) => {
+		items.forEach( i => i.dateValue = i.date.toDate() );
+		items.sort( SortByDateValue );
+		const item = items.shift();
+		delete item.dateValue;
+		return item;
 	}
 }
