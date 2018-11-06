@@ -10,6 +10,7 @@ import { Settings } from "models/settings";
 import * as uuid from 'uuid/v4';
 import * as pty from 'node-pty';
 import * as si from 'systeminformation';
+import { exec } from 'child_process';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -144,15 +145,29 @@ export class EPMNode {
 	}
 
 	private executeCommand = async ( command: NodeCommand ) => {
-		if ( command.commandType === CommandType.reboot ) {
-			console.log( 'We will actually reboot now' );
-		}
+		if ( command.commandType === CommandType.reboot ) { command.command = 'sudo reboot'; }
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( 'We sholud now execute below command' );
 		console.log( command );
 		console.log( '===========================================' );
+		console.log( 'Initiating execution now' );
+		await this.executeCommandAction( command.command );
 		console.log( '===========================================' );
+		console.log( 'Execution is now complete' );
+		console.log( '===========================================' );
+	}
+
+	private executeCommandAction = ( command: string ) => {
+		return new Promise( ( resolve, reject ) => {
+			exec( command, ( error, stdout ) => {
+				if ( error ) {
+					reject( error );
+				} else {
+					resolve( stdout );
+				}
+			} );
+		} );
 	}
 
 	private getFirstInArray = ( items: any[] ) => {
