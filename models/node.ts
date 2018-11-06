@@ -49,5 +49,6 @@ export interface NodeCommand {
 
 export enum CommandType {
 	console = 1,
-	reboot = 2
+	reboot = 2,
+	shutdown = 3
 }
