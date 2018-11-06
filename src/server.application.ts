@@ -127,7 +127,7 @@ export class EPMNode {
 				}
 			} else if ( this.node.commands && this.node.commands.length > 0 ) {
 				const command = this.getFirstInArray( this.node.commands );
-				this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( command ) } ).catch( console.error );
+				await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( command ) } ).catch( console.error );
 				await this.executeCommand( command );
 
 				// if ( this.node.commands.length > 0 ) {
