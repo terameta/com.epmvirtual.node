@@ -127,7 +127,7 @@ export class EPMNode {
 			} else if ( this.node.commands && this.node.commands.length > 0 ) {
 				const command = this.getFirstInArray( this.node.commands );
 				await this.executeCommand( command );
-				this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( { date: command.date } ) } ).catch( console.error );
+				this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( command ) } ).catch( console.error );
 
 				// if ( this.node.commands.length > 0 ) {
 				// 	this.node.commands.forEach( c => c.dateValue = c.date.toDate() );
