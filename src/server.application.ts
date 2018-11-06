@@ -23,6 +23,7 @@ export class EPMNode {
 	private nodeReference: firestore.DocumentReference = null;
 	private shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
+	private isExecutingCommand = false;
 
 	constructor() {
 		console.clear();
@@ -127,8 +128,13 @@ export class EPMNode {
 				}
 			} else if ( this.node.commands && this.node.commands.length > 0 ) {
 				const command = this.getFirstInArray( this.node.commands );
-				await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( command ) } ).catch( console.error );
-				await this.executeCommand( command );
+				if ( !this.isExecutingCommand ) {
+					this.isExecutingCommand = true;
+					await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( command ) } ).catch( console.error );
+					const result = await this.executeCommand( command );
+					this.isExecutingCommand = false;
+					this.nodeReference.update( { lastCommandResult: result } );
+				}
 
 				// if ( this.node.commands.length > 0 ) {
 				// 	this.node.commands.forEach( c => c.dateValue = c.date.toDate() );
