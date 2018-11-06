@@ -153,16 +153,16 @@ export class EPMNode {
 	private executeCommand = async ( command: NodeCommand ) => {
 		if ( command.commandType === CommandType.reboot ) { command.command = 'sudo reboot'; }
 		if ( command.commandType === CommandType.shutdown ) { command.command = 'sudo shutdown -h now'; }
-		console.log( '===========================================' );
-		console.log( '===========================================' );
-		console.log( 'We sholud now execute below command' );
-		console.log( command );
-		console.log( '===========================================' );
-		console.log( 'Initiating execution now' );
+		// console.log( '===========================================' );
+		// console.log( '===========================================' );
+		// console.log( 'We sholud now execute below command' );
+		// console.log( command );
+		// console.log( '===========================================' );
+		// console.log( 'Initiating execution now' );
 		await this.executeCommandAction( command.command );
-		console.log( '===========================================' );
-		console.log( 'Execution is now complete' );
-		console.log( '===========================================' );
+		// console.log( '===========================================' );
+		// console.log( 'Execution is now complete' );
+		// console.log( '===========================================' );
 	}
 
 	private executeCommandAction = ( command: string ) => {
