@@ -1,5 +1,5 @@
 import * as os from 'os';
-import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
+import { defaultNode, Node, KeyPress, NodeCommand, CommandType } from "../models/node";
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { initializeApp, app, firestore } from 'firebase';
@@ -144,6 +144,9 @@ export class EPMNode {
 	}
 
 	private executeCommand = async ( command: NodeCommand ) => {
+		if ( command.commandType === CommandType.reboot ) {
+			console.log( 'We will actually reboot now' );
+		}
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( 'We sholud now execute below command' );
