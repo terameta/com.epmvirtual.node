@@ -193,6 +193,7 @@ export class EPMNode {
 	}
 
 	private getPoolFiles = async () => {
-		console.log( await this.executeCommandAction( 'rbd ls -l --format json --pretty-format' ) );
+		console.log( 'Get pool files is now called' );
+		// console.log( await this.executeCommandAction( 'rbd ls -l --format json --pretty-format' ) );
 	}
 }
