@@ -5,7 +5,8 @@ export interface Node extends NodeCandidate {
 		dimensions: {
 			cols: number, rows: number
 		}
-	}
+	},
+	isPoolWorker: boolean
 }
 
 export const defaultNode = (): Node => ( { id: '', name: '' } as Node );

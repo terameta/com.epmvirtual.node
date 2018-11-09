@@ -1,7 +1,6 @@
 import * as os from 'os';
 import { defaultNode, Node, KeyPress, NodeCommand, CommandType } from "../models/node";
-import { BehaviorSubject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, interval } from 'rxjs';
 import { initializeApp, app, firestore } from 'firebase';
 import { fromDocRef } from 'rxfire/firestore';
 import { existsSync, readFileSync, writeFileSync } from "fs";
@@ -24,6 +23,7 @@ export class EPMNode {
 	private shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
 	private isExecutingCommand = false;
+	private isSchedulesInitiated = false;
 
 	constructor() {
 		console.clear();
@@ -102,6 +102,7 @@ export class EPMNode {
 				} );
 				console.log( 'We should be handling exit as well' );
 			}
+			if ( !this.isSchedulesInitiated ) this.schedulesInitiate();
 		}
 	}
 
@@ -183,5 +184,15 @@ export class EPMNode {
 		const item = items.shift();
 		delete item.dateValue;
 		return item;
+	}
+
+	private schedulesInitiate = async () => {
+		if ( this.node.isPoolWorker ) {
+			interval( 3000 ).subscribe( this.getPoolFiles );
+		}
+	}
+
+	private getPoolFiles = async () => {
+		console.log( 'Get pool files is now called' );
 	}
 }

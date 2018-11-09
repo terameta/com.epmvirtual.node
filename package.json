@@ -16,15 +16,15 @@
 	"license": "ISC",
 	"homepage": "https://bitbucket.org/alirizadikici/com.epmvirtual.node#readme",
 	"dependencies": {
-		"firebase": "^5.5.7",
+		"firebase": "^5.5.8",
 		"node-pty": "^0.7.8",
-		"rxfire": "^3.0.9",
+		"rxfire": "^3.0.10",
 		"rxjs": "^6.3.3",
-		"systeminformation": "^3.46.0",
+		"systeminformation": "^3.47.0",
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
-		"@types/node": "^10.12.2",
+		"@types/node": "^10.12.4",
 		"@types/systeminformation": "^3.23.0",
 		"@types/uuid": "^3.4.4",
 		"ts-node": "^7.0.1",
