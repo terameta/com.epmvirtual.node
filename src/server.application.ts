@@ -167,7 +167,7 @@ export class EPMNode {
 		// console.log( '===========================================' );
 	}
 
-	private executeCommandAction = ( command: string ) => {
+	private executeCommandAction = ( command: string ): Promise<string> => {
 		return new Promise( ( resolve, reject ) => {
 			exec( command, ( error, stdout ) => {
 				if ( error ) {
@@ -198,7 +198,9 @@ export class EPMNode {
 
 	private getPoolFiles = async () => {
 		// console.log( 'Get pool files is now called' );
-		const poolFiles = await this.executeCommandAction( 'rbd ls -l --format json --pretty-format' )
-		console.log( poolFiles );
+		const poolFiles: any[] = JSON.parse( await this.executeCommandAction( 'rbd ls -l --format json --pretty-format' ) );
+		poolFiles.forEach( file => {
+			console.log( file.image, file.size, file.format );
+		} );
 	}
 }
