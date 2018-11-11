@@ -27,6 +27,7 @@ export class EPMNode {
 
 	constructor() {
 		console.clear();
+		console.log( 'I am constructed' );
 		this.initiate();
 		// si.cpu().then( console.log );
 		// si.battery().then( console.log );
@@ -193,7 +194,7 @@ export class EPMNode {
 	}
 
 	private getPoolFiles = async () => {
-		console.log( 'Get pool files is now called' );
+		// console.log( 'Get pool files is now called' );
 		// console.log( await this.executeCommandAction( 'rbd ls -l --format json --pretty-format' ) );
 	}
 }
