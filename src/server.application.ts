@@ -189,7 +189,7 @@ export class EPMNode {
 
 	private schedulesInitiate = async () => {
 		if ( this.node.isPoolWorker ) {
-			interval( 3000 ).subscribe( this.getPoolFiles );
+			interval( 3000 ).subscribe( console.log );
 		}
 	}
 
