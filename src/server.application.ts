@@ -191,13 +191,14 @@ export class EPMNode {
 		if ( !this.isSchedulesInitiated ) {
 			this.isSchedulesInitiated = true;
 			if ( this.node.isPoolWorker ) {
-				interval( 3000 ).subscribe( console.log );
+				interval( 3000 ).subscribe( this.getPoolFiles );
 			}
 		}
 	}
 
 	private getPoolFiles = async () => {
 		// console.log( 'Get pool files is now called' );
-		// console.log( await this.executeCommandAction( 'rbd ls -l --format json --pretty-format' ) );
+		const poolFiles = await this.executeCommandAction( 'rbd ls -l --format json --pretty-format' )
+		console.log( poolFiles );
 	}
 }
