@@ -201,6 +201,7 @@ export class EPMNode {
 		const poolFiles: any[] = JSON.parse( await this.executeCommandAction( 'rbd ls -l --format json --pretty-format' ) );
 		poolFiles.forEach( file => {
 			console.log( file.image, file.size, file.format );
+			console.log( file );
 		} );
 	}
 }
