@@ -110,6 +110,11 @@ export class EPMNode {
 	private nodeChange = async ( change: firestore.DocumentSnapshot ) => {
 		// console.log( 'We have reached here as well' );
 		this.node = change.data() as Node;
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( this.node );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
 		this.nodeReceived = true;
 		// console.log( 'We have reached here as well', this.node );
 		if ( !this.node ) {
