@@ -20,8 +20,8 @@ export class EPMNode {
 	private databaseApp: app.App = null;
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
-	private poolReference: firestore.DocumentReference = null;
-	private poolSubscription: Subscription = null;
+	private poolReferences: firestore.DocumentReference[] = [];
+	private poolSubscriptions: Subscription[] = [];
 	private shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
 	private isExecutingCommand = false;
@@ -205,6 +205,9 @@ export class EPMNode {
 	}
 
 	private getPoolAssignments = async () => {
+		Object.keys( this.node.poolWorkerAssignments ).forEach( pwaKey => {
+			console.log( pwaKey, this.node.poolWorkerAssignments[ pwaKey ] );
+		} );
 		console.log( 'Pool Assignments', this.node.poolAssignments );
 		console.log( 'Pool Worker Assignments', this.node.poolWorkerAssignments );
 	}
