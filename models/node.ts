@@ -6,10 +6,11 @@ export interface Node extends NodeCandidate {
 			cols: number, rows: number
 		}
 	},
-	isPoolWorker: boolean
+	poolAssignments: PoolAssignment,
+	poolWorkerAssignments: PoolWorkerAssignment
 }
 
-export const defaultNode = (): Node => ( { id: '', name: '' } as Node );
+export const defaultNode = (): Node => ( { id: '', name: '', terminal: { dimensions: { cols: 0, rows: 0 } }, poolAssignments: {}, poolWorkerAssignments: {} } as Node );
 
 export interface NodeCandidateObject {
 	id: string,
@@ -52,4 +53,12 @@ export enum CommandType {
 	console = 1,
 	reboot = 2,
 	shutdown = 3
+}
+
+export interface PoolAssignment {
+	[ key: string ]: boolean
+}
+
+export interface PoolWorkerAssignment {
+	[ key: string ]: boolean
 }

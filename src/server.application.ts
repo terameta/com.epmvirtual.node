@@ -2,7 +2,7 @@ import * as os from 'os';
 import { defaultNode, Node, KeyPress, NodeCommand, CommandType } from "../models/node";
 import { BehaviorSubject, interval, Subscription } from 'rxjs';
 import { initializeApp, app, firestore } from 'firebase';
-import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
+import { fromDocRef } from 'rxfire/firestore';
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { waiter, JSONDeepCopy, SortByDateValue } from "./utilities";
 import { Settings } from "models/settings";
@@ -20,7 +20,8 @@ export class EPMNode {
 	private databaseApp: app.App = null;
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
-	private poolReference: firestore.CollectionReference = null;
+	private poolReference: firestore.DocumentReference = null;
+	private poolSubscription: Subscription = null;
 	private shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
 	private isExecutingCommand = false;
@@ -68,9 +69,6 @@ export class EPMNode {
 
 		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
 		fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
-
-		this.poolReference = this.database.collection( 'storagepools' );
-		fromCollectionRef( this.poolReference ).subscribe( console.log );
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
@@ -125,6 +123,7 @@ export class EPMNode {
 			this.isThisaNewNode.next( true );
 		} else {
 			this.isThisaNewNode.next( false );
+			this.getPoolAssignments();
 			this.ptyProcess.resize( this.node.terminal.dimensions.cols | 80, this.node.terminal.dimensions.rows | 30 );
 			if ( this.node.keypresses && this.node.keypresses.length > 0 ) {
 				this.node.keypresses.forEach( kp => kp.dateValue = kp.date.toDate() );
@@ -199,10 +198,15 @@ export class EPMNode {
 	private schedulesInitiate = async () => {
 		if ( !this.isSchedulesInitiated ) {
 			this.isSchedulesInitiated = true;
-			if ( this.node.isPoolWorker ) {
-				interval( 3000 ).subscribe( this.getPoolFiles );
-			}
+			// if ( this.node.isPoolWorker ) {
+			// 	interval( 3000 ).subscribe( this.getPoolFiles );
+			// }
 		}
+	}
+
+	private getPoolAssignments = async () => {
+		console.log( 'Pool Assignments', this.node.poolAssignments );
+		console.log( 'Pool Worker Assignments', this.node.poolWorkerAssignments );
 	}
 
 	private getPoolFiles = async () => {
