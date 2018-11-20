@@ -44,16 +44,10 @@ export interface PtyResponse {
 
 export interface NodeCommand {
 	date: any,
-	commandType: CommandType
-	command?: string,
+	command: string,
 	dateValue?: Date
 }
 
-export enum CommandType {
-	console = 1,
-	reboot = 2,
-	shutdown = 3
-}
 
 export interface PoolAssignment {
 	[ key: string ]: boolean
