@@ -167,7 +167,7 @@ export class EPMNode {
 		// console.log( command );
 		// console.log( '===========================================' );
 		// console.log( 'Initiating execution now' );
-		await this.executeCommandAction( command.command );
+		return await this.executeCommandAction( command.command );
 		// console.log( '===========================================' );
 		// console.log( 'Execution is now complete' );
 		// console.log( '===========================================' );
