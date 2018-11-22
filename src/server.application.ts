@@ -1,5 +1,5 @@
 import * as os from 'os';
-import { defaultNode, Node, KeyPress, NodeCommand, CommandType } from "../models/node";
+import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
 import { BehaviorSubject, interval, Subscription } from 'rxjs';
 import { initializeApp, app, firestore } from 'firebase';
 import { fromDocRef } from 'rxfire/firestore';
