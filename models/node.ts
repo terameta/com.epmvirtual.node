@@ -7,6 +7,8 @@ export interface Node extends NodeCandidate {
 		}
 	},
 	lastCommandResult: string,
+	lastCommand: string,
+	currentCommand: string,
 	poolAssignments: PoolAssignment,
 	poolWorkerAssignments: PoolWorkerAssignment
 }
