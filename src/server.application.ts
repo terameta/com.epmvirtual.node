@@ -141,10 +141,10 @@ export class EPMNode {
 				if ( !this.isExecutingCommand ) {
 					this.isExecutingCommand = true;
 					await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( command ) } ).catch( console.error );
-					await this.nodeReference.update( { currentCommand: command } );
+					await this.nodeReference.update( { currentCommand: command.command } );
 					const result = await this.executeCommand( command );
 					this.isExecutingCommand = false;
-					await this.nodeReference.update( { currentCommand: '', lastCommand: command, lastCommandResult: result } );
+					await this.nodeReference.update( { currentCommand: '', lastCommand: command.command, lastCommandResult: result } );
 				}
 
 				// if ( this.node.commands.length > 0 ) {
