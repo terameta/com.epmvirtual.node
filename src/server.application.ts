@@ -179,7 +179,7 @@ export class EPMNode {
 			exec( command, ( error, stdout ) => {
 				if ( error ) {
 					// reject( error );
-					resolve( 'Command Failed with:' + error.message );
+					resolve( '!!!!!!!!!!!\n' + error.message + '\n!!!!!!!!!!!' );
 				} else {
 					resolve( stdout );
 				}
