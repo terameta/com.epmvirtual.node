@@ -1,6 +1,6 @@
 import * as os from 'os';
 import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
-import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { BehaviorSubject, interval, Subscription, timer } from 'rxjs';
 import { initializeApp, app, firestore } from 'firebase';
 import { fromDocRef } from 'rxfire/firestore';
 import { existsSync, readFileSync, writeFileSync } from "fs";
@@ -36,7 +36,7 @@ export class EPMNode {
 		// si.blockDevices().then( console.log );
 		// si.diskLayout().then( console.log );
 		si.networkInterfaces().then( console.log );
-
+		interval( 3000 ).subscribe( () => console.log( new Date() ) );
 	}
 
 	private initiate = async () => {
