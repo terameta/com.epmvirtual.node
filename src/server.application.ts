@@ -36,7 +36,7 @@ export class EPMNode {
 		// si.blockDevices().then( console.log );
 		// si.diskLayout().then( console.log );
 		si.networkInterfaces().then( console.log );
-		interval( 3000 ).subscribe( () => console.log( new Date() ) );
+		interval( 5000 ).subscribe( () => console.log( new Date() ) );
 	}
 
 	private initiate = async () => {
