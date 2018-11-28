@@ -35,6 +35,7 @@ export class EPMNode {
 		// si.battery().then( console.log );
 		// si.blockDevices().then( console.log );
 		// si.diskLayout().then( console.log );
+		si.networkInterfaces().then( console.log );
 
 	}
 
