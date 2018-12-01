@@ -1,6 +1,6 @@
 import * as os from 'os';
 import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
-import { BehaviorSubject, interval, Subscription, timer } from 'rxjs';
+import { BehaviorSubject, interval, combineLatest } from 'rxjs';
 import { initializeApp, app, firestore } from 'firebase';
 import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
 import { existsSync, readFileSync, writeFileSync } from "fs";
@@ -71,7 +71,6 @@ export class EPMNode {
 		fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
 
 		this.poolsReference = this.database.collection( 'storagepools' );
-		// fromCollectionRef(this.poolsReference).pipe()
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
@@ -115,18 +114,13 @@ export class EPMNode {
 	private nodeChange = async ( change: firestore.DocumentSnapshot ) => {
 		// console.log( 'We have reached here as well' );
 		this.node = change.data() as Node;
-		console.log( '===========================================' );
-		console.log( '===========================================' );
-		console.log( this.node );
-		console.log( '===========================================' );
-		console.log( '===========================================' );
 		this.nodeReceived = true;
 		// console.log( 'We have reached here as well', this.node );
 		if ( !this.node ) {
 			this.isThisaNewNode.next( true );
 		} else {
 			this.isThisaNewNode.next( false );
-			this.getPoolAssignments();
+			this.poolAssignments();
 			this.ptyProcess.resize( this.node.terminal.dimensions.cols | 80, this.node.terminal.dimensions.rows | 30 );
 			if ( this.node.keypresses && this.node.keypresses.length > 0 ) {
 				this.node.keypresses.forEach( kp => kp.dateValue = kp.date.toDate() );
@@ -196,14 +190,12 @@ export class EPMNode {
 		}
 	}
 
-	private getPoolAssignments = async () => {
+	private poolAssignments = async () => {
+		combineLatest( fromCollectionRef( this.poolsReference ), fromDocRef( this.nodeReference ) ).subscribe( console.log );
 		// this.poolReferences = [];
 		// Object.keys( this.node.poolAssignments ).filter( paKey => this.node.poolAssignments[ paKey ] ).forEach( ( paKey ) => {
-		// 	console.log( 'We have this pool assignment', paKey );
 		// 	this.poolReferences.push()
 		// } );
-		// console.log( 'Pool Assignments', this.node.poolAssignments );
-		// console.log( 'Pool Worker Assignments', this.node.poolWorkerAssignments );
 	}
 
 	private getPoolFiles = async () => {
