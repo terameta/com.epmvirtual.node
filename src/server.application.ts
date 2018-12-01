@@ -197,13 +197,13 @@ export class EPMNode {
 	}
 
 	private getPoolAssignments = async () => {
-		this.poolReferences = [];
-		Object.keys( this.node.poolAssignments ).filter( paKey => this.node.poolAssignments[ paKey ] ).forEach( ( paKey ) => {
-			console.log( 'We have this pool assignment', paKey );
-			this.poolReferences.push()
-		} );
-		console.log( 'Pool Assignments', this.node.poolAssignments );
-		console.log( 'Pool Worker Assignments', this.node.poolWorkerAssignments );
+		// this.poolReferences = [];
+		// Object.keys( this.node.poolAssignments ).filter( paKey => this.node.poolAssignments[ paKey ] ).forEach( ( paKey ) => {
+		// 	console.log( 'We have this pool assignment', paKey );
+		// 	this.poolReferences.push()
+		// } );
+		// console.log( 'Pool Assignments', this.node.poolAssignments );
+		// console.log( 'Pool Worker Assignments', this.node.poolWorkerAssignments );
 	}
 
 	private getPoolFiles = async () => {
