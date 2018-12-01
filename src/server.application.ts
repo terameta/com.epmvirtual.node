@@ -147,17 +147,6 @@ export class EPMNode {
 					this.isExecutingCommand = false;
 					await this.nodeReference.update( { currentCommand: '', lastCommand: command.command, lastCommandResult: result } );
 				}
-
-				// if ( this.node.commands.length > 0 ) {
-				// 	this.node.commands.forEach( c => c.dateValue = c.date.toDate() );
-				// 	this.node.commands.sort( SortByDateValue );
-				// 	const command = this.node.commands.shift();
-				// 	await this.executeCommand( command );
-				// 	delete command.dateValue;
-				// 	this.nodeReference.update( {
-				// 		commands: firestore.FieldValue.arrayRemove( command )
-				// 	} );
-				// }
 			}
 		}
 	}
