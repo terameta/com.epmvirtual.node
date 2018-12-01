@@ -2,7 +2,7 @@ import * as os from 'os';
 import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
 import { BehaviorSubject, interval, Subscription, timer } from 'rxjs';
 import { initializeApp, app, firestore } from 'firebase';
-import { fromDocRef } from 'rxfire/firestore';
+import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { waiter, JSONDeepCopy, SortByDateValue } from "./utilities";
 import { Settings } from "models/settings";
@@ -20,8 +20,7 @@ export class EPMNode {
 	private databaseApp: app.App = null;
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
-	private poolReferences: firestore.DocumentReference[] = [];
-	private poolSubscriptions: Subscription[] = [];
+	private poolsReference: firestore.CollectionReference;
 	private shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
 	private isExecutingCommand = false;
@@ -70,6 +69,9 @@ export class EPMNode {
 
 		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
 		fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
+
+		this.poolsReference = this.database.collection( 'storagepools' );
+		// fromCollectionRef(this.poolsReference).pipe()
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
@@ -195,12 +197,10 @@ export class EPMNode {
 	}
 
 	private getPoolAssignments = async () => {
-		Object.keys( this.node.poolWorkerAssignments ).forEach( pwaKey => {
-			console.log( pwaKey, this.node.poolWorkerAssignments[ pwaKey ] );
-		} );
-
+		this.poolReferences = [];
 		Object.keys( this.node.poolAssignments ).filter( paKey => this.node.poolAssignments[ paKey ] ).forEach( ( paKey ) => {
 			console.log( 'We have this pool assignment', paKey );
+			this.poolReferences.push()
 		} );
 		console.log( 'Pool Assignments', this.node.poolAssignments );
 		console.log( 'Pool Worker Assignments', this.node.poolWorkerAssignments );
