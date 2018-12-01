@@ -198,6 +198,10 @@ export class EPMNode {
 		Object.keys( this.node.poolWorkerAssignments ).forEach( pwaKey => {
 			console.log( pwaKey, this.node.poolWorkerAssignments[ pwaKey ] );
 		} );
+
+		Object.keys( this.node.poolAssignments ).filter( paKey => this.node.poolAssignments[ paKey ] ).forEach( ( paKey ) => {
+			console.log( 'We have this pool assignment', paKey );
+		} );
 		console.log( 'Pool Assignments', this.node.poolAssignments );
 		console.log( 'Pool Worker Assignments', this.node.poolWorkerAssignments );
 	}
