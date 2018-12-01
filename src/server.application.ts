@@ -69,8 +69,6 @@ export class EPMNode {
 
 		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
 		fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
-
-		this.poolsReference = this.database.collection( 'storagepools' );
 	}
 
 	private thisisaNewNode = ( isit: boolean ) => {
@@ -191,6 +189,7 @@ export class EPMNode {
 	}
 
 	private poolAssignments = async () => {
+		console.log( 'Pool Assignments called' );
 		Object.keys( this.node.poolAssignments ).filter( paKey => this.node.poolAssignments[ paKey ] ).forEach( ( paKey ) => {
 			console.log( 'We are assigned this pool:', paKey );
 		} );
