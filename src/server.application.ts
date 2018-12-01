@@ -191,11 +191,9 @@ export class EPMNode {
 	}
 
 	private poolAssignments = async () => {
-		combineLatest( fromCollectionRef( this.poolsReference ), fromDocRef( this.nodeReference ) ).subscribe( console.log );
-		// this.poolReferences = [];
-		// Object.keys( this.node.poolAssignments ).filter( paKey => this.node.poolAssignments[ paKey ] ).forEach( ( paKey ) => {
-		// 	this.poolReferences.push()
-		// } );
+		Object.keys( this.node.poolAssignments ).filter( paKey => this.node.poolAssignments[ paKey ] ).forEach( ( paKey ) => {
+			console.log( 'We are assigned this pool:', paKey );
+		} );
 	}
 
 	private getPoolFiles = async () => {
