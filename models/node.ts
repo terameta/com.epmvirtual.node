@@ -79,7 +79,8 @@ const baseNode: Node = {
 	os: null,
 	system: null,
 	networkInterfaces: null,
-	cpu: null
+	cpu: null,
+	memory: null
 }
 
 export const defaultNode = (): Node => JSONDeepCopy( baseNode );
