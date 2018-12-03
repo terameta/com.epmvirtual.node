@@ -1,9 +1,12 @@
 import { interval } from 'rxjs';
 import * as si from 'systeminformation';
 import { defaultNode, Node } from '../models/node';
+import { SettingsWithCredentials } from 'models/settings';
+import { existsSync, readFileSync } from 'fs';
 
 export class EPMNode {
 	public node: Node = defaultNode();
+	public settings: SettingsWithCredentials = {} as SettingsWithCredentials;
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
@@ -13,6 +16,7 @@ export class EPMNode {
 
 	private initiate = async () => {
 		await this.identifySelf();
+		await this.identifySettings;
 	}
 
 	private identifySelf = async () => {
@@ -24,12 +28,26 @@ export class EPMNode {
 		this.node.disk = await si.blockDevices();
 	}
 
+	private identifySettings = async () => {
+		this.settings.firebaseUser = process.env.Firebase_User;
+		this.settings.firebasePass = process.env.Firebase_Pass;
+		if ( !this.settings.firebaseUser ) throw new Error( 'Firebase user should be defined in the Environment variable as "Firebase_User"' );
+		if ( this.settings.firebaseUser === '' ) throw new Error( 'Firebase user should be defined in the Environment variable as "Firebase_User" and it should not be an empty string' );
+		if ( !this.settings.firebasePass ) throw new Error( 'Firebase password should be defined in the Environment variable as "Firebase_Pass"' );
+		if ( this.settings.firebasePass === '' ) throw new Error( 'Firebase password should be defined in the Environment variable as "Firebase_Pass" and it should not be an empty string' );
+		if ( !existsSync( 'settings.json' ) ) throw new Error( 'settings.json file should exist, please copy from settings.sample.json and update the details' );
+		this.settings = JSON.parse( readFileSync( 'settings.json', 'utf8' ) );
+	}
+
+	private identifyExistance = async () => {
+
+	}
+
 	private scheduledTasks = async () => {
 		si.mem().then( console.log ); // This will print the current memory usage and state
 		si.currentLoad().then( console.log ); // This will print the current cpu usage and state
 	}
 }
-// import * as os from 'os';
 // import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
 // import { BehaviorSubject, interval, combineLatest } from 'rxjs';
 // import { initializeApp, app, firestore } from 'firebase';
@@ -39,7 +57,6 @@ export class EPMNode {
 // import { Settings } from "models/settings";
 // import * as uuid from 'uuid/v4';
 // import * as pty from 'node-pty';
-// import * as si from 'systeminformation';
 // import { exec } from 'child_process';
 
 // export class EPMNode {
