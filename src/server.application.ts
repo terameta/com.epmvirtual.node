@@ -8,7 +8,11 @@ export class EPMNode {
 	constructor() {
 		interval( 5000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
 
-		this.identifySelf();
+		this.initiate();
+	}
+
+	private initiate = async () => {
+		await this.identifySelf();
 	}
 
 	private identifySelf = async () => {
