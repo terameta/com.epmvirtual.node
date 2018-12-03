@@ -1,12 +1,14 @@
-import { interval } from 'rxjs';
+import { interval, BehaviorSubject } from 'rxjs';
 import * as si from 'systeminformation';
 import { defaultNode, Node } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
+import * as uuid from 'uuid/v1';
 
 export class EPMNode {
 	public node: Node = defaultNode();
 	public settings: SettingsWithCredentials = {} as SettingsWithCredentials;
+	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( true );
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
@@ -44,6 +46,15 @@ export class EPMNode {
 		if ( !this.settings.firebase.databaseURL || this.settings.firebase.databaseURL === '' ) throw new Error( 'Settings json should have an databaseURL item' );
 		if ( !this.settings.firebase.projectId || this.settings.firebase.projectId === '' ) throw new Error( 'Settings json should have an projectId item' );
 		this.settings.firebase.timestampsInSnapshots = true;
+		if ( existsSync( './nodeid.json' ) ) {
+			const { nodeid } = JSON.parse( readFileSync( 'nodeid.json', 'utf8' ) );
+			this.settings.nodeid = nodeid;
+		} else {
+			this.settings.nodeid = uuid();
+			this.isThisaNewNode.next( true );
+			const toWrite = JSON.stringify( { nodeid: this.settings.nodeid } );
+			writeFileSync( 'nodeid.json', toWrite );
+		}
 	}
 
 	private identifyExistance = async () => {
@@ -62,13 +73,11 @@ export class EPMNode {
 // import { existsSync, readFileSync, writeFileSync } from "fs";
 // import { waiter, JSONDeepCopy, SortByDateValue } from "./utilities";
 // import { Settings } from "models/settings";
-// import * as uuid from 'uuid/v4';
 // import * as pty from 'node-pty';
 // import { exec } from 'child_process';
 
 // export class EPMNode {
 // 	public node: Node = defaultNode();
-// 	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( true );
 // 	private nodeReceived = false;
 // 	private settings: Settings = null;
 // 	private nodeid: string = null;
