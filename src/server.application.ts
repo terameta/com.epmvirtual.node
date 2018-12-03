@@ -16,7 +16,7 @@ export class EPMNode {
 		si.osInfo().then( console.log );
 		// si.cpu().then( console.log );
 		// si.blockDevices().then( console.log );
-		// si.networkInterfaces().then( console.log );
+		si.networkInterfaces().then( console.log );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
