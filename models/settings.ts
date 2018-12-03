@@ -10,5 +10,6 @@ export interface Settings {
 
 export interface SettingsWithCredentials extends Settings {
 	firebaseUser: string,
-	firebasePass: string
+	firebasePass: string,
+	nodeid: string
 }
