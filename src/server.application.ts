@@ -17,11 +17,10 @@ export class EPMNode {
 
 	private identifySelf = async () => {
 		this.node.networkInterfaces = await si.networkInterfaces();
-		// si.system().then( console.log );
+		await si.system().then( console.log );
 		// si.osInfo().then( console.log );
 		// si.cpu().then( console.log );
 		// si.blockDevices().then( console.log );
-		// si.networkInterfaces().then( console.log );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
