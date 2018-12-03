@@ -4,7 +4,7 @@ import { defaultNode, Node } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
-import { initializeApp, app, firestore } from 'firebase';
+import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -66,7 +66,7 @@ export class EPMNode {
 		this.databaseApp = initializeApp( this.settings.firebase );
 		this.database = this.databaseApp.firestore();
 		this.database.settings( { timestampsInSnapshots: true } );
-		firebase.auth().signInWithEmailAndPassword( this.settings.firebaseUser, this.settings.firebasePass ).then( console.log );
+		firebaseAuth().signInWithEmailAndPassword( this.settings.firebaseUser, this.settings.firebasePass ).then( console.log );
 	}
 
 	private identifyExistance = async () => {
