@@ -1,3 +1,5 @@
+import { JSONDeepCopy } from "src/utilities";
+
 export interface Node {
 	id: string,
 	name: string,
@@ -11,6 +13,14 @@ interface NodeNetworkInterfacesData {
 	mac: string;
 	internal: boolean;
 }
+
+const baseNode: Node = {
+	id: null,
+	name: null,
+	networkInterfaces: null
+}
+
+export const defaultNode = (): Node => JSONDeepCopy( baseNode );
 
 // export interface Node extends NodeCandidate {
 // 	name: string,
