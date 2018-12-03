@@ -23,6 +23,7 @@ export interface NodeCandidateObject {
 export interface NodeCandidate {
 	id: string,
 	name: string,
+	details: any,
 	hostname: string,
 	ostype: string,
 	osplatform: string,
