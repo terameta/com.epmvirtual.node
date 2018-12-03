@@ -6,3 +6,8 @@ export interface Settings {
 		projectId: string
 	}
 }
+
+export interface SettingsWithCredentials extends Settings {
+	firebaseUser: string,
+	firebasePass: string
+}
