@@ -3,7 +3,8 @@ export interface Settings {
 		apiKey: string,
 		authDomain: string,
 		databaseURL: string,
-		projectId: string
+		projectId: string,
+		timestampsInSnapshots: boolean
 	}
 }
 
