@@ -6,7 +6,7 @@ After=network.target
 [Service]
 Environment=NODE_PORT=8000
 Environment=Firebase_User=<update here with correct credential>
-Environment=Firebase_Pass=<update here with correct credential>
+Environment=Firebase_Pass=<update here with correct credential make sure there are no special characteres so make it very long>
 Type=simple
 User=<write the username here>
 SyslogIdentifier=epmvirtualnode
