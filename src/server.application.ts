@@ -16,7 +16,9 @@ export class EPMNode {
 
 	private initiate = async () => {
 		await this.identifySelf();
+		console.log( '*** EPMVirtual Node is now self identified' );
 		await this.identifySettings();
+		console.log( '*** EPMVirtual Node settings are now ready' );
 	}
 
 	private identifySelf = async () => {
@@ -42,11 +44,6 @@ export class EPMNode {
 		if ( !this.settings.firebase.databaseURL || this.settings.firebase.databaseURL === '' ) throw new Error( 'Settings json should have an databaseURL item' );
 		if ( !this.settings.firebase.projectId || this.settings.firebase.projectId === '' ) throw new Error( 'Settings json should have an projectId item' );
 		this.settings.firebase.timestampsInSnapshots = true;
-		console.log( '===========================================' );
-		console.log( '===========================================' );
-		console.log( this.settings );
-		console.log( '===========================================' );
-		console.log( '===========================================' );
 	}
 
 	private identifyExistance = async () => {
