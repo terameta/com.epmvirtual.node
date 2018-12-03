@@ -6,7 +6,7 @@ export class EPMNode {
 	public node: Node = defaultNode();
 
 	constructor() {
-		interval( 15000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
+		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
 
 		this.initiate();
 	}
