@@ -38,7 +38,7 @@ export class EPMNode {
 
 	private scheduledTasks = async () => {
 		si.mem().then( console.log ); // This will print the current memory usage and state
-
+		si.currentLoad().then( console.log ); // This will print the current cpu usage and state
 	}
 }
 // import * as os from 'os';
