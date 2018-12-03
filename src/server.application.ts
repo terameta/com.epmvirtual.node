@@ -26,6 +26,11 @@ export class EPMNode {
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		await si.getStaticData().then( console.log );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( this.node );
 	}
 }
 // import * as os from 'os';
