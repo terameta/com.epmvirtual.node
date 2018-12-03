@@ -5,10 +5,11 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "nodemon -w ./ -e ts,json --exec ts-node src/server.ts",
-		"autocommit": "nodemon -w ./ -e ts,json --exec npm run gitadd & npm run gitcom & npm run gitpus",
+		"autocommit": "nodemon -w ./ -e ts,json --exec \"npm run gitadd & npm run gitcommit & npm run gitpush\"",
+		"gitall": "npm run gitadd & npm run gitcommit & npm run gitpush",
 		"gitadd": "git add -A --",
-		"gitcom": "git commit -m \"Regular Commit\"",
-		"gitpus": "git push",
+		"gitcommit": "git commit -m \"Regular Commit\"",
+		"gitpush": "git push",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"private": true,
