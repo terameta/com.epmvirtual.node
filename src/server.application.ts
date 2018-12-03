@@ -13,15 +13,18 @@ export class EPMNode {
 
 	private identifySelf = async () => {
 		// si.system().then( console.log );
-		si.osInfo().then( console.log );
+		// si.osInfo().then( console.log );
 		// si.cpu().then( console.log );
 		// si.blockDevices().then( console.log );
-		si.networkInterfaces().then( console.log );
+		// si.networkInterfaces().then( console.log );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		si.getStaticData().then( console.log );
+		si.networkInterfaces().then( ( a: si.Systeminformation.NetInterfacesData[] ) => {
+			console.log( a );
+		} );
 	}
 }
 // import * as os from 'os';
