@@ -33,7 +33,7 @@ export class EPMNode {
 		// console.log( '===========================================' );
 		// console.log( '===========================================' );
 		// console.log( await si.services( '*' ) );
-		si.currentLoad().then( console.log );
+		si.blockDevices().then( console.log );
 	}
 
 	private scheduledTasks = async () => {
