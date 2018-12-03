@@ -16,7 +16,7 @@ export class EPMNode {
 
 	private initiate = async () => {
 		await this.identifySelf();
-		await this.identifySettings;
+		await this.identifySettings();
 	}
 
 	private identifySelf = async () => {
@@ -36,7 +36,12 @@ export class EPMNode {
 		if ( !this.settings.firebasePass ) throw new Error( 'Firebase password should be defined in the Environment variable as "Firebase_Pass"' );
 		if ( this.settings.firebasePass === '' ) throw new Error( 'Firebase password should be defined in the Environment variable as "Firebase_Pass" and it should not be an empty string' );
 		if ( !existsSync( 'settings.json' ) ) throw new Error( 'settings.json file should exist, please copy from settings.sample.json and update the details' );
-		this.settings = JSON.parse( readFileSync( 'settings.json', 'utf8' ) );
+		this.settings = { ...this.settings, ...JSON.parse( readFileSync( 'settings.json', 'utf8' ) ) };
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( this.settings );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
 	}
 
 	private identifyExistance = async () => {
