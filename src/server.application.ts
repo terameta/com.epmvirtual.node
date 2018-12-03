@@ -13,7 +13,7 @@ export class EPMNode {
 		// si.cpu().then( console.log );
 		// si.blockDevices().then( console.log );
 		si.networkInterfaces().then( console.log );
-		si.networkConnections().then( console.log );
+		// si.networkConnections().then( console.log );
 	}
 }
 // import * as os from 'os';
