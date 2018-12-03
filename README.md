@@ -6,6 +6,7 @@
 * Copy settings.sample.json to settings.json and update
 * Copy epmvirtualnode.service file to /lib/systemd/system/epmvirtualnode.service
 * Update epmvirtualnode.service file according to your needs
+* sudo chmod 600 /lib/systemd/system/epmvirtualnode.service
 * Run below commands
 	* sudo systemctl daemon-reload
 	* sudo systemctl enable epmvirtualnode.service
