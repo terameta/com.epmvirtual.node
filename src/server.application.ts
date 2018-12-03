@@ -16,8 +16,8 @@ export class EPMNode {
 	}
 
 	private identifySelf = async () => {
+		this.node.system = await si.system();
 		this.node.networkInterfaces = await si.networkInterfaces();
-		await si.system().then( console.log );
 		// si.osInfo().then( console.log );
 		// si.cpu().then( console.log );
 		// si.blockDevices().then( console.log );
