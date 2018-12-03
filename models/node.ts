@@ -3,6 +3,7 @@ import { JSONDeepCopy } from "../src/utilities";
 export interface Node {
 	id: string,
 	name: string,
+	system: NodeSystemData,
 	networkInterfaces: NodeNetworkInterfacesData[]
 }
 
@@ -12,6 +13,14 @@ interface NodeNetworkInterfacesData {
 	ip6: string;
 	mac: string;
 	internal: boolean;
+}
+
+interface NodeSystemData {
+	manufacturer: string;
+	model: string;
+	version: string;
+	serial: string;
+	uuid: string;
 }
 
 const baseNode: Node = {
