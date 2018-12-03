@@ -37,6 +37,11 @@ export class EPMNode {
 		if ( this.settings.firebasePass === '' ) throw new Error( 'Firebase password should be defined in the Environment variable as "Firebase_Pass" and it should not be an empty string' );
 		if ( !existsSync( 'settings.json' ) ) throw new Error( 'settings.json file should exist, please copy from settings.sample.json and update the details' );
 		this.settings = { ...this.settings, ...JSON.parse( readFileSync( 'settings.json', 'utf8' ) ) };
+		if ( !this.settings.firebase.apiKey || this.settings.firebase.apiKey === '' ) throw new Error( 'Settings json should have an apiKey item' );
+		if ( !this.settings.firebase.authDomain || this.settings.firebase.authDomain === '' ) throw new Error( 'Settings json should have an authDomain item' );
+		if ( !this.settings.firebase.databaseURL || this.settings.firebase.databaseURL === '' ) throw new Error( 'Settings json should have an databaseURL item' );
+		if ( !this.settings.firebase.projectId || this.settings.firebase.projectId === '' ) throw new Error( 'Settings json should have an projectId item' );
+		this.settings.firebase.timestampsInSnapshots = true;
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( this.settings );
