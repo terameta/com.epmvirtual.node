@@ -7,7 +7,7 @@
 		"start": "nodemon -w ./ -e ts,json --exec ts-node src/server.ts",
 		"autocommit": "nodemon -w ./ -e ts,json --exec npm run gitadd & npm run gitcom & npm run gitpus",
 		"gitadd": "git add -A --",
-		"gitcom": "git commit -m 'Regular Commit'",
+		"gitcom": "git commit -m \"Regular Commit\"",
 		"gitpus": "git push",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
