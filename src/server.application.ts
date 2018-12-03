@@ -1,9 +1,15 @@
 import { interval } from 'rxjs';
+import * as si from 'systeminformation';
+
 export class EPMNode {
 	constructor() {
 		interval( 5000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
 
+		this.identifySelf();
+	}
 
+	private identifySelf = async () => {
+		si.cpu().then( console.log );
 	}
 }
 // import * as os from 'os';
