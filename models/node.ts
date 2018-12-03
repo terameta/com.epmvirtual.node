@@ -6,7 +6,8 @@ export interface Node {
 	os: NodeOsData,
 	system: NodeSystemData,
 	networkInterfaces: NodeNetworkInterfacesData[],
-	cpu: NodeCpuData
+	cpu: NodeCpuData,
+	memory: NodeMemoryLayoutData
 }
 
 interface NodeNetworkInterfacesData {
@@ -57,6 +58,19 @@ interface NodeCpuCacheData {
 	l1i: number;
 	l2: number;
 	l3: number;
+}
+
+interface NodeMemoryLayoutData {
+	size: number;
+	bank: string;
+	type: string;
+	clockSpeed: number;
+	formFactor: string;
+	partNum: string;
+	serialNum: string;
+	voltageConfigured: number;
+	voltageMin: number;
+	voltageMax: number;
 }
 
 const baseNode: Node = {
