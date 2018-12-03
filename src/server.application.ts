@@ -4,11 +4,14 @@ import { defaultNode, Node } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
+import { initializeApp, app, firestore } from 'firebase';
 
 export class EPMNode {
 	public node: Node = defaultNode();
 	public settings: SettingsWithCredentials = {} as SettingsWithCredentials;
 	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( true );
+	private databaseApp: app.App = null;
+	private database: firestore.Firestore = null;
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
@@ -21,7 +24,8 @@ export class EPMNode {
 		console.log( '*** EPMVirtual Node is now self identified' );
 		await this.identifySettings();
 		console.log( '*** EPMVirtual Node settings are now ready' );
-		console.log( this.settings );
+		await this.connectToDatabase();
+		console.log( '*** Connected to firestore database' );
 	}
 
 	private identifySelf = async () => {
@@ -58,6 +62,10 @@ export class EPMNode {
 		}
 	}
 
+	private connectToDatabase = async () => {
+
+	}
+
 	private identifyExistance = async () => {
 
 	}
@@ -69,7 +77,7 @@ export class EPMNode {
 }
 // import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
 // import { BehaviorSubject, interval, combineLatest } from 'rxjs';
-// import { initializeApp, app, firestore } from 'firebase';
+
 // import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
 // import { existsSync, readFileSync, writeFileSync } from "fs";
 // import { waiter, JSONDeepCopy, SortByDateValue } from "./utilities";
@@ -82,8 +90,7 @@ export class EPMNode {
 // 	private nodeReceived = false;
 // 	private settings: Settings = null;
 // 	private nodeid: string = null;
-// 	private databaseApp: app.App = null;
-// 	private database: firestore.Firestore = null;
+
 // 	private nodeReference: firestore.DocumentReference = null;
 // 	private poolsReference: firestore.CollectionReference;
 // 	private shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
@@ -91,42 +98,10 @@ export class EPMNode {
 // 	private isExecutingCommand = false;
 // 	private isSchedulesInitiated = false;
 
-// 	constructor() {
-// 		console.clear();
-// 		console.log( 'I am constructed' );
-// 		this.initiate();
-// 		// si.cpu().then( console.log );
-// 		// si.battery().then( console.log );
-// 		// si.blockDevices().then( console.log );
-// 		// si.diskLayout().then( console.log );
-// 		si.networkInterfaces().then( console.log );
-// 		interval( 5000 ).subscribe( () => console.log( new Date() ) );
-// 	}
+// 	constructor() {}
 
 // 	private initiate = async () => {
 // 		this.isThisaNewNode.subscribe( this.thisisaNewNode );
-
-// 		let notified = false;
-// 		while ( !existsSync( 'settings.json' ) ) {
-// 			if ( !notified ) {
-// 				console.log( 'There is no settings.json file, please create one with necessary details' );
-// 				console.log( 'Once the file is at the correct place system will initiate automatically, there is no need to restart the service' );
-// 				notified = true;
-// 			}
-// 			await waiter();
-// 		}
-// 		this.settings = JSON.parse( readFileSync( 'settings.json', 'utf8' ) );
-
-// 		if ( existsSync( './nodeid.json' ) ) {
-// 			const { nodeid } = JSON.parse( readFileSync( 'nodeid.json', 'utf8' ) );
-// 			this.nodeid = nodeid;
-// 		} else {
-// 			this.nodeid = uuid();
-// 			this.isThisaNewNode.next( true );
-// 			const toWrite = JSON.stringify( { nodeid: this.nodeid } );
-// 			writeFileSync( 'nodeid.json', toWrite );
-// 		}
-
 
 // 		this.databaseApp = initializeApp( this.settings.firebase );
 // 		this.database = this.databaseApp.firestore();
