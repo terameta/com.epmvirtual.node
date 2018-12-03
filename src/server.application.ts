@@ -32,7 +32,7 @@ export class EPMNode {
 		// console.log( '===========================================' );
 		// console.log( '===========================================' );
 		// console.log( await si.services( '*' ) );
-		( si as any ).bios().then( console.log );
+		si.mem().then( console.log );
 	}
 }
 // import * as os from 'os';
