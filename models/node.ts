@@ -38,6 +38,7 @@ interface NodeOsData {
 const baseNode: Node = {
 	id: null,
 	name: null,
+	os: null,
 	system: null,
 	networkInterfaces: null
 }
