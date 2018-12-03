@@ -32,9 +32,7 @@ export class EPMNode {
 		// console.log( '===========================================' );
 		// console.log( '===========================================' );
 		// console.log( await si.services( '*' ) );
-		si.services( '*' ).then( a => {
-			console.log( a.map( a => a.name ) );
-		} );
+		( si as any ).bios().then( console.log );
 	}
 }
 // import * as os from 'os';
