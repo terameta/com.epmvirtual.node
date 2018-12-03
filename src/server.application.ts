@@ -16,6 +16,7 @@ export class EPMNode {
 	}
 
 	private identifySelf = async () => {
+		this.node.networkInterfaces = await si.networkInterfaces();
 		// si.system().then( console.log );
 		// si.osInfo().then( console.log );
 		// si.cpu().then( console.log );
@@ -25,10 +26,7 @@ export class EPMNode {
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
-		si.getStaticData().then( console.log );
-		si.networkInterfaces().then( ( a: si.Systeminformation.NetInterfacesData[] ) => {
-			console.log( a );
-		} );
+		await si.getStaticData().then( console.log );
 	}
 }
 // import * as os from 'os';
