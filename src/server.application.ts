@@ -21,6 +21,7 @@ export class EPMNode {
 		this.node.networkInterfaces = await si.networkInterfaces();
 		this.node.cpu = await si.cpu();
 		this.node.memory = await si.memLayout();
+		this.node.disk = await si.blockDevices();
 		// this.node.bios = await si.services( '*' );
 		// si.blockDevices().then( console.log );
 		// console.log( '===========================================' );

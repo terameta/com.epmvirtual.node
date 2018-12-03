@@ -8,7 +8,7 @@ export interface Node {
 	networkInterfaces: NodeNetworkInterfacesData[],
 	cpu: NodeCpuData,
 	memory: NodeMemoryLayoutData,
-	disk: NodeBlockDevicesData
+	disk: NodeBlockDevicesData[]
 }
 
 interface NodeNetworkInterfacesData {
