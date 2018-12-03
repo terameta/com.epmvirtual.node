@@ -63,7 +63,9 @@ export class EPMNode {
 	}
 
 	private connectToDatabase = async () => {
-
+		this.databaseApp = initializeApp( this.settings.firebase );
+		this.database = this.databaseApp.firestore();
+		this.database.settings( { timestampsInSnapshots: true } );
 	}
 
 	private identifyExistance = async () => {
@@ -103,9 +105,6 @@ export class EPMNode {
 // 	private initiate = async () => {
 // 		this.isThisaNewNode.subscribe( this.thisisaNewNode );
 
-// 		this.databaseApp = initializeApp( this.settings.firebase );
-// 		this.database = this.databaseApp.firestore();
-// 		this.database.settings( { timestampsInSnapshots: true } );
 
 // 		this.nodeReference = this.database.doc( 'nodes/' + this.nodeid );
 // 		fromDocRef( this.nodeReference ).subscribe( this.nodeChange );
