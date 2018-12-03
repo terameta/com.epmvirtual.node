@@ -1,8 +1,9 @@
 import { interval } from 'rxjs';
 export class EPMNode {
 	constructor() {
-		console.log( 'I am constructed' );
-		interval( 5000 ).subscribe( () => console.log( new Date() ) );
+		interval( 5000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
+
+
 	}
 }
 // import * as os from 'os';
