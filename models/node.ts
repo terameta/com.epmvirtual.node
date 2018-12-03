@@ -7,7 +7,8 @@ export interface Node {
 	system: NodeSystemData,
 	networkInterfaces: NodeNetworkInterfacesData[],
 	cpu: NodeCpuData,
-	memory: NodeMemoryLayoutData
+	memory: NodeMemoryLayoutData,
+	disk: NodeBlockDevicesData
 }
 
 interface NodeNetworkInterfacesData {
@@ -73,6 +74,21 @@ interface NodeMemoryLayoutData {
 	voltageMax: number;
 }
 
+interface NodeBlockDevicesData {
+	name: string;
+	type: string;
+	fstype: string;
+	mount: string;
+	size: number;
+	physical: string;
+	uuid: string;
+	label: string;
+	model: string;
+	serial: string;
+	removable: boolean;
+	protocol: string;
+}
+
 const baseNode: Node = {
 	id: null,
 	name: null,
@@ -80,7 +96,8 @@ const baseNode: Node = {
 	system: null,
 	networkInterfaces: null,
 	cpu: null,
-	memory: null
+	memory: null,
+	disk: null
 }
 
 export const defaultNode = (): Node => JSONDeepCopy( baseNode );
