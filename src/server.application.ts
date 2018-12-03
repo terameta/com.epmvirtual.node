@@ -6,7 +6,7 @@ export class EPMNode {
 	public node: Node = defaultNode();
 
 	constructor() {
-		interval( 5000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
+		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
 
 		this.initiate();
 	}
@@ -31,7 +31,10 @@ export class EPMNode {
 		// console.log( '===========================================' );
 		// console.log( '===========================================' );
 		// console.log( '===========================================' );
-		console.log( await si.services( '*' ) );
+		// console.log( await si.services( '*' ) );
+		si.services( '*' ).then( a => {
+			console.log( a.map( a => a.name ) );
+		} );
 	}
 }
 // import * as os from 'os';
