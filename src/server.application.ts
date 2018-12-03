@@ -16,7 +16,16 @@ export class EPMNode {
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
 
-		this.initiate();
+		this.initiate().catch( e => {
+			console.log( '!!! There is an issue with the initialization' );
+			console.log( '!!! Please check the below error message to identify the issue and resolve' );
+			console.log( '!!! Until then the system will not initiate' );
+			console.log( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' );
+			console.log( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' );
+			console.log( e );
+			console.log( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' );
+			console.log( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' );
+		} );
 	}
 
 	private initiate = async () => {
