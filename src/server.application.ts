@@ -9,8 +9,9 @@ export class EPMNode {
 	}
 
 	private identifySelf = async () => {
-		si.system().then( console.log );
+		// si.system().then( console.log );
 		// si.cpu().then( console.log );
+		si.diskLayout().then( console.log );
 	}
 }
 // import * as os from 'os';
