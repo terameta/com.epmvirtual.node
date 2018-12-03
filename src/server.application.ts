@@ -21,6 +21,7 @@ export class EPMNode {
 		console.log( '*** EPMVirtual Node is now self identified' );
 		await this.identifySettings();
 		console.log( '*** EPMVirtual Node settings are now ready' );
+		console.log( this.settings );
 	}
 
 	private identifySelf = async () => {
