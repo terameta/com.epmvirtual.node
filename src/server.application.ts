@@ -32,7 +32,12 @@ export class EPMNode {
 		// console.log( '===========================================' );
 		// console.log( '===========================================' );
 		// console.log( await si.services( '*' ) );
-		si.mem().then( console.log );
+		si.memLayout().then( console.log );
+	}
+
+	private scheduledTasks = async () => {
+		si.mem().then( console.log ); // This will print the current memory usage and state
+
 	}
 }
 // import * as os from 'os';
