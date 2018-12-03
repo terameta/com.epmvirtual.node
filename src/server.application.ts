@@ -66,7 +66,7 @@ export class EPMNode {
 		this.databaseApp = initializeApp( this.settings.firebase );
 		this.database = this.databaseApp.firestore();
 		this.database.settings( { timestampsInSnapshots: true } );
-		firebaseAuth().signInWithEmailAndPassword( this.settings.firebaseUser, this.settings.firebasePass ).then( console.log );
+		await firebaseAuth().signInWithEmailAndPassword( this.settings.firebaseUser, this.settings.firebasePass + 'aaa' );
 	}
 
 	private identifyExistance = async () => {
