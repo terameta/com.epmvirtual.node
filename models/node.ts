@@ -5,7 +5,8 @@ export interface Node {
 	name: string,
 	os: NodeOsData,
 	system: NodeSystemData,
-	networkInterfaces: NodeNetworkInterfacesData[]
+	networkInterfaces: NodeNetworkInterfacesData[],
+	cpu: NodeCpuData
 }
 
 interface NodeNetworkInterfacesData {
@@ -35,12 +36,36 @@ interface NodeOsData {
 	logofile: string;
 }
 
+interface NodeCpuData {
+	manufacturer: string;
+	brand: string;
+	vendor: string;
+	family: string;
+	model: string;
+	stepping: string;
+	revision: string;
+	speed: string;
+	speedmin: string;
+	speedmax: string;
+	cores: number;
+	cache: NodeCpuCacheData;
+	flags: string;
+}
+
+interface NodeCpuCacheData {
+	l1d: number;
+	l1i: number;
+	l2: number;
+	l3: number;
+}
+
 const baseNode: Node = {
 	id: null,
 	name: null,
 	os: null,
 	system: null,
-	networkInterfaces: null
+	networkInterfaces: null,
+	cpu: null
 }
 
 export const defaultNode = (): Node => JSONDeepCopy( baseNode );
