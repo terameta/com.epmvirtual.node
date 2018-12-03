@@ -1,7 +1,10 @@
 import { interval } from 'rxjs';
 import * as si from 'systeminformation';
+import { defaultNode, Node } from 'models/node';
 
 export class EPMNode {
+	public node: Node = defaultNode();
+
 	constructor() {
 		interval( 5000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
 
