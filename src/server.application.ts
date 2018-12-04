@@ -1,11 +1,12 @@
 import { interval, BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import * as si from 'systeminformation';
 import { defaultNode, Node } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
-import { SortBy } from './utilities';
+import { SortBy, waiter } from './utilities';
 import { fromDocRef } from 'rxfire/firestore';
 
 export class EPMNode {
@@ -15,9 +16,13 @@ export class EPMNode {
 	private databaseApp: app.App = null;
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
+	private isNodeReceived = false;
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
+		interval( 1000 ).pipe( filter( () => this.isNodeReceived ) ).subscribe( () => {
+			console.log( 'This should only happen after node is received. isNodeReceived', this.isNodeReceived );
+		} );
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
@@ -39,6 +44,7 @@ export class EPMNode {
 		await this.connectToDatabase();
 		console.log( '*** Connected to firestore database' );
 		this.nodeReference = this.database.doc( 'nodes/' + this.node.id );
+		await waiter();
 		await this.identifyExistance();
 		// console.log( firebaseAuth().currentUser.email, firebaseAuth().currentUser.emailVerified, firebaseAuth().currentUser.displayName );
 		// console.log( this.node );
