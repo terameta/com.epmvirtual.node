@@ -99,6 +99,7 @@ export class EPMNode {
 	private identifyExistance = async () => {
 		fromDocRef( this.nodeReference ).subscribe( recNode => {
 			console.log( { ...{ id: recNode.id }, ...recNode.data() }, recNode.data() );
+
 			this.isNodeReceived = true;
 		} );
 	}
