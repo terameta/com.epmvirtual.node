@@ -29,6 +29,7 @@ export class EPMNode {
 	}
 
 	private initiate = async () => {
+		console.log( this.node );
 		await this.identifySelf();
 		console.log( '*** EPMVirtual Node is now self identified' );
 		await this.identifySettings();
@@ -40,7 +41,7 @@ export class EPMNode {
 	}
 
 	private identifySelf = async () => {
-		// this.node.os = await si.osInfo();
+		this.node.os = await si.osInfo();
 		// this.node.system = await si.system();
 		// this.node.networkInterfaces = await si.networkInterfaces();
 		// this.node.cpu = await si.cpu();
