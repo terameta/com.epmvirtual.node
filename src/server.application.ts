@@ -88,7 +88,9 @@ export class EPMNode {
 	}
 
 	private identifyExistance = async () => {
-		fromDocRef( this.nodeReference ).subscribe( console.log );
+		fromDocRef( this.nodeReference ).subscribe( a => {
+			console.log( { ...{ id: a.id }, ...a.data() } );
+		} );
 	}
 
 	private scheduledTasks = async () => {
