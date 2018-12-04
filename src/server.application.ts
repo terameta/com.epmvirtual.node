@@ -89,12 +89,16 @@ export class EPMNode {
 
 	private scheduledTasks = async () => {
 		interval( 30000 ).subscribe( async () => {
-			console.log( JSON.stringify( this.node.networkInterfaces ) );
-			console.log( JSON.stringify( await si.networkInterfaces() ) );
-			console.log( this.node.networkInterfaces.sort( SortBy( 'mac' ) ) === ( await si.networkInterfaces() ).sort( SortBy( 'mac' ) ) );
+			this.checkNetwork();
 		} );
 		si.mem().then( console.log ); // This will print the current memory usage and state
 		si.currentLoad().then( console.log ); // This will print the current cpu usage and state
+	}
+
+	private checkNetwork = async () => {
+		const oldNics = JSON.stringify( this.node.networkInterfaces.sort( SortBy( 'mac' ) ) );
+		const newNics = JSON.stringify( ( await si.networkInterfaces() ).sort( SortBy( 'mac' ) ) );
+		console.log( 'Are oldNics equal to newNics:', oldNics === newNics );
 	}
 }
 // import { defaultNode, Node, KeyPress, NodeCommand } from "../models/node";
