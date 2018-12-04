@@ -87,7 +87,6 @@ export class EPMNode {
 			writeFileSync( 'nodeid.json', toWrite );
 		}
 		this.node.id = this.settings.nodeid;
-		console.log( 'Process.Environment', process.env );
 	}
 
 	private connectToDatabase = async () => {
