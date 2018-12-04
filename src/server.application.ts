@@ -46,6 +46,8 @@ export class EPMNode {
 			)
 		);
 
+		const subscribe = example.subscribe( val => console.log( val ) );
+
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
 			console.log( '!!! Please check the below error message to identify the issue and resolve' );
