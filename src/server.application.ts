@@ -27,27 +27,6 @@ export class EPMNode {
 		// 	console.log( 'This should always happen. isNodeReceived', this.isNodeReceived );
 		// } );
 
-		const source = interval( 1000 );
-		const example = source.pipe(
-			map( val => {
-				if ( val > 5 ) {
-					//error will be picked up by retryWhen
-					throw val;
-				}
-				return val;
-			} ),
-			retryWhen( errors =>
-				errors.pipe(
-					//log error message
-					tap( val => console.log( `Value ${val} was too high!` ) ),
-					//restart in 5 seconds
-					delayWhen( val => timer( val * 1000 ) )
-				)
-			)
-		);
-
-		const subscribe = example.subscribe( val => console.log( val ) );
-
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
 			console.log( '!!! Please check the below error message to identify the issue and resolve' );
@@ -118,13 +97,50 @@ export class EPMNode {
 	}
 
 	private identifyExistance = async () => {
-		fromDocRef( this.nodeReference ).pipe( catchError( e => fromDocRef( this.nodeReference ) ) ).subscribe( recNode => {
-			console.log( { ...{ id: recNode.id }, ...recNode.data() }, recNode.data() );
+		// fromDocRef( this.nodeReference ).pipe( catchError( e => fromDocRef( this.nodeReference ) ) ).subscribe( recNode => {
+		// 	console.log( { ...{ id: recNode.id }, ...recNode.data() }, recNode.data() );
 
-			this.isNodeReceived = true;
-		}, e => {
-			console.log( 'Error Received', e );
-		} );
+		// 	this.isNodeReceived = true;
+		// }, e => {
+		// 	console.log( 'Error Received', e );
+		// 	} );
+
+		let errorWaitDuration = 0;
+
+		const source = fromDocRef( this.nodeReference );
+		const example = source.pipe(
+			map( recNode => {
+				console.log( 'Received node', recNode.id );
+			} ),
+			retryWhen( errors => errors.pipe(
+				tap( e => console.log( 'Firebase error >>>>:', e ) ),
+				tap( e => { errorWaitDuration++; if ( errorWaitDuration > 120 ) errorWaitDuration = 120; } ),
+				delayWhen( val => timer( errorWaitDuration ) )
+			) )
+		);
+
+		/**
+		 * const source = interval( 1000 );
+		const example = source.pipe(
+			map( val => {
+				if ( val > 5 ) {
+					//error will be picked up by retryWhen
+					throw val;
+				}
+				return val;
+			} ),
+			retryWhen( errors =>
+				errors.pipe(
+					//log error message
+					tap( val => console.log( `Value ${val} was too high!` ) ),
+					//restart in 5 seconds
+					delayWhen( val => timer( val * 1000 ) )
+				)
+			)
+		);
+
+		const subscribe = example.subscribe( val => console.log( val ) );
+		 */
 	}
 
 	private scheduledTasks = async () => {
