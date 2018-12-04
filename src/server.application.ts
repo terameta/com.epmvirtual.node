@@ -13,6 +13,7 @@ export class EPMNode {
 	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( true );
 	private databaseApp: app.App = null;
 	private database: firestore.Firestore = null;
+	private nodeReference: firestore.DocumentReference = null;
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
@@ -36,6 +37,8 @@ export class EPMNode {
 		console.log( '*** EPMVirtual Node settings are now ready' );
 		await this.connectToDatabase();
 		console.log( '*** Connected to firestore database' );
+		this.nodeReference = this.database.doc( 'nodes/' + this.node.id );
+		await this.identifyExistance();
 		// console.log( firebaseAuth().currentUser.email, firebaseAuth().currentUser.emailVerified, firebaseAuth().currentUser.displayName );
 		// console.log( this.node );
 		this.scheduledTasks();
