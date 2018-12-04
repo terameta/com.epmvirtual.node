@@ -5,6 +5,7 @@ import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
+import { SortByDate, SortBy } from './utilities';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -91,7 +92,7 @@ export class EPMNode {
 		interval( 30000 ).subscribe( async () => {
 			console.log( JSON.stringify( this.node.networkInterfaces ) );
 			console.log( JSON.stringify( await si.networkInterfaces() ) );
-			console.log( this.node.networkInterfaces === await si.networkInterfaces() );
+			console.log( this.node.networkInterfaces.sort( SortBy( 'mac' ) ) === ( await si.networkInterfaces() ).sort( SortBy( 'mac' ) ) );
 		} );
 		si.mem().then( console.log ); // This will print the current memory usage and state
 		si.currentLoad().then( console.log ); // This will print the current cpu usage and state
