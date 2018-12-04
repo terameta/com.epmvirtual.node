@@ -1,5 +1,5 @@
-import { interval, BehaviorSubject } from 'rxjs';
-import { filter, catchError, delay } from 'rxjs/operators';
+import { interval, BehaviorSubject, timer } from 'rxjs';
+import { filter, catchError, delay, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
 import * as si from 'systeminformation';
 import { defaultNode, Node } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
@@ -20,12 +20,31 @@ export class EPMNode {
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
-		interval( 1000 ).pipe( filter( () => this.isNodeReceived ) ).subscribe( () => {
-			console.log( 'This should only happen after node is received. isNodeReceived', this.isNodeReceived );
-		} );
-		interval( 1000 ).subscribe( () => {
-			console.log( 'This should always happen. isNodeReceived', this.isNodeReceived );
-		} );
+		// interval( 1000 ).pipe( filter( () => this.isNodeReceived ) ).subscribe( () => {
+		// 	console.log( 'This should only happen after node is received. isNodeReceived', this.isNodeReceived );
+		// } );
+		// interval( 1000 ).subscribe( () => {
+		// 	console.log( 'This should always happen. isNodeReceived', this.isNodeReceived );
+		// } );
+
+		const source = interval( 1000 );
+		const example = source.pipe(
+			map( val => {
+				if ( val > 5 ) {
+					//error will be picked up by retryWhen
+					throw val;
+				}
+				return val;
+			} ),
+			retryWhen( errors =>
+				errors.pipe(
+					//log error message
+					tap( val => console.log( `Value ${val} was too high!` ) ),
+					//restart in 5 seconds
+					delayWhen( val => timer( val * 1000 ) )
+				)
+			)
+		);
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
