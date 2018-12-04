@@ -1,5 +1,5 @@
 import { interval, BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, catchError, delay } from 'rxjs/operators';
 import * as si from 'systeminformation';
 import { defaultNode, Node } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
@@ -97,7 +97,7 @@ export class EPMNode {
 	}
 
 	private identifyExistance = async () => {
-		fromDocRef( this.nodeReference ).subscribe( recNode => {
+		fromDocRef( this.nodeReference ).pipe( catchError( e => fromDocRef( this.nodeReference ) ) ).subscribe( recNode => {
 			console.log( { ...{ id: recNode.id }, ...recNode.data() }, recNode.data() );
 
 			this.isNodeReceived = true;
