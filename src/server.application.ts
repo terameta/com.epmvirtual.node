@@ -42,11 +42,11 @@ export class EPMNode {
 
 	private identifySelf = async () => {
 		this.node.os = await si.osInfo();
-		// this.node.system = await si.system();
-		// this.node.networkInterfaces = await si.networkInterfaces();
-		// this.node.cpu = await si.cpu();
-		// this.node.memory = await si.memLayout();
-		// this.node.disk = await si.blockDevices();
+		this.node.system = await si.system();
+		this.node.networkInterfaces = await si.networkInterfaces();
+		this.node.cpu = await si.cpu();
+		this.node.memory = await si.memLayout();
+		this.node.disk = await si.blockDevices();
 	}
 
 	private identifySettings = async () => {
