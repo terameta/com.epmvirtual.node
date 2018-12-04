@@ -23,6 +23,9 @@ export class EPMNode {
 		interval( 1000 ).pipe( filter( () => this.isNodeReceived ) ).subscribe( () => {
 			console.log( 'This should only happen after node is received. isNodeReceived', this.isNodeReceived );
 		} );
+		interval( 1000 ).subscribe( () => {
+			console.log( 'This should always happen. isNodeReceived', this.isNodeReceived );
+		} );
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
