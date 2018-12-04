@@ -30,7 +30,6 @@ export class EPMNode {
 	}
 
 	private initiate = async () => {
-		console.log( this.node );
 		await this.identifySelf();
 		console.log( '*** EPMVirtual Node is now self identified' );
 		await this.identifySettings();
