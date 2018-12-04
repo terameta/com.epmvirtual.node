@@ -35,6 +35,7 @@ export class EPMNode {
 		console.log( '*** EPMVirtual Node settings are now ready' );
 		await this.connectToDatabase();
 		console.log( '*** Connected to firestore database' );
+		console.log( firebaseAuth().currentUser );
 	}
 
 	private identifySelf = async () => {
