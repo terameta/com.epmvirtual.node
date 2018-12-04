@@ -101,7 +101,9 @@ export class EPMNode {
 			console.log( { ...{ id: recNode.id }, ...recNode.data() }, recNode.data() );
 
 			this.isNodeReceived = true;
-		} );
+		}/*, e => {
+			console.log( 'Error Received', e );
+		} */);
 	}
 
 	private scheduledTasks = async () => {
