@@ -6,6 +6,7 @@ import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
 import { SortBy } from './utilities';
+import { fromDocRef } from 'rxfire/firestore';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -87,7 +88,7 @@ export class EPMNode {
 	}
 
 	private identifyExistance = async () => {
-
+		fromDocRef( this.nodeReference ).subscribe( console.log );
 	}
 
 	private scheduledTasks = async () => {
