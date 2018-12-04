@@ -87,6 +87,11 @@ export class EPMNode {
 	}
 
 	private scheduledTasks = async () => {
+		interval( 30000 ).subscribe( async () => {
+			console.log( JSON.stringify( this.node.networkInterfaces ) );
+			console.log( JSON.stringify( await si.networkInterfaces() ) );
+			console.log( this.node.networkInterfaces === await si.networkInterfaces() );
+		} );
 		si.mem().then( console.log ); // This will print the current memory usage and state
 		si.currentLoad().then( console.log ); // This will print the current cpu usage and state
 	}
