@@ -20,12 +20,12 @@ export class EPMNode {
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
-		interval( 1000 ).pipe( filter( () => this.isNodeReceived ) ).subscribe( () => {
-			console.log( 'This should only happen after node is received. isNodeReceived', this.isNodeReceived );
-		} );
-		interval( 1000 ).subscribe( () => {
-			console.log( 'This should always happen. isNodeReceived', this.isNodeReceived );
-		} );
+		// interval( 1000 ).pipe( filter( () => this.isNodeReceived ) ).subscribe( () => {
+		// 	console.log( 'This should only happen after node is received. isNodeReceived', this.isNodeReceived );
+		// } );
+		// interval( 1000 ).subscribe( () => {
+		// 	console.log( 'This should always happen. isNodeReceived', this.isNodeReceived );
+		// } );
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
@@ -87,6 +87,7 @@ export class EPMNode {
 			writeFileSync( 'nodeid.json', toWrite );
 		}
 		this.node.id = this.settings.nodeid;
+		console.log( process.env );
 	}
 
 	private connectToDatabase = async () => {
