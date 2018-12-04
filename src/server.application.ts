@@ -70,6 +70,7 @@ export class EPMNode {
 			this.isThisaNewNode.next( true );
 			const toWrite = JSON.stringify( { nodeid: this.settings.nodeid } );
 			writeFileSync( 'nodeid.json', toWrite );
+			this.node.id = this.settings.nodeid;
 		}
 	}
 
