@@ -5,7 +5,7 @@ import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
-import { SortByDate, SortBy } from './utilities';
+import { SortBy } from './utilities';
 
 export class EPMNode {
 	public node: Node = defaultNode();
