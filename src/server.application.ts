@@ -38,6 +38,7 @@ export class EPMNode {
 		console.log( '*** Connected to firestore database' );
 		console.log( firebaseAuth().currentUser.email, firebaseAuth().currentUser.emailVerified, firebaseAuth().currentUser.displayName );
 		console.log( this.node );
+		this.scheduledTasks();
 	}
 
 	private identifySelf = async () => {
