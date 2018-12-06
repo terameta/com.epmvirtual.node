@@ -116,7 +116,7 @@ export class EPMNode {
 			} ),
 			retryWhen( errors => errors.pipe(
 				tap( e => console.log( 'Firebase error >>>>:', e ) ),
-				tap( e => { errorWaitDuration++; if ( errorWaitDuration > 120 ) errorWaitDuration = 120; } ),
+				tap( e => { errorWaitDuration++; if ( errorWaitDuration > 12 ) errorWaitDuration = 12; } ),
 				tap( e => console.log( 'We will now wait for', errorWaitDuration, 'seconds.' ) ),
 				delayWhen( val => timer( errorWaitDuration * 1000 ) )
 			) )
