@@ -125,8 +125,7 @@ export class EPMNode {
 		// 	console.log( 'Received node at the last place', recNode.id, recNode.data() );
 		// } );
 
-		/**
-		 * const source = interval( 1000 );
+		const source = interval( 1000 );
 		const example = source.pipe(
 			map( val => {
 				if ( val > 5 ) {
@@ -146,7 +145,6 @@ export class EPMNode {
 		);
 
 		const subscribe = example.subscribe( val => console.log( val ) );
-		 */
 	}
 
 	private scheduledTasks = async () => {
