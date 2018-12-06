@@ -111,6 +111,7 @@ export class EPMNode {
 		const example = source.pipe(
 			map( recNode => {
 				console.log( 'Received node at first map', recNode.id );
+				errorWaitDuration = 0;
 				return recNode;
 			} ),
 			retryWhen( errors => errors.pipe(
