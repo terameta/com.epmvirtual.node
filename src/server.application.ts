@@ -125,6 +125,7 @@ export class EPMNode {
 			console.log( 'Received node at the last place', recNode.id, recNode.data() );
 		} );
 
+
 		// const source = interval( 1000 );
 		// const example = source.pipe(
 		// 	map( val => {
