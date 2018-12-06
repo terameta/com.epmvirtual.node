@@ -121,9 +121,9 @@ export class EPMNode {
 			) )
 		);
 
-		// const subscribe = example.subscribe( recNode => {
-		// 	console.log( 'Received node at the last place', recNode.id, recNode.data() );
-		// } );
+		const subscribe = example.subscribe( recNode => {
+			console.log( 'Received node at the last place', recNode.id, recNode.data() );
+		} );
 
 		/**
 		 * const source = interval( 1000 );
