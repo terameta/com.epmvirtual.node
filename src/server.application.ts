@@ -107,44 +107,44 @@ export class EPMNode {
 
 		let errorWaitDuration = 0;
 
-		// const source = fromDocRef( this.nodeReference );
-		// const example = source.pipe(
-		// 	map( recNode => {
-		// 		console.log( 'Received node at first map', recNode.id );
-		// 		return recNode;
-		// 	} ),
-		// 	retryWhen( errors => errors.pipe(
-		// 		tap( e => console.log( 'Firebase error >>>>:', e ) ),
-		// 		tap( e => { errorWaitDuration++; if ( errorWaitDuration > 120 ) errorWaitDuration = 120; } ),
-		// 		tap( e => console.log( 'We will now wait for', errorWaitDuration, 'seconds.' ) ),
-		// 		delayWhen( val => timer( errorWaitDuration ) )
-		// 	) )
-		// );
-
-		// const subscribe = example.subscribe( recNode => {
-		// 	console.log( 'Received node at the last place', recNode.id, recNode.data() );
-		// } );
-
-		const source = interval( 1000 );
+		const source = fromDocRef( this.nodeReference );
 		const example = source.pipe(
-			map( val => {
-				if ( val > 5 ) {
-					//error will be picked up by retryWhen
-					throw val;
-				}
-				return val;
+			map( recNode => {
+				console.log( 'Received node at first map', recNode.id );
+				return recNode;
 			} ),
-			retryWhen( errors =>
-				errors.pipe(
-					//log error message
-					tap( val => console.log( `Value ${val} was too high!` ) ),
-					//restart in 5 seconds
-					delayWhen( val => timer( val * 1000 ) )
-				)
-			)
+			retryWhen( errors => errors.pipe(
+				tap( e => console.log( 'Firebase error >>>>:', e ) ),
+				tap( e => { errorWaitDuration++; if ( errorWaitDuration > 120 ) errorWaitDuration = 120; } ),
+				tap( e => console.log( 'We will now wait for', errorWaitDuration, 'seconds.' ) ),
+				delayWhen( val => timer( errorWaitDuration * 1000 ) )
+			) )
 		);
 
-		const subscribe = example.subscribe( val => console.log( val ) );
+		const subscribe = example.subscribe( recNode => {
+			console.log( 'Received node at the last place', recNode.id, recNode.data() );
+		} );
+
+		// const source = interval( 1000 );
+		// const example = source.pipe(
+		// 	map( val => {
+		// 		if ( val > 5 ) {
+		// 			//error will be picked up by retryWhen
+		// 			throw val;
+		// 		}
+		// 		return val;
+		// 	} ),
+		// 	retryWhen( errors =>
+		// 		errors.pipe(
+		// 			//log error message
+		// 			tap( val => console.log( `Value ${val} was too high!` ) ),
+		// 			//restart in 5 seconds
+		// 			delayWhen( val => timer( val * 1000 ) )
+		// 		)
+		// 	)
+		// );
+
+		// const subscribe = example.subscribe( val => console.log( val ) );
 	}
 
 	private scheduledTasks = async () => {
