@@ -112,17 +112,9 @@ export class EPMNode {
 
 	private actOnNewNode = async () => {
 		this.isThisaNewNode$.pipe( filter( i => i ) ).subscribe( ( isNew ) => {
-			console.log( this.node );
-			// this.database.doc( 'nodecandidates/list' ).update( {
-			// 	items: firestore.FieldValue.arrayUnion( {
-			// 		id: this.node.id,
-			// 		hostname: os.hostname(),
-			// 		ostype: os.type(),
-			// 		osplatform: os.platform(),
-			// 		osarch: os.arch(),
-			// 		osrelease: os.release()
-			// 	} )
-			// } )
+			this.database.doc( 'nodecandidates/list' ).update( {
+				items: firestore.FieldValue.arrayUnion( this.node )
+			} )
 		} );
 	}
 
