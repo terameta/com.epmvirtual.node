@@ -55,7 +55,7 @@ export class EPMNode {
 
 	private identifySelf = async () => {
 		this.node.os = await si.osInfo();
-		deleteKeyIfFunction( this.node.os );
+		// deleteKeyIfFunction( this.node.os );
 		this.node.system = await si.system();
 		deleteKeyIfFunction( this.node.system );
 		this.node.networkInterfaces = await si.networkInterfaces();
