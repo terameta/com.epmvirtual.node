@@ -9,5 +9,7 @@
 	"editor.formatOnPaste": true,
 	"editor.formatOnType": true,
 	"workbench.editor.enablePreview": false,
-	"breadcrumbs.enabled": true
+	"breadcrumbs.enabled": true,
+	"zenMode.hideStatusBar": false,
+	"zenMode.centerLayout": false
 }
