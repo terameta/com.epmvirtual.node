@@ -113,7 +113,7 @@ export class EPMNode {
 		);
 
 		doWeHaveNodeObservable.subscribe( recNode => {
-			console.log( 'Is this a new node', !!recNode.data() );
+			console.log( 'Is this a new node', !recNode.data(), !( { id: 'zobelek' } ) );
 			this.isThisaNewNode$.next( !!recNode.data() );
 		} );
 
