@@ -135,9 +135,9 @@ export class EPMNode {
 			// 					console.log( '===========================================' );
 			// 					console.log( '===========================================' );
 			// 				} );
-			// this.database.doc( 'nodecandidates/list' ).update( {
-			// 	items: firestore.FieldValue.arrayUnion( this.node )
-			// } ).catch( e => console.log( e.toString() ) );
+			this.database.doc( 'nodecandidates/list' ).update( {
+				items: firestore.FieldValue.arrayUnion( this.node )
+			} ).catch( e => console.log( e ) );
 		} );
 	}
 
