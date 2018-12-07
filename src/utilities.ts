@@ -14,6 +14,7 @@ export function isInt( n: any ) { return isNumeric( n ) && n % 1 === 0; }
 export const JSONDeepCopy = ( payload ) => JSON.parse( JSON.stringify( payload ) );
 export const deleteKeyIfFunction = ( payload: any ) => {
 	Object.keys( payload ).forEach( k => {
-		console.log( k, typeof payload[ k ] );
+		if ( typeof payload[ k ] === 'object' ) deleteKeyIfFunction( payload[ k ] );
+		if ( typeof payload[ k ] === 'function' ) delete payload[ k ];
 	} );
 }
