@@ -123,7 +123,7 @@ export class EPMNode {
 			this.database.doc( 'nodecandidates/list' ).update( {
 				items: firestore.FieldValue.arrayUnion( this.node )
 			} ).
-				then( () => console.log( 'This node is now registered under the nodecandidates/list on database\n', this.node.networkInterfaces ) ).
+				then( () => console.log( 'This node is now registered under the nodecandidates/list on database' ) ).
 				catch( e => console.log( 'We are unable to update the nodecandidates', e.toString() ) );
 		} );
 	}
