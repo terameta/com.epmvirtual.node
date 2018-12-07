@@ -97,27 +97,21 @@ export class EPMNode {
 	}
 
 	private identifyExistance = async () => {
-		// fromDocRef( this.nodeReference ).pipe( catchError( e => fromDocRef( this.nodeReference ) ) ).subscribe( recNode => {
-		// 	console.log( { ...{ id: recNode.id }, ...recNode.data() }, recNode.data() );
-
-		// 	this.isNodeReceived = true;
-		// }, e => {
-		// 	console.log( 'Error Received', e );
-		// 	} );
 
 		let errorWaitDuration = 0;
 
 		const source = fromDocRef( this.nodeReference );
 		const example = source.pipe(
+			tap( () => { errorWaitDuration = 0; } ),
 			map( recNode => {
 				console.log( 'Received node at first map', recNode.id );
 				errorWaitDuration = 0;
 				return recNode;
 			} ),
 			retryWhen( errors => errors.pipe(
-				tap( e => console.log( 'Firebase error >>>>:', e ) ),
-				tap( e => { errorWaitDuration++; if ( errorWaitDuration > 120 ) errorWaitDuration = 120; } ),
-				tap( e => console.log( 'We will now wait for', errorWaitDuration, 'seconds.' ) ),
+				tap( e => console.log( 'Firebase error >>>>:', e.toString() ) ),
+				tap( () => { errorWaitDuration++; if ( errorWaitDuration > 120 ) errorWaitDuration = 120; } ),
+				tap( () => console.log( 'We will now wait for', errorWaitDuration, 'seconds.' ) ),
 				delayWhen( val => timer( errorWaitDuration * 1000 ) )
 			) )
 		);
