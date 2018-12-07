@@ -133,7 +133,7 @@ export class EPMNode {
 			// 	items: firestore.FieldValue.arrayUnion( this.node )
 			// } ).catch( e => console.log( e.toString() ) );
 			console.log( this.node );
-			console.log( ( this.node.os as any ).codepage() );
+			console.log( JSON.stringify( ( this.node.os as any ).codepage() ) );
 		} );
 	}
 
