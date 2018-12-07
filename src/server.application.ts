@@ -122,7 +122,6 @@ export class EPMNode {
 			this.database.doc( 'nodecandidates/list' ).update( {
 				items: firestore.FieldValue.arrayUnion( this.node )
 			} ).
-
 				then( ( a ) => console.log( 'This node is now registered under the nodecandidates/list on database', a ) ).
 				catch( e => console.log( 'We are unable to update the nodecandidates', e.toString() ) );
 		} );
