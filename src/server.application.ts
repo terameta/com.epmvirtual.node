@@ -112,7 +112,10 @@ export class EPMNode {
 			) )
 		);
 
-		doWeHaveNodeObservable.subscribe( recNode => { this.isThisaNewNode$.next( !!recNode.data() ); } );
+		doWeHaveNodeObservable.subscribe( recNode => {
+			console.log( 'Is this a new node', !!recNode.data() );
+			this.isThisaNewNode$.next( !!recNode.data() );
+		} );
 
 	}
 
