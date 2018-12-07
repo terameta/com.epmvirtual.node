@@ -131,6 +131,7 @@ export class EPMNode {
 	private scheduledTasks = async () => {
 		interval( 30000 ).subscribe( async () => {
 			this.checkNetwork();
+
 			this.reportLoad();
 		} );
 	}
