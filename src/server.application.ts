@@ -136,8 +136,6 @@ export class EPMNode {
 			// this.database.doc( 'nodecandidates/list' ).update( {
 			// 	items: firestore.FieldValue.arrayUnion( this.node )
 			// } ).catch( e => console.log( e.toString() ) );
-			console.log( this.node );
-			console.log( JSON.stringify( ( this.node.os as any ).codepage() ) );
 		} );
 	}
 
