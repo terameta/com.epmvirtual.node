@@ -55,6 +55,10 @@ export class EPMNode {
 
 	private identifySelf = async () => {
 		this.node.os = await si.osInfo();
+		Object.keys( this.node.os ).forEach( k => {
+			console.log( 'this.node.os' );
+			console.log( k, typeof this.node.os[ k ] );
+		} );
 		this.node.system = await si.system();
 		this.node.networkInterfaces = await si.networkInterfaces();
 		this.node.cpu = await si.cpu();

@@ -11,5 +11,6 @@
 	"workbench.editor.enablePreview": false,
 	"breadcrumbs.enabled": true,
 	"zenMode.hideStatusBar": false,
-	"zenMode.centerLayout": false
+	"zenMode.centerLayout": false,
+	"zenMode.hideTabs": false
 }
