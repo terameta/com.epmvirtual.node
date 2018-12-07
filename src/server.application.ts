@@ -112,9 +112,27 @@ export class EPMNode {
 
 	private actOnNewNode = async () => {
 		this.isThisaNewNode$.pipe( filter( i => i ) ).subscribe( ( isNew ) => {
-			this.database.doc( 'nodecandidates/list' ).update( {
-				items: firestore.FieldValue.arrayUnion( this.node )
-			} ).catch( e => console.log( e.toString() ) );
+			// 				this.database.doc( 'nodecandidates/list' ).update( {
+			// 					items: firestore.FieldValue.arrayUnion( {
+			// 						id: this.nodeid,
+			// 						hostname: os.hostname(),
+			// 						ostype: os.type(),
+			// 						osplatform: os.platform(),
+			// 						osarch: os.arch(),
+			// 						osrelease: os.release()
+			// 					} )
+			// 				} ).catch( ( error ) => {
+			// 					console.log( '===========================================' );
+			// 					console.log( '===========================================' );
+			// 					console.log( 'We could not register the new node. Below is the error trace' );
+			// 					console.error( error );
+			// 					console.log( '===========================================' );
+			// 					console.log( '===========================================' );
+			// 				} );
+			// this.database.doc( 'nodecandidates/list' ).update( {
+			// 	items: firestore.FieldValue.arrayUnion( this.node )
+			// } ).catch( e => console.log( e.toString() ) );
+			console.log( this.node );
 		} );
 	}
 
