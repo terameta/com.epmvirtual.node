@@ -113,7 +113,9 @@ export class EPMNode {
 	}
 
 	private actOnNewNode = async () => {
-		this.isThisaNewNode$.subscribe( console.log );
+		this.isThisaNewNode$.pipe( tap( i => console.log( 'This will happen true or false', i ) ), filter( i => i ) ).subscribe( ( isNew ) => {
+			console.log( 'We have only subscribed for true', isNew );
+		} );
 	}
 
 	private scheduledTasks = async () => {
