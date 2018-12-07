@@ -111,6 +111,7 @@ export class EPMNode {
 			) )
 		);
 
+
 		example.subscribe( recNode => {
 			console.log( 'Received node at the last place', recNode.id, recNode.data() );
 		} );
