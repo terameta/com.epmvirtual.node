@@ -103,11 +103,6 @@ export class EPMNode {
 		const source = fromDocRef( this.nodeReference );
 		const example = source.pipe(
 			tap( () => { errorWaitDuration = 0; } ),
-			map( recNode => {
-				console.log( 'Received node at first map', recNode.id );
-				errorWaitDuration = 0;
-				return recNode;
-			} ),
 			retryWhen( errors => errors.pipe(
 				tap( e => console.log( 'Firebase error >>>>:', e.toString() ) ),
 				tap( () => { errorWaitDuration++; if ( errorWaitDuration > 120 ) errorWaitDuration = 120; } ),
