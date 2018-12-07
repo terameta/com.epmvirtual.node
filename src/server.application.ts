@@ -131,7 +131,6 @@ export class EPMNode {
 	private scheduledTasks = async () => {
 		interval( 30000 ).subscribe( async () => {
 			this.checkNetwork();
-
 			this.reportLoad();
 		} );
 	}
@@ -139,7 +138,7 @@ export class EPMNode {
 	private checkNetwork = async () => {
 		const oldNics = JSON.stringify( this.node.networkInterfaces.sort( SortBy( 'mac' ) ) );
 		const newNics = JSON.stringify( ( await si.networkInterfaces() ).sort( SortBy( 'mac' ) ) );
-		console.log( 'Are oldNics equal to newNics:', oldNics === newNics );
+		if ( oldNics !== newNics && !this.isThisaNewNode$.getValue() ) this.nodeReference.update( this.node );
 	}
 	private reportLoad = async () => {
 		// si.mem().then( console.log ); // This will print the current memory usage and state
