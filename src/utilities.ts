@@ -12,3 +12,8 @@ export function SortByNothing( e1: any, e2: any ) { return 0; }
 export function isNumeric( n: any ) { return !isNaN( parseFloat( n ) ) && isFinite( n ); }
 export function isInt( n: any ) { return isNumeric( n ) && n % 1 === 0; }
 export const JSONDeepCopy = ( payload ) => JSON.parse( JSON.stringify( payload ) );
+export const deleteKeyIfFunction = ( payload: any ) => {
+	Object.keys( payload ).forEach( k => {
+		console.log( k, typeof payload[ k ] );
+	} );
+}
