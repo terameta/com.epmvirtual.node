@@ -110,7 +110,6 @@ export class EPMNode {
 				delayWhen( val => timer( errorWaitDuration * 1000 ) )
 			) )
 		).subscribe( recNode => { this.isThisaNewNode$.next( !recNode.data() ); } );
-
 	}
 
 	private actOnNewNode = async () => {
