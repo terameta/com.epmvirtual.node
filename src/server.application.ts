@@ -6,7 +6,7 @@ import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
-import { SortBy, waiter } from './utilities';
+import { SortBy, waiter, deleteKeyIfFunction } from './utilities';
 import { fromDocRef } from 'rxfire/firestore';
 
 export class EPMNode {
@@ -55,10 +55,8 @@ export class EPMNode {
 
 	private identifySelf = async () => {
 		this.node.os = await si.osInfo();
-		console.log( 'this.node.os' );
-		Object.keys( this.node.os ).forEach( k => {
-			console.log( k, typeof this.node.os[ k ] );
-		} );
+		console.log( 'Removing keys from this.node.os' );
+		deleteKeyIfFunction( this.node.os );
 		this.node.system = await si.system();
 		this.node.networkInterfaces = await si.networkInterfaces();
 		this.node.cpu = await si.cpu();
