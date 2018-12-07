@@ -60,6 +60,8 @@ export class EPMNode {
 		this.node.system = await si.system();
 		this.node.networkInterfaces = await si.networkInterfaces();
 		this.node.cpu = await si.cpu();
+		console.log( 'Removing keys from this.node.cpu' );
+		deleteKeyIfFunction( this.node.cpu );
 		this.node.memory = await si.memLayout();
 		this.node.disk = await si.blockDevices();
 	}
