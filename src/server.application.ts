@@ -56,7 +56,6 @@ export class EPMNode {
 	private identifySelf = async () => {
 		this.node.os = await si.osInfo();
 		this.node.name = this.node.os.hostname;
-
 		deleteKeyIfFunction( this.node.os );
 		this.node.system = await si.system();
 		deleteKeyIfFunction( this.node.system );
@@ -122,7 +121,9 @@ export class EPMNode {
 		this.isThisaNewNode$.pipe( filter( i => i ) ).subscribe( ( isNew ) => {
 			this.database.doc( 'nodecandidates/list' ).update( {
 				items: firestore.FieldValue.arrayUnion( this.node )
-			} ).catch( e => console.log( 'We are unable to update the nodecandidates', e.toString() ) );
+			} ).
+				then( ( a ) => console.log( 'This node is now registered under the nodecandidates/list on database', a ) ).
+				catch( e => console.log( 'We are unable to update the nodecandidates', e.toString() ) );
 		} );
 	}
 
