@@ -12,7 +12,7 @@ import { fromDocRef } from 'rxfire/firestore';
 export class EPMNode {
 	public node: Node = defaultNode();
 	public settings: SettingsWithCredentials = {} as SettingsWithCredentials;
-	private isThisaNewNode: BehaviorSubject<boolean> = new BehaviorSubject( true );
+	private isThisaNewNode$: BehaviorSubject<boolean> = new BehaviorSubject( false );
 	private databaseApp: app.App = null;
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
@@ -82,7 +82,7 @@ export class EPMNode {
 			this.settings.nodeid = nodeid;
 		} else {
 			this.settings.nodeid = uuid();
-			this.isThisaNewNode.next( true );
+			this.isThisaNewNode$.next( true );
 			const toWrite = JSON.stringify( { nodeid: this.settings.nodeid } );
 			writeFileSync( 'nodeid.json', toWrite );
 		}
@@ -101,7 +101,7 @@ export class EPMNode {
 		let errorWaitDuration = 0;
 
 		const source = fromDocRef( this.nodeReference );
-		const example = source.pipe(
+		const doWeHaveNodeObservable = source.pipe(
 			tap( () => { errorWaitDuration = 0; } ),
 			retryWhen( errors => errors.pipe(
 				tap( e => console.log( 'Firebase error >>>>:', e.toString() ) ),
@@ -111,32 +111,8 @@ export class EPMNode {
 			) )
 		);
 
+		doWeHaveNodeObservable.subscribe( recNode => { this.isThisaNewNode$.next( !!recNode.data() ); } );
 
-		example.subscribe( recNode => {
-			console.log( 'Received node at the last place', recNode.id, recNode.data() );
-		} );
-
-
-		// const source = interval( 1000 );
-		// const example = source.pipe(
-		// 	map( val => {
-		// 		if ( val > 5 ) {
-		// 			//error will be picked up by retryWhen
-		// 			throw val;
-		// 		}
-		// 		return val;
-		// 	} ),
-		// 	retryWhen( errors =>
-		// 		errors.pipe(
-		// 			//log error message
-		// 			tap( val => console.log( `Value ${val} was too high!` ) ),
-		// 			//restart in 5 seconds
-		// 			delayWhen( val => timer( val * 1000 ) )
-		// 		)
-		// 	)
-		// );
-
-		// const subscribe = example.subscribe( val => console.log( val ) );
 	}
 
 	private scheduledTasks = async () => {
