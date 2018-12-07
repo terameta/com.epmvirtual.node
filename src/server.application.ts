@@ -137,7 +137,7 @@ export class EPMNode {
 			// 				} );
 			this.database.doc( 'nodecandidates/list' ).update( {
 				items: firestore.FieldValue.arrayUnion( this.node )
-			} ).catch( e => console.log( e ) );
+			} ).catch( e => console.log( 'We are unable to update the nodecandidates', e ) );
 		} );
 	}
 
