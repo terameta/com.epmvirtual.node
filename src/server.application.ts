@@ -61,7 +61,7 @@ export class EPMNode {
 		deleteKeyIfFunction( this.node.system );
 		this.node.networkInterfaces = await si.networkInterfaces();
 		this.node.networkInterfaces.sort( SortBy( 'mac' ) );
-		deleteKeyIfFunction( this.node.networkInterfaces );
+		this.node.networkInterfaces.forEach( deleteKeyIfFunction );
 		this.node.cpu = await si.cpu();
 		deleteKeyIfFunction( this.node.cpu );
 		this.node.memory = await si.memLayout();
