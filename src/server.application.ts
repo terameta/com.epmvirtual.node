@@ -55,8 +55,8 @@ export class EPMNode {
 
 	private identifySelf = async () => {
 		this.node.os = await si.osInfo();
+		console.log( 'this.node.os' );
 		Object.keys( this.node.os ).forEach( k => {
-			console.log( 'this.node.os' );
 			console.log( k, typeof this.node.os[ k ] );
 		} );
 		this.node.system = await si.system();
