@@ -50,8 +50,6 @@ export class EPMNode {
 		await waiter();
 		await this.identifyExistance();
 		await this.actOnNewNode();
-		// console.log( firebaseAuth().currentUser.email, firebaseAuth().currentUser.emailVerified, firebaseAuth().currentUser.displayName );
-		// console.log( this.node );
 		this.scheduledTasks();
 	}
 
@@ -113,8 +111,18 @@ export class EPMNode {
 	}
 
 	private actOnNewNode = async () => {
-		this.isThisaNewNode$.pipe( tap( i => console.log( 'This will happen true or false', i ) ), filter( i => i ) ).subscribe( ( isNew ) => {
-			console.log( 'We have only subscribed for true', isNew );
+		this.isThisaNewNode$.pipe( filter( i => i ) ).subscribe( ( isNew ) => {
+			console.log( this.node );
+			// this.database.doc( 'nodecandidates/list' ).update( {
+			// 	items: firestore.FieldValue.arrayUnion( {
+			// 		id: this.node.id,
+			// 		hostname: os.hostname(),
+			// 		ostype: os.type(),
+			// 		osplatform: os.platform(),
+			// 		osarch: os.arch(),
+			// 		osrelease: os.release()
+			// 	} )
+			// } )
 		} );
 	}
 
