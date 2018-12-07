@@ -101,8 +101,7 @@ export class EPMNode {
 
 		let errorWaitDuration = 0;
 
-		const source = fromDocRef( this.nodeReference );
-		const doWeHaveNodeObservable = source.pipe(
+		fromDocRef( this.nodeReference ).pipe(
 			tap( () => { errorWaitDuration = 0; } ),
 			retryWhen( errors => errors.pipe(
 				tap( e => console.log( 'Firebase error >>>>:', e.toString() ) ),
@@ -110,9 +109,7 @@ export class EPMNode {
 				tap( () => console.log( 'We will now wait for', errorWaitDuration, 'seconds.' ) ),
 				delayWhen( val => timer( errorWaitDuration * 1000 ) )
 			) )
-		);
-
-		doWeHaveNodeObservable.subscribe( recNode => { this.isThisaNewNode$.next( !recNode.data() ); } );
+		).subscribe( recNode => { this.isThisaNewNode$.next( !recNode.data() ); } );
 
 	}
 
