@@ -114,7 +114,7 @@ export class EPMNode {
 		this.isThisaNewNode$.pipe( filter( i => i ) ).subscribe( ( isNew ) => {
 			this.database.doc( 'nodecandidates/list' ).update( {
 				items: firestore.FieldValue.arrayUnion( this.node )
-			} )
+			} ).catch( e => console.log( e.toString() ) );
 		} );
 	}
 
