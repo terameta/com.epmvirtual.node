@@ -55,15 +55,17 @@ export class EPMNode {
 
 	private identifySelf = async () => {
 		this.node.os = await si.osInfo();
-		console.log( 'Removing keys from this.node.os' );
 		deleteKeyIfFunction( this.node.os );
 		this.node.system = await si.system();
+		deleteKeyIfFunction( this.node.system );
 		this.node.networkInterfaces = await si.networkInterfaces();
+		deleteKeyIfFunction( this.node.networkInterfaces );
 		this.node.cpu = await si.cpu();
-		console.log( 'Removing keys from this.node.cpu' );
 		deleteKeyIfFunction( this.node.cpu );
 		this.node.memory = await si.memLayout();
+		deleteKeyIfFunction( this.node.memory );
 		this.node.disk = await si.blockDevices();
+		deleteKeyIfFunction( this.node.disk );
 	}
 
 	private identifySettings = async () => {
