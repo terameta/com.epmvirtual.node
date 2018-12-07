@@ -49,6 +49,7 @@ export class EPMNode {
 		this.nodeReference = this.database.doc( 'nodes/' + this.node.id );
 		await waiter();
 		await this.identifyExistance();
+		await this.actOnNewNode();
 		// console.log( firebaseAuth().currentUser.email, firebaseAuth().currentUser.emailVerified, firebaseAuth().currentUser.displayName );
 		// console.log( this.node );
 		this.scheduledTasks();
@@ -113,6 +114,10 @@ export class EPMNode {
 
 		doWeHaveNodeObservable.subscribe( recNode => { this.isThisaNewNode$.next( !!recNode.data() ); } );
 
+	}
+
+	private actOnNewNode = async () => {
+		this.isThisaNewNode$.subscribe( console.log );
 	}
 
 	private scheduledTasks = async () => {
