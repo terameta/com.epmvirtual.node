@@ -57,7 +57,7 @@ export class EPMNode {
 
 	private initiateRTC = async () => {
 		console.log( 'Initiating RTC channel' );
-		const pc = wrtc.RTCPeerConnection( { iceServers: [ { urls: 'stun:stun.l.google.com:19302' } ] } );
+		const pc = new wrtc.RTCPeerConnection( { iceServers: [ { urls: 'stun:stun.l.google.com:19302' } ] } );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( 'This is pc' );
