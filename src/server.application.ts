@@ -50,6 +50,7 @@ export class EPMNode {
 		await waiter();
 		await this.identifyExistance();
 		await this.actOnNewNode();
+		await this.initiateRTC();
 		this.scheduledTasks();
 	}
 
