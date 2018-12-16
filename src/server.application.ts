@@ -78,7 +78,11 @@ export class EPMNode {
 		dc.onopen = () => {
 			console.log( 'dc data channel is open' );
 		}
-		console.log( pc.createOffer() );
+		pc.createOffer()
+			.then( offer => pc.setLocalDescription( offer ) )
+			// .then( () => sendMessage( yourId, JSON.stringify( { 'sdp': pc.localDescription } ) ) );
+			.then( () => console.log( pc.localDescription ) )
+			.catch( console.error );
 	}
 
 	private identifySelf = async () => {
