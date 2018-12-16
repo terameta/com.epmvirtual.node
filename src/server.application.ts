@@ -86,6 +86,7 @@ export class EPMNode {
 			// .then( () => sendMessage( yourId, JSON.stringify( { 'sdp': pc.localDescription } ) ) );
 			.then( () => console.log( 'PC.localDescription:', pc.localDescription ) )
 			.catch( console.error );
+
 	}
 
 	private identifySelf = async () => {
