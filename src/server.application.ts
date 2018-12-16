@@ -8,7 +8,7 @@ import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
 import { SortBy, waiter, deleteKeyIfFunction } from './utilities';
 import { fromDocRef } from 'rxfire/firestore';
-import * as wrtc from 'wrtc';
+const wrtc = require( 'wrtc' );
 
 export class EPMNode {
 	public node: Node = defaultNode();
