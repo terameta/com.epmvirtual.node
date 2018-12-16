@@ -78,6 +78,7 @@ export class EPMNode {
 		dc.onopen = () => {
 			console.log( 'dc data channel is open' );
 		}
+		console.log( pc.createOffer() );
 
 
 
