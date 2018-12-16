@@ -86,9 +86,7 @@ export class EPMNode {
 			// .then( () => sendMessage( yourId, JSON.stringify( { 'sdp': pc.localDescription } ) ) );
 			.then( () => {
 				return this.nodeReference.update( {
-					rtc: {
-						sdp: JSON.stringify( pc.localDescription )
-					}
+					'rtc.sdp': JSON.stringify( pc.localDescription )
 				} );
 			} )
 			.then( () => console.log( 'PC.localDescription:', pc.localDescription ) )
