@@ -74,6 +74,10 @@ export class EPMNode {
 			console.log( candidate );
 			if ( !candidate ) return;
 		}
+		const dc = pc.createDataChannel( 'Test' );
+		dc.onopen = () => {
+			console.log( 'dc data channel is open' );
+		}
 
 
 
