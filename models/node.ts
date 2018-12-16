@@ -8,8 +8,19 @@ export interface Node {
 	networkInterfaces: NodeNetworkInterfacesData[],
 	cpu: NodeCpuData,
 	memory: NodeMemoryLayoutData,
-	disk: NodeBlockDevicesData[]
+	disk: NodeBlockDevicesData[],
+	poolAssignments: PoolAssignment,
+	poolWorkerAssignments: PoolWorkerAssignment
 }
+
+export interface PoolAssignment {
+	[ key: string ]: boolean
+}
+
+export interface PoolWorkerAssignment {
+	[ key: string ]: boolean
+}
+
 
 interface NodeNetworkInterfacesData {
 	iface: string;
@@ -97,10 +108,19 @@ const baseNode: Node = {
 	networkInterfaces: null,
 	cpu: null,
 	memory: null,
-	disk: null
-}
+	disk: null,
+	poolAssignments: {},
+	poolWorkerAssignments: {}
+};
 
 export const defaultNode = (): Node => JSONDeepCopy( baseNode );
+
+export interface NodeCandidateObject {
+	id: string,
+	items: Node[]
+}
+
+// import { Item, ItemType } from './generic.models';
 
 // export interface Node extends NodeCandidate {
 // 	name: string,
@@ -117,17 +137,10 @@ export const defaultNode = (): Node => JSONDeepCopy( baseNode );
 // 	poolWorkerAssignments: PoolWorkerAssignment
 // }
 
-// export const defaultNode = (): Node => ( { id: '', name: '', terminal: { dimensions: { cols: 0, rows: 0 } }, poolAssignments: {}, poolWorkerAssignments: {} } as Node );
+// export const defaultNode = (): Node => ( { id: '', name: '', type: ItemType.node, terminal: { dimensions: { cols: 0, rows: 0 } }, poolAssignments: {}, poolWorkerAssignments: {} } as Node );
 
-// export interface NodeCandidateObject {
+// export interface NodeCandidate extends Partial<Item> {
 // 	id: string,
-// 	items: NodeCandidate[]
-// }
-
-// export interface NodeCandidate {
-// 	id: string,
-// 	name: string,
-// 	details: any,
 // 	hostname: string,
 // 	ostype: string,
 // 	osplatform: string,
@@ -156,11 +169,3 @@ export const defaultNode = (): Node => JSONDeepCopy( baseNode );
 // 	dateValue?: Date
 // }
 
-
-// export interface PoolAssignment {
-// 	[ key: string ]: boolean
-// }
-
-// export interface PoolWorkerAssignment {
-// 	[ key: string ]: boolean
-// }
