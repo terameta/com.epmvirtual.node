@@ -60,13 +60,16 @@ export class EPMNode {
 		const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
 		pc.onsignalingstatechange = ( event ) => {
-			console.info( 'Signaling state change:', event.target.signalingState );
+			// console.info( 'Signaling state change:', event.target.signalingState );
+			console.info( 'Signaling state change:', event );
 		}
 		pc.oniceconnectionstatechange = ( event ) => {
-			console.info( 'ice connection state change:', event.target.iceConnectionState );
+			// console.info( 'ice connection state change:', event.target.iceConnectionState );
+			console.info( 'ice connection state change:', event );
 		}
 		pc.onicegatheringstatechange = ( event ) => {
-			console.info( 'ice gathering state change:', event.target.iceGatheringState );
+			// console.info( 'ice gathering state change:', event.target.iceGatheringState );
+			console.info( 'ice gathering state change:', event );
 		}
 		pc.onicecandidate = ( event ) => {
 			console.log( 'We are at onicecandidate' );
