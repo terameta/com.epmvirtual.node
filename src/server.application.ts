@@ -59,10 +59,6 @@ export class EPMNode {
 		console.log( 'Initiating RTC channel' );
 		const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
 		const pc = new wrtc.RTCPeerConnection( servers );
-		pc.onicecandidate = ( event: any ) => {
-			console.log( 'RTC On ice candidate' );
-			console.log( event );
-		}
 		pc.onsignalingstatechange = ( event ) => {
 			console.info( 'Signaling state change:', event.target.signalingState );
 		}
@@ -71,6 +67,12 @@ export class EPMNode {
 		}
 		pc.onicegatheringstatechange = ( event ) => {
 			console.info( 'ice gathering state change:', event.target.iceGatheringState );
+		}
+		pc.onicecandidate = ( event ) => {
+			console.log( 'We are at onicecandidate' );
+			const candidate = event.candidate;
+			console.log( candidate );
+			if ( !candidate ) return;
 		}
 
 
