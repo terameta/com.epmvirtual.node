@@ -53,6 +53,10 @@ export class EPMNode {
 		this.scheduledTasks();
 	}
 
+	private initiateRTC = async () => {
+		console.log( 'Initiating RTC channel' );
+	}
+
 	private identifySelf = async () => {
 		this.node.os = await si.osInfo();
 		this.node.name = this.node.os.hostname;
