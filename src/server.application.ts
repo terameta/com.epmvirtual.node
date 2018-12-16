@@ -66,6 +66,17 @@ export class EPMNode {
 		pc.onsignalingstatechange = ( event ) => {
 			console.info( 'Signaling state change:', event.target.signalingState );
 		}
+		pc.oniceconnectionstatechange = ( event ) => {
+			console.info( 'ice connection state change:', event.target.iceConnectionState );
+		}
+		pc.onicegatheringstatechange = ( event ) => {
+			console.info( 'ice gathering state change:', event.target.iceGatheringState );
+		}
+
+
+
+
+
 		/**
 		 pc.onsignalingstatechange = function(event) {
     console.info('signaling state change: ', event.target.signalingState);
