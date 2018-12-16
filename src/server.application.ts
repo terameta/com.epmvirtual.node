@@ -87,7 +87,7 @@ export class EPMNode {
 			.then( () => {
 				return this.nodeReference.update( {
 					rtc: {
-						sdp: pc.localDescription
+						sdp: JSON.stringify( pc.localDescription )
 					}
 				} );
 			} )
