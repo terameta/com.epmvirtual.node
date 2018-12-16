@@ -85,9 +85,10 @@ export class EPMNode {
 			.then( offer => pc.setLocalDescription( offer ) )
 			// .then( () => sendMessage( yourId, JSON.stringify( { 'sdp': pc.localDescription } ) ) );
 			.then( () => {
-				return this.nodeReference.update( {
-					'rtc.sdp': JSON.stringify( pc.localDescription )
-				} );
+				console.log( 'Kekele' );
+				// return this.nodeReference.update( {
+				// 	'rtc.sdp': JSON.stringify( pc.localDescription )
+				// } );
 			} )
 			.then( () => console.log( 'PC.localDescription:', pc.localDescription ) )
 			.catch( console.error );
