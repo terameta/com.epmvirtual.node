@@ -62,6 +62,9 @@ export class EPMNode {
 		console.log( '===========================================' );
 		console.log( 'This is pc' );
 		console.log( pc );
+		console.log( 'Or maybe this is pc' );
+		await waiter( 5000 );
+		console.log( pc );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		Object.keys( wrtc ).forEach( k => console.log( k ) );
