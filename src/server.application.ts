@@ -79,38 +79,6 @@ export class EPMNode {
 			console.log( 'dc data channel is open' );
 		}
 		console.log( pc.createOffer() );
-
-
-
-
-
-		/**
-		 pc.onsignalingstatechange = function(event) {
-    console.info('signaling state change: ', event.target.signalingState);
-  };
-  pc.oniceconnectionstatechange = function(event) {
-    console.info('ice connection state change: ', event.target.iceConnectionState);
-  };
-  pc.onicegatheringstatechange = function(event) {
-    console.info('ice gathering state change: ', event.target.iceGatheringState);
-  };
-  pc.onicecandidate = function(event) {
-    var candidate = event.candidate;
-    if (!candidate) return;
-    if (WebSocket.OPEN === ws.readyState) {
-      ws.send(JSON.stringify({
-        type: 'ice',
-        sdp: {
-          candidate: candidate.candidate,
-          sdpMid: candidate.sdpMid,
-          sdpMLineIndex: candidate.sdpMLineIndex
-        }
-      }));
-    } else {
-      pendingCandidates.push(candidate);
-    }
-  };
-		 */
 	}
 
 	private identifySelf = async () => {
