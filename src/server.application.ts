@@ -8,6 +8,7 @@ import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
 import { SortBy, waiter, deleteKeyIfFunction } from './utilities';
 import { fromDocRef } from 'rxfire/firestore';
+import * as wrtc from 'wrtc';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -56,6 +57,11 @@ export class EPMNode {
 
 	private initiateRTC = async () => {
 		console.log( 'Initiating RTC channel' );
+		const pc = wrtc.RTCPeerConnection( { iceServers: [ { urls: 'stun:stun.l.google.com:19302' } ] } );
+		pc.onicecandidate = ( event: any ) => {
+			console.log( 'RTC On ice candidate' );
+			console.log( event );
+		}
 	}
 
 	private identifySelf = async () => {
