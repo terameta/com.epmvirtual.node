@@ -58,9 +58,7 @@ export class EPMNode {
 	private initiateRTC = async () => {
 		console.log( 'Initiating RTC channel' );
 		const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
-		const pc = new wrtc.RTCPeerConnection( servers, {
-			optional: []
-		} );
+		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
 		pc.onsignalingstatechange = ( event ) => {
 			console.info( 'Signaling state change:', event.target.signalingState );
 		}
