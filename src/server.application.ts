@@ -84,7 +84,7 @@ export class EPMNode {
 		pc.createOffer()
 			.then( offer => pc.setLocalDescription( offer ) )
 			// .then( () => sendMessage( yourId, JSON.stringify( { 'sdp': pc.localDescription } ) ) );
-			.then( () => console.log( pc.localDescription ) )
+			.then( () => console.log( 'PC.localDescription:', pc.localDescription ) )
 			.catch( console.error );
 	}
 
