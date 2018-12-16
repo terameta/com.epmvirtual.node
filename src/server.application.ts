@@ -58,6 +58,7 @@ export class EPMNode {
 	private initiateRTC = async () => {
 		console.log( 'Initiating RTC channel' );
 		const pc = wrtc.RTCPeerConnection( { iceServers: [ { urls: 'stun:stun.l.google.com:19302' } ] } );
+		Object.keys( pc ).forEach( k => console.log( k ) );
 		pc.onicecandidate = ( event: any ) => {
 			console.log( 'RTC On ice candidate' );
 			console.log( event );
