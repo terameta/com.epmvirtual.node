@@ -145,7 +145,7 @@ export class EPMNode {
 		const { servers } = await this.database.doc( 'settings/rtc' ).get().then( s => s.data() );
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
 		pc.onicecandidate = ( candidate ) => {
-			console.log( 'We have ice candidate', candidate );
+			console.log( 'We have ice candidate', candidate.type );
 		}
 		pc.ondatachannel = ( event ) => {
 			console.log( 'Data channel is now open' );
