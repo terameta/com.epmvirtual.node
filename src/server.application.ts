@@ -51,6 +51,7 @@ export class EPMNode {
 		await waiter();
 		await this.identifyExistance();
 		await this.actOnNewNode();
+		await this.actOnExistingNode();
 		await this.initiateRTC();
 		this.scheduledTasks();
 	}
@@ -167,6 +168,12 @@ export class EPMNode {
 			} ).
 				then( () => console.log( 'This node is now registered under the nodecandidates/list on database' ) ).
 				catch( e => console.log( 'We are unable to update the nodecandidates', e.toString() ) );
+		} );
+	}
+
+	private actOnExistingNode = async () => {
+		this.isThisaNewNode$.pipe( filter( i => !i ) ).subscribe( ( isNew ) => {
+			console.log( 'Is this a new node?', isNew );
 		} );
 	}
 
