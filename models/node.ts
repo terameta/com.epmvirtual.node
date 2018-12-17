@@ -10,7 +10,8 @@ export interface Node {
 	memory: NodeMemoryLayoutData,
 	disk: NodeBlockDevicesData[],
 	poolAssignments: PoolAssignment,
-	poolWorkerAssignments: PoolWorkerAssignment
+	poolWorkerAssignments: PoolWorkerAssignment,
+	rtc: any
 }
 
 export interface PoolAssignment {
