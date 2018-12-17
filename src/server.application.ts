@@ -146,6 +146,11 @@ export class EPMNode {
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
 		pc.onicecandidate = ( candidate ) => {
 			console.log( 'We have ice candidate', candidate.type );
+			if ( candidate.candidate ) {
+				this.nodeReference.update( {
+					'rtc.nodeice': firestore.FieldValue.arrayUnion( JSON.stringify( { ice: candidate.candidate } ) )
+				} )
+			}
 		}
 		pc.ondatachannel = ( event ) => {
 			console.log( 'Data channel is now received' );
