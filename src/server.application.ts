@@ -20,7 +20,7 @@ export class EPMNode {
 	private isNodeReceived = false;
 
 	constructor() {
-		interval( 60000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date(), 'NodeReceived:', this.isNodeReceived ) );
+		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date(), 'NodeReceived:', this.isNodeReceived ) );
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
@@ -171,7 +171,7 @@ export class EPMNode {
 	}
 
 	private actOnExistingNode = async () => {
-		this.isThisaNewNode$.pipe( filter( i => !i && this.isNodeReceived ) ).subscribe( ( isNew ) => {
+		this.isThisaNewNode$.pipe( filter( i => ( !i && this.isNodeReceived ) ) ).subscribe( ( isNew ) => {
 			console.log( 'Is this a new node?', isNew );
 		} );
 	}
