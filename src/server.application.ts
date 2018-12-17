@@ -178,7 +178,7 @@ export class EPMNode {
 		// 		console.log( 'Is this a new node?', isNew );
 		// 	} );
 		this.isThisaNewNode$.pipe(
-			filter( i => !i )
+			filter( i => ( !i && this.isNodeReceived ) )
 		).subscribe( ( isNew ) => {
 			console.log( 'This should false true:', isNew, this.isNodeReceived );
 		} )
