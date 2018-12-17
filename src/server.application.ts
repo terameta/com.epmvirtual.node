@@ -141,7 +141,7 @@ export class EPMNode {
 		console.log( 'We are now handling RTC Offer' );
 		const offer = JSON.parse( this.node.rtc.offer );
 		console.log( 'Offer:', offer );
-		await this.nodeReference.update( { rtc: { offer: null } } );
+		await this.nodeReference.update( { 'rtc.offer': null } );
 		const { servers } = await this.database.doc( 'settings/rtc' ).get().then( s => s.data() );
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
 		pc.onicecandidate = ( candidate ) => {
