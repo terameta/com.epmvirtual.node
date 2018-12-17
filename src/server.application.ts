@@ -181,7 +181,7 @@ export class EPMNode {
 	}
 
 	private handleRTCOffer = async () => {
-
+		console.log( 'We are now handling RTC Offer' );
 	}
 
 	private scheduledTasks = async () => {
