@@ -153,7 +153,7 @@ export class EPMNode {
 			}
 		}
 		fromDocRef( this.nodeReference ).subscribe( ( a ) => {
-			console.log( 'Watching for icecandidates:', a );
+			console.log( 'Watching for icecandidates:', ( a.data() ).rtc );
 		} );
 		pc.ondatachannel = ( event ) => {
 			console.log( 'Data channel is now received' );
