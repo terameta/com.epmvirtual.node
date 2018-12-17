@@ -147,7 +147,7 @@ export class EPMNode {
 		console.log( 'Peer connection is now created' );
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
 		console.log( 'Set remote description successful' );
-		const answer = pc.createAnswer();
+		const answer = await pc.createAnswer();
 		console.log( 'Answer is now created', answer );
 		await pc.setLocalDescription( answer );
 		console.log( 'Local description is now set' );
