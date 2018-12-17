@@ -165,7 +165,7 @@ export class EPMNode {
 		console.log( 'Answer is now created', answer );
 		await pc.setLocalDescription( answer );
 		console.log( 'Local description is now set' );
-		await this.nodeReference.update( { rtc: { answer: JSON.stringify( pc.localDescription ) } } );
+		await this.nodeReference.update( { 'rtc.answer': JSON.stringify( pc.localDescription ) } );
 		console.log( 'Answer is now delivered to firestore' );
 
 
