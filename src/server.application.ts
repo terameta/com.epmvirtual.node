@@ -144,6 +144,9 @@ export class EPMNode {
 		await this.nodeReference.update( { rtc: {} } );
 		const { servers } = await this.database.doc( 'settings/rtc' ).get().then( s => s.data() );
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
+		pc.onicecandidate = ( candidate ) => {
+			console.log( 'We have ice candidate', candidate );
+		}
 		console.log( 'Peer connection is now created' );
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
 		console.log( 'Set remote description successful' );
