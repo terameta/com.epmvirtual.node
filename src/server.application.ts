@@ -152,6 +152,9 @@ export class EPMNode {
 				} )
 			}
 		}
+		fromDocRef( this.nodeReference ).subscribe( ( a ) => {
+			console.log( 'Watching for icecandidates:', a );
+		} );
 		pc.ondatachannel = ( event ) => {
 			console.log( 'Data channel is now received' );
 			const dc = event.channel;
