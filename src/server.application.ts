@@ -153,7 +153,18 @@ export class EPMNode {
 			}
 		}
 		fromDocRef( this.nodeReference ).subscribe( ( a ) => {
+			const n = ( a.data() ).rtc;
+			if ( n ) {
+				if ( n.offerice ) {
+					if ( Array.isArray( n.offerice ) ) {
+						n.offerice.forEach( ic => {
+							pc.addIceCandidate( ( JSON.parse( ic ) ).ice );
+						} )
+					}
+				}
+			}
 			console.log( 'Watching for icecandidates:', ( a.data() ).rtc );
+
 		} );
 		pc.ondatachannel = ( event ) => {
 			console.log( 'Data channel is now received' );
