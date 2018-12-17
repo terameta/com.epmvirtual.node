@@ -46,48 +46,7 @@ export class EPMNode {
 		await this.identifyExistance();
 		await this.actOnNewNode();
 		await this.actOnExistingNode();
-		await this.initiateRTC();
 		this.scheduledTasks();
-	}
-
-	private initiateRTC = async () => {
-		console.log( 'Initiating RTC channel' );
-		// const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
-		// const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
-		// pc.onsignalingstatechange = ( event ) => {
-		// 	// console.info( 'Signaling state change:', event.target.signalingState );
-		// 	console.info( 'Signaling state change:', event );
-		// }
-		// pc.oniceconnectionstatechange = ( event ) => {
-		// 	// console.info( 'ice connection state change:', event.target.iceConnectionState );
-		// 	console.info( 'ice connection state change:', event );
-		// }
-		// pc.onicegatheringstatechange = ( event ) => {
-		// 	// console.info( 'ice gathering state change:', event.target.iceGatheringState );
-		// 	console.info( 'ice gathering state change:', event );
-		// }
-		// pc.onicecandidate = ( event ) => {
-		// 	console.log( 'We are at onicecandidate' );
-		// 	const candidate = event.candidate;
-		// 	console.log( candidate );
-		// 	if ( !candidate ) return;
-		// }
-		// const dc = pc.createDataChannel( 'Test' );
-		// dc.onopen = () => {
-		// 	console.log( 'dc data channel is open' );
-		// }
-		// pc.createOffer()
-		// 	.then( offer => pc.setLocalDescription( offer ) )
-		// 	// .then( () => sendMessage( yourId, JSON.stringify( { 'sdp': pc.localDescription } ) ) );
-		// 	.then( () => {
-		// 		console.log( 'Kekele' );
-		// 		// return this.nodeReference.update( {
-		// 		// 	'rtc.sdp': JSON.stringify( pc.localDescription )
-		// 		// } );
-		// 	} )
-		// 	.then( () => console.log( 'PC.localDescription:', pc.localDescription ) )
-		// 	.catch( console.error );
-
 	}
 
 	private identifySelf = async () => {
@@ -183,7 +142,44 @@ export class EPMNode {
 		const offer = this.node.rtc.offer;
 		console.log( 'Offer:', offer );
 		await this.nodeReference.update( { rtc: {} } );
-		await this.database.doc( 'settings/rtc' ).get().then( s => console.log( s.data() ) );
+		const { servers } = await this.database.doc( 'settings/rtc' ).get().then( s => s.data() );
+		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
+
+		// const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
+		// const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
+		// pc.onsignalingstatechange = ( event ) => {
+		// 	// console.info( 'Signaling state change:', event.target.signalingState );
+		// 	console.info( 'Signaling state change:', event );
+		// }
+		// pc.oniceconnectionstatechange = ( event ) => {
+		// 	// console.info( 'ice connection state change:', event.target.iceConnectionState );
+		// 	console.info( 'ice connection state change:', event );
+		// }
+		// pc.onicegatheringstatechange = ( event ) => {
+		// 	// console.info( 'ice gathering state change:', event.target.iceGatheringState );
+		// 	console.info( 'ice gathering state change:', event );
+		// }
+		// pc.onicecandidate = ( event ) => {
+		// 	console.log( 'We are at onicecandidate' );
+		// 	const candidate = event.candidate;
+		// 	console.log( candidate );
+		// 	if ( !candidate ) return;
+		// }
+		// const dc = pc.createDataChannel( 'Test' );
+		// dc.onopen = () => {
+		// 	console.log( 'dc data channel is open' );
+		// }
+		// pc.createOffer()
+		// 	.then( offer => pc.setLocalDescription( offer ) )
+		// 	// .then( () => sendMessage( yourId, JSON.stringify( { 'sdp': pc.localDescription } ) ) );
+		// 	.then( () => {
+		// 		console.log( 'Kekele' );
+		// 		// return this.nodeReference.update( {
+		// 		// 	'rtc.sdp': JSON.stringify( pc.localDescription )
+		// 		// } );
+		// 	} )
+		// 	.then( () => console.log( 'PC.localDescription:', pc.localDescription ) )
+		// 	.catch( console.error );
 	}
 
 	private scheduledTasks = async () => {
