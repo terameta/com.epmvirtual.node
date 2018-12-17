@@ -152,7 +152,10 @@ export class EPMNode {
 				tap( () => console.log( 'We will now wait for', errorWaitDuration, 'seconds.' ) ),
 				delayWhen( val => timer( errorWaitDuration * 1000 ) )
 			) )
-		).subscribe( recNode => { this.isThisaNewNode$.next( !recNode.data() ); } );
+		).subscribe( recNode => {
+			this.isThisaNewNode$.next( !recNode.data() );
+			this.node = { ...this.node, ...recNode };
+		} );
 	}
 
 	private actOnNewNode = async () => {
