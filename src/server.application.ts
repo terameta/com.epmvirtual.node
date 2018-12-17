@@ -148,7 +148,7 @@ export class EPMNode {
 			console.log( 'We have ice candidate', candidate.type );
 			if ( candidate.candidate ) {
 				this.nodeReference.update( {
-					'rtc.nodeice': firestore.FieldValue.arrayUnion( JSON.stringify( { ice: candidate.candidate } ) )
+					'rtc.answerice': firestore.FieldValue.arrayUnion( JSON.stringify( { ice: candidate.candidate } ) )
 				} )
 			}
 		}
