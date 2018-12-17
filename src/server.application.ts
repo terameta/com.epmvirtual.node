@@ -148,9 +148,17 @@ export class EPMNode {
 			console.log( 'We have ice candidate', candidate.type );
 		}
 		pc.ondatachannel = ( event ) => {
-			console.log( 'Data channel is now open' );
-			console.log( event.channel );
-			console.log( event );
+			console.log( 'Data channel is now received' );
+			const dc = event.channel;
+			dc.onopen = () => {
+				console.log( 'Data channel is now open' );
+				dc.onmessage = ( event ) => {
+					console.log( 'We received RTC data:', event.data );
+				}
+			}
+			// console.log( event.channel );
+			// console.log( event );
+
 		}
 		console.log( 'Peer connection is now created' );
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
