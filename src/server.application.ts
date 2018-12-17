@@ -20,7 +20,7 @@ export class EPMNode {
 	private isNodeReceived = false;
 
 	constructor() {
-		interval( 120000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
+		interval( 120000 ).subscribe( () => console.log( 'EPMVirtual Time:', new Date() ) );
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
