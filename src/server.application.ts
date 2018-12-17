@@ -154,6 +154,7 @@ export class EPMNode {
 			) )
 		).subscribe( recNode => {
 			this.isThisaNewNode$.next( !recNode.data() );
+			console.log( 'Node is now received' );
 			this.node = { ...this.node, ...recNode.data() };
 			this.isNodeReceived = true;
 		} );
