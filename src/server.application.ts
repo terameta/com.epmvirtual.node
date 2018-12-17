@@ -145,8 +145,12 @@ export class EPMNode {
 		const { servers } = await this.database.doc( 'settings/rtc' ).get().then( s => s.data() );
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
 		console.log( 'Peer connection is now created' );
-		pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
+		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
 		console.log( 'Set remote description successful' );
+		const answer = pc.createAnswer();
+		console.log( 'Answer is now created', answer );
+		await pc.setLocalDescription( answer );
+		console.log( 'Local description is now set' );
 
 		// const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
 		// const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
