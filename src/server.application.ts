@@ -153,6 +153,11 @@ export class EPMNode {
 		console.log( 'Local description is now set' );
 		await this.nodeReference.update( { rtc: { answer: JSON.stringify( pc.localDescription ) } } );
 		console.log( 'Answer is now delivered to firestore' );
+		pc.ondatachannel = ( event ) => {
+			console.log( 'Data channel is now open' );
+			console.log( event.channel );
+			console.log( event );
+		}
 
 		// const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
 		// const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
