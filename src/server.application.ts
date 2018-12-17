@@ -176,15 +176,14 @@ export class EPMNode {
 		).subscribe( async ( isNew ) => {
 			console.log( 'This should false true:', isNew, this.isNodeReceived );
 			console.log( this.node.rtc );
-			if ( this.node.rtc.offer ) {
-				await this.handleRTCOffer();
-				console.log( 'RTC offer is now handled' );
-			}
+			if ( this.node.rtc.offer ) { await this.handleRTCOffer(); }
 		} )
 	}
 
 	private handleRTCOffer = async () => {
 		console.log( 'We are now handling RTC Offer' );
+		const offer = this.node.rtc.offer;
+		await this.nodeReference.update( { rtc: {} } );
 		await this.database.doc( 'settings/rtc' ).get().then( console.log );
 	}
 
