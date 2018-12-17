@@ -157,8 +157,6 @@ export class EPMNode {
 				}
 			}
 			// console.log( event.channel );
-			// console.log( event );
-
 		}
 		console.log( 'Peer connection is now created' );
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
