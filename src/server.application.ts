@@ -153,10 +153,10 @@ export class EPMNode {
 				delayWhen( val => timer( errorWaitDuration * 1000 ) )
 			) )
 		).subscribe( recNode => {
+			this.isNodeReceived = true;
+			this.node = { ...this.node, ...recNode.data() };
 			this.isThisaNewNode$.next( !recNode.data() );
 			console.log( 'Node is now received' );
-			this.node = { ...this.node, ...recNode.data() };
-			this.isNodeReceived = true;
 		} );
 	}
 
