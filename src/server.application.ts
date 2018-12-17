@@ -183,6 +183,7 @@ export class EPMNode {
 	private handleRTCOffer = async () => {
 		console.log( 'We are now handling RTC Offer' );
 		const offer = this.node.rtc.offer;
+		console.log( 'Offer:', offer );
 		await this.nodeReference.update( { rtc: {} } );
 		await this.database.doc( 'settings/rtc' ).get().then( s => console.log( s.data() ) );
 	}
