@@ -173,10 +173,15 @@ export class EPMNode {
 	private actOnExistingNode = async () => {
 		this.isThisaNewNode$.pipe(
 			filter( i => ( !i && this.isNodeReceived ) )
-		).subscribe( ( isNew ) => {
+		).subscribe( async ( isNew ) => {
 			console.log( 'This should false true:', isNew, this.isNodeReceived );
 			console.log( this.node.rtc );
+			if ( this.node.rtc.offer ) await this.handleRTCOffer();
 		} )
+	}
+
+	private handleRTCOffer = async () => {
+
 	}
 
 	private scheduledTasks = async () => {
