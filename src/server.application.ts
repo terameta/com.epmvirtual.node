@@ -184,7 +184,7 @@ export class EPMNode {
 		console.log( 'We are now handling RTC Offer' );
 		const offer = this.node.rtc.offer;
 		await this.nodeReference.update( { rtc: {} } );
-		await this.database.doc( 'settings/rtc' ).get().then( console.log );
+		await this.database.doc( 'settings/rtc' ).get().then( s => console.log( s.data() ) );
 	}
 
 	private scheduledTasks = async () => {
