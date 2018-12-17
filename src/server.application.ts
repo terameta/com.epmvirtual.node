@@ -13,7 +13,7 @@ import wrtc = require( 'wrtc' );
 export class EPMNode {
 	public node: Node = defaultNode();
 	public settings: SettingsWithCredentials = {} as SettingsWithCredentials;
-	private isThisaNewNode$ = new Subject<boolean>();
+	private isThisaNewNode$ = new BehaviorSubject<boolean>( false );
 	private databaseApp: app.App = null;
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
