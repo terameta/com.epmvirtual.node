@@ -174,8 +174,6 @@ export class EPMNode {
 		this.isThisaNewNode$.pipe(
 			filter( i => ( !i && this.isNodeReceived ) )
 		).subscribe( async ( isNew ) => {
-			console.log( 'This should false true:', isNew, this.isNodeReceived );
-			console.log( this.node.rtc );
 			if ( this.node.rtc.offer ) { await this.handleRTCOffer(); }
 		} )
 	}
