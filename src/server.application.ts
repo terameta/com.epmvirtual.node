@@ -1,4 +1,4 @@
-import { interval, BehaviorSubject, timer } from 'rxjs';
+import { interval, BehaviorSubject, timer, Subject } from 'rxjs';
 import { filter, catchError, delay, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
 import * as si from 'systeminformation';
 import { defaultNode, Node } from '../models/node';
@@ -13,7 +13,7 @@ import wrtc = require( 'wrtc' );
 export class EPMNode {
 	public node: Node = defaultNode();
 	public settings: SettingsWithCredentials = {} as SettingsWithCredentials;
-	private isThisaNewNode$: BehaviorSubject<boolean> = new BehaviorSubject( false );
+	private isThisaNewNode$ = new Subject<boolean>();
 	private databaseApp: app.App = null;
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
@@ -21,12 +21,6 @@ export class EPMNode {
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual is reporting date:', new Date() ) );
-		// interval( 1000 ).pipe( filter( () => this.isNodeReceived ) ).subscribe( () => {
-		// 	console.log( 'This should only happen after node is received. isNodeReceived', this.isNodeReceived );
-		// } );
-		// interval( 1000 ).subscribe( () => {
-		// 	console.log( 'This should always happen. isNodeReceived', this.isNodeReceived );
-		// } );
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
