@@ -163,8 +163,6 @@ export class EPMNode {
 					}
 				}
 			}
-			console.log( 'Watching for icecandidates:', ( a.data() ).rtc );
-
 		} );
 		pc.ondatachannel = ( event ) => {
 			console.log( 'Data channel is now received' );
