@@ -154,7 +154,7 @@ export class EPMNode {
 			) )
 		).subscribe( recNode => {
 			this.isThisaNewNode$.next( !recNode.data() );
-			this.node = { ...this.node, ...recNode };
+			this.node = { ...this.node, ...recNode.data() };
 			this.isNodeReceived = true;
 		} );
 	}
