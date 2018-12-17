@@ -171,9 +171,17 @@ export class EPMNode {
 	}
 
 	private actOnExistingNode = async () => {
-		this.isThisaNewNode$.pipe( filter( i => ( !i && this.isNodeReceived ) ) ).subscribe( ( isNew ) => {
-			console.log( 'Is this a new node?', isNew );
-		} );
+		// this.isThisaNewNode$.pipe(
+		// 	filter( i => ( !i && this.isNodeReceived ),
+		// 		filter( i => this.isNodeReceived )
+		// 	) ).subscribe( ( isNew ) => {
+		// 		console.log( 'Is this a new node?', isNew );
+		// 	} );
+		this.isThisaNewNode$.pipe(
+			filter( i => !i )
+		).subscribe( ( isNew ) => {
+			console.log( 'This should false:', isNew );
+		} )
 	}
 
 	private scheduledTasks = async () => {
