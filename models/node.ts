@@ -111,7 +111,8 @@ const baseNode: Node = {
 	memory: null,
 	disk: null,
 	poolAssignments: {},
-	poolWorkerAssignments: {}
+	poolWorkerAssignments: {},
+	rtc: null
 };
 
 export const defaultNode = (): Node => JSONDeepCopy( baseNode );
