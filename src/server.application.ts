@@ -151,6 +151,7 @@ export class EPMNode {
 		console.log( 'Answer is now created', answer );
 		await pc.setLocalDescription( answer );
 		console.log( 'Local description is now set' );
+		await this.nodeReference.update( { rtc: { answer: JSON.stringify( pc.localDescription ) } } );
 
 		// const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
 		// const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
