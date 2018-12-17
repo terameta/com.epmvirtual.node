@@ -180,7 +180,7 @@ export class EPMNode {
 		this.isThisaNewNode$.pipe(
 			filter( i => !i )
 		).subscribe( ( isNew ) => {
-			console.log( 'This should false:', isNew );
+			console.log( 'This should false false:', isNew, this.isNodeReceived );
 		} )
 	}
 
