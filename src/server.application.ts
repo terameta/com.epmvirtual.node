@@ -139,11 +139,14 @@ export class EPMNode {
 
 	private handleRTCOffer = async () => {
 		console.log( 'We are now handling RTC Offer' );
-		const offer = this.node.rtc.offer;
+		const offer = JSON.parse( this.node.rtc.offer );
 		console.log( 'Offer:', offer );
 		await this.nodeReference.update( { rtc: {} } );
 		const { servers } = await this.database.doc( 'settings/rtc' ).get().then( s => s.data() );
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
+		console.log( 'Peer connection is now created' );
+		pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
+		console.log( 'Set remote description successful' );
 
 		// const servers = { 'iceServers': [ { 'urls': 'stun:stun.l.google.com:19302' } ] };
 		// const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
