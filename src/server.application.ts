@@ -175,6 +175,7 @@ export class EPMNode {
 			filter( i => ( !i && this.isNodeReceived ) )
 		).subscribe( ( isNew ) => {
 			console.log( 'This should false true:', isNew, this.isNodeReceived );
+			console.log( this.node.rtc );
 		} )
 	}
 
