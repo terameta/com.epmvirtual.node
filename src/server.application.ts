@@ -176,7 +176,7 @@ export class EPMNode {
 		).subscribe( async ( isNew ) => {
 			console.log( 'This should false true:', isNew, this.isNodeReceived );
 			console.log( this.node.rtc );
-			if ( this.node.rtc.offer ) await this.handleRTCOffer();
+			if ( this.node.rtc.offer ) { await this.handleRTCOffer(); }
 		} )
 	}
 
