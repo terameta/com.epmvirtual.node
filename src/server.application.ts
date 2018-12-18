@@ -215,6 +215,7 @@ export class EPMNode {
 		dc.onmessage = ( event ) => {
 			const data = JSON.parse( event.data );
 			if ( data.type === 'key' ) this.ptyProcess.write( data.key );
+			if ( data.type === 'resize' ) this.ptyProcess.resize( data.cols, data.rows );
 		}
 		setInterval( () => {
 			this.ptyProcess.write( 'ls -lh\r' );
