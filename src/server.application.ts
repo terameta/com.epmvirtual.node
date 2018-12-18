@@ -9,6 +9,9 @@ import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
 import { SortBy, waiter, deleteKeyIfFunction } from './utilities';
 import { fromDocRef } from 'rxfire/firestore';
 import wrtc = require( 'wrtc' );
+import * as pty from 'node-pty';
+import { platform } from 'os';
+
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -18,6 +21,9 @@ export class EPMNode {
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
 	private isNodeReceived = false;
+
+	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
+	private ptyProcess: pty.IPty = null;
 
 	constructor() {
 		interval( 120000 ).subscribe( () => console.log( 'EPMVirtual Time:', new Date() ) );
@@ -170,6 +176,7 @@ export class EPMNode {
 			console.log( 'Data channel id:', dc.id );
 			console.log( 'Data channel label:', dc.label );
 			dc.onopen = () => {
+				if ( dc.label === 'console' ) this.handleConsoleRequest( dc );
 				console.log( 'Data channel is now open' );
 				dc.onmessage = ( event ) => {
 					console.log( 'We received RTC data on', dc.label, event.data );
@@ -199,6 +206,14 @@ export class EPMNode {
 		console.log( 'Answer is now delivered to firestore' );
 	}
 
+	private handleConsoleRequest = ( dc: RTCDataChannel ) => {
+		this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
+		this.ptyProcess.on( 'data', ( data ) => {
+			dc.send( data );
+		} );
+		console.log( 'We should be handling exit as well' );
+	}
+
 	private scheduledTasks = async () => {
 		interval( 30000 ).subscribe( async () => {
 			this.checkNetwork();
@@ -223,7 +238,6 @@ export class EPMNode {
 // import { existsSync, readFileSync, writeFileSync } from "fs";
 // import { waiter, JSONDeepCopy, SortByDateValue } from "./utilities";
 // import { Settings } from "models/settings";
-// import * as pty from 'node-pty';
 // import { exec } from 'child_process';
 
 // export class EPMNode {
