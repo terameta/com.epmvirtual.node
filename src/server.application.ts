@@ -209,6 +209,7 @@ export class EPMNode {
 	private handleConsoleRequest = ( dc: RTCDataChannel ) => {
 		this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
 		this.ptyProcess.on( 'data', ( data ) => {
+			console.log( 'PTYProcess data:', data );
 			dc.send( data );
 		} );
 		dc.onmessage = ( event ) => {
