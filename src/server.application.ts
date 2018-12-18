@@ -167,6 +167,8 @@ export class EPMNode {
 		pc.ondatachannel = ( event ) => {
 			console.log( 'Data channel is now received' );
 			const dc = event.channel;
+			console.log( 'Data channel id:', dc.id );
+			console.log( 'Data channel label:', dc.label );
 			dc.onopen = () => {
 				console.log( 'Data channel is now open' );
 				dc.onmessage = ( event ) => {
