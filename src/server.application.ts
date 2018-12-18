@@ -175,6 +175,10 @@ export class EPMNode {
 					console.log( 'We received RTC data on', dc.label, event.data );
 				}
 			}
+			dc.onclose = ( event ) => {
+				console.log( 'Data channel is now closed' );
+				console.log( event );
+			}
 			// console.log( event.channel );
 		}
 		console.log( 'Peer connection is now created' );
