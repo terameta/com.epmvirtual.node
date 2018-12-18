@@ -174,9 +174,9 @@ export class EPMNode {
 				dc.onmessage = ( event ) => {
 					console.log( 'We received RTC data on', dc.label, event.data );
 				}
-				setTimeout( () => {
-					dc.close();
-				}, 60000 );
+				// setTimeout( () => {
+				// 	dc.close();
+				// }, 60000 );
 			}
 			dc.onclose = ( event ) => {
 				console.log( 'Data channel is now closed' );
