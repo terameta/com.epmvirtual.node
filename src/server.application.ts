@@ -179,6 +179,10 @@ export class EPMNode {
 				console.log( 'Data channel is now closed' );
 				console.log( event );
 			}
+			dc.onerror = ( event ) => {
+				console.log( 'Data channel erred', dc.label );
+				console.log( event );
+			}
 			// console.log( event.channel );
 		}
 		console.log( 'Peer connection is now created' );
