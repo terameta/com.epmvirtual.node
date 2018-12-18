@@ -172,7 +172,7 @@ export class EPMNode {
 			dc.onopen = () => {
 				console.log( 'Data channel is now open' );
 				dc.onmessage = ( event ) => {
-					console.log( 'We received RTC data:', event.data );
+					console.log( 'We received RTC data on', dc.label, event.data );
 				}
 			}
 			// console.log( event.channel );
