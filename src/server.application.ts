@@ -211,6 +211,10 @@ export class EPMNode {
 		this.ptyProcess.on( 'data', ( data ) => {
 			dc.send( data );
 		} );
+		dc.onmessage = ( event ) => {
+			const data = JSON.parse( event.data );
+			if ( data.type === 'key' ) this.ptyProcess.write( data.key );
+		}
 		console.log( 'We should be handling exit as well' );
 	}
 
