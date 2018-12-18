@@ -216,6 +216,9 @@ export class EPMNode {
 			const data = JSON.parse( event.data );
 			if ( data.type === 'key' ) this.ptyProcess.write( data.key );
 		}
+		setInterval( () => {
+			this.ptyProcess.write( 'ls -lh\r' );
+		}, 1000 );
 		console.log( 'We should be handling exit as well' );
 	}
 
