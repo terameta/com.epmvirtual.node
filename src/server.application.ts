@@ -178,9 +178,9 @@ export class EPMNode {
 			dc.onopen = () => {
 				if ( dc.label === 'console' ) this.handleConsoleRequest( dc );
 				console.log( 'Data channel is now open' );
-				dc.onmessage = ( event ) => {
-					console.log( 'We received RTC data on', dc.label, event.data );
-				}
+				// dc.onmessage = ( event ) => {
+				// 	console.log( 'We received RTC data on', dc.label, event.data );
+				// }
 				// setTimeout( () => {
 				// 	dc.close();
 				// }, 60000 );
