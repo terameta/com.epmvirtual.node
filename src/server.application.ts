@@ -218,7 +218,7 @@ export class EPMNode {
 			if ( data.type === 'resize' ) this.ptyProcess.resize( data.cols, data.rows );
 		}
 		setInterval( () => {
-			this.ptyProcess.write( 'ls -lh\r' );
+			// this.ptyProcess.write( 'ls -lh\r' );
 		}, 1000 );
 		console.log( 'We should be handling exit as well' );
 	}
