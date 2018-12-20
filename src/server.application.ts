@@ -26,7 +26,7 @@ export class EPMNode {
 	private ptyProcess: pty.IPty = null;
 
 	constructor() {
-		interval( 120000 ).subscribe( () => console.log( 'EPMVirtual Time:', new Date() ) );
+		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual Time:', new Date() ) );
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
