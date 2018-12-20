@@ -183,8 +183,14 @@ export class EPMNode {
 				console.log( 'RTC: Data channel is now open -', dc.label );
 				if ( dc.label === 'console' ) this.handleConsoleRequest( dc );
 			}
-			dc.onclose = ( event ) => console.log( 'RTC: Data channel is now closed -', dc.label );
-			dc.onerror = ( event ) => console.log( 'RTC: Data channel is now in error state -', dc.label );
+			dc.onclose = ( event ) => {
+				console.log( 'RTC: Data channel is now closed -', dc.label );
+				this.ptyProcess.kill();
+			}
+			dc.onerror = ( event ) => {
+				console.log( 'RTC: Data channel is now in error state -', dc.label );
+				this.ptyProcess.kill();
+			}
 		}
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
 		const answer = await pc.createAnswer();
