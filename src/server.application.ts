@@ -183,22 +183,13 @@ export class EPMNode {
 				console.log( 'RTC: Data channel is now open -', dc.label );
 				if ( dc.label === 'console' ) this.handleConsoleRequest( dc );
 			}
-			dc.onclose = ( event ) => {
-				console.log( 'RTC: Data channel is now closed -', dc.label );
-			}
-			dc.onerror = ( event ) => {
-				console.log( 'RTC: Data channel is now in error state -', dc.label );
-			}
+			dc.onclose = ( event ) => console.log( 'RTC: Data channel is now closed -', dc.label );
+			dc.onerror = ( event ) => console.log( 'RTC: Data channel is now in error state -', dc.label );
 		}
-		console.log( 'Peer connection is now created' );
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
-		console.log( 'Set remote description successful' );
 		const answer = await pc.createAnswer();
-		console.log( 'Answer is now created', answer );
 		await pc.setLocalDescription( answer );
-		console.log( 'Local description is now set' );
 		await this.nodeReference.update( { 'rtc.answer': JSON.stringify( pc.localDescription ) } );
-		console.log( 'Answer is now delivered to firestore' );
 	}
 
 	private handleConsoleRequest = ( dc: RTCDataChannel ) => {
