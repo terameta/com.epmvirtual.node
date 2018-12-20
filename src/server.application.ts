@@ -144,24 +144,27 @@ export class EPMNode {
 	}
 
 	private handleRTCOffer = async () => {
-		console.log( 'We are now handling RTC Offer' );
+		console.log( 'RTC: Request received' );
 		const offer = JSON.parse( this.node.rtc.offer );
-		console.log( 'Offer:', offer );
 		await this.nodeReference.update( { 'rtc.offer': null } );
 		const { servers } = await this.database.doc( 'settings/rtc' ).get().then( s => s.data() );
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
 		pc.oniceconnectionstatechange = () => {
-			console.log( 'Connection state changed', pc.iceConnectionState );
+			console.log( 'RTC: Connection state changed -', pc.iceConnectionState );
+			if ( pc.iceConnectionState === 'disconnected' ) {
+				setTimeout( () => {
+					if ( iceCandidateSub ) iceCandidateSub.unsubscribe();
+				}, 120000 );
+			}
 		}
 		pc.onicecandidate = ( candidate ) => {
-			console.log( 'We have ice candidate', candidate.type );
 			if ( candidate.candidate ) {
 				this.nodeReference.update( {
 					'rtc.answerice': firestore.FieldValue.arrayUnion( JSON.stringify( { ice: candidate.candidate } ) )
 				} )
 			}
 		}
-		fromDocRef( this.nodeReference ).subscribe( ( a ) => {
+		const iceCandidateSub = fromDocRef( this.nodeReference ).subscribe( ( a ) => {
 			const n = ( a.data() ).rtc;
 			if ( n ) {
 				if ( n.offerice ) {
@@ -173,7 +176,7 @@ export class EPMNode {
 				}
 			}
 		} );
-		pc.ondatachannel = ( event ) => {
+		pc.ondatachannel = ( event: RTCDataChannelEvent ) => {
 			console.log( 'Data channel is now received' );
 			const dc = event.channel;
 			console.log( 'Data channel id:', dc.id );
@@ -196,7 +199,6 @@ export class EPMNode {
 				console.log( 'Data channel erred', dc.label );
 				console.log( event );
 			}
-			// console.log( event.channel );
 		}
 		console.log( 'Peer connection is now created' );
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
@@ -211,23 +213,13 @@ export class EPMNode {
 
 	private handleConsoleRequest = ( dc: RTCDataChannel ) => {
 		this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
-		this.ptyProcess.on( 'data', ( data ) => {
-			console.log( 'PTYProcess data:', data );
-			dc.send( JSON.stringify( { type: 'data', data } ) );
-		} );
-		this.ptyProcess.on( 'exit', ( exitCode: number ) => {
-			dc.send( JSON.stringify( { type: 'exit', exitCode } ) );
-		} )
+		this.ptyProcess.on( 'data', ( data ) => dc.send( JSON.stringify( { type: 'data', data } ) ) );
+		this.ptyProcess.on( 'exit', ( exitCode: number ) => dc.send( JSON.stringify( { type: 'exit', exitCode } ) ) );
 		dc.onmessage = ( event ) => {
 			const data = JSON.parse( event.data );
-			console.log( 'Writing to console:', event.data );
 			if ( data.type === 'key' ) this.ptyProcess.write( data.key );
 			if ( data.type === 'resize' ) this.ptyProcess.resize( data.cols, data.rows );
 		}
-		setInterval( () => {
-			// this.ptyProcess.write( 'ls -lh\r' );
-		}, 1000 );
-		console.log( 'We should be handling exit as well' );
 	}
 
 	private scheduledTasks = async () => {
