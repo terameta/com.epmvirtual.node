@@ -151,10 +151,8 @@ export class EPMNode {
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
 		pc.oniceconnectionstatechange = () => {
 			console.log( 'RTC: Connection state changed -', pc.iceConnectionState );
-			if ( pc.iceConnectionState === 'disconnected' ) {
-				setTimeout( () => {
-					if ( iceCandidateSub ) iceCandidateSub.unsubscribe();
-				}, 120000 );
+			if ( pc.iceConnectionState === 'failed' ) {
+				if ( iceCandidateSub ) iceCandidateSub.unsubscribe();
 			}
 		}
 		pc.onicecandidate = ( candidate ) => {
