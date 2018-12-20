@@ -186,10 +186,12 @@ export class EPMNode {
 			dc.onclose = ( event ) => {
 				console.log( 'RTC: Data channel is now closed -', dc.label );
 				this.ptyProcess.kill();
+				this.ptyProcess = null;
 			}
 			dc.onerror = ( event ) => {
 				console.log( 'RTC: Data channel is now in error state -', dc.label );
 				this.ptyProcess.kill();
+				this.ptyProcess = null;
 			}
 		}
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
@@ -199,6 +201,7 @@ export class EPMNode {
 	}
 
 	private handleConsoleRequest = ( dc: RTCDataChannel ) => {
+		if ( this.ptyProcess ) { this.ptyProcess.kill(); this.ptyProcess = null; }
 		this.ptyProcess = pty.spawn( this.shell, [], { name: 'xterm-color', cols: 80, rows: 30, cwd: process.env.HOME, env: process.env } );
 		this.ptyProcess.on( 'data', ( data ) => dc.send( JSON.stringify( { type: 'data', data } ) ) );
 		this.ptyProcess.on( 'exit', ( exitCode: number ) => dc.send( JSON.stringify( { type: 'exit', exitCode } ) ) );
