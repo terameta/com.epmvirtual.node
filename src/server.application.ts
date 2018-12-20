@@ -150,6 +150,9 @@ export class EPMNode {
 		await this.nodeReference.update( { 'rtc.offer': null } );
 		const { servers } = await this.database.doc( 'settings/rtc' ).get().then( s => s.data() );
 		const pc = new wrtc.RTCPeerConnection( servers, { optional: [] } );
+		pc.oniceconnectionstatechange = () => {
+			console.log( 'Connection state changed', pc.iceConnectionState );
+		}
 		pc.onicecandidate = ( candidate ) => {
 			console.log( 'We have ice candidate', candidate.type );
 			if ( candidate.candidate ) {
