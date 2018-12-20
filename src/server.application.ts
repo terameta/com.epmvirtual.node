@@ -177,27 +177,17 @@ export class EPMNode {
 			}
 		} );
 		pc.ondatachannel = ( event: RTCDataChannelEvent ) => {
-			console.log( 'Data channel is now received' );
 			const dc = event.channel;
-			console.log( 'Data channel id:', dc.id );
-			console.log( 'Data channel label:', dc.label );
+			console.log( 'RTC: Data channel received -', dc.id, dc.label );
 			dc.onopen = () => {
+				console.log( 'RTC: Data channel is now open -', dc.label );
 				if ( dc.label === 'console' ) this.handleConsoleRequest( dc );
-				console.log( 'Data channel is now open' );
-				// dc.onmessage = ( event ) => {
-				// 	console.log( 'We received RTC data on', dc.label, event.data );
-				// }
-				// setTimeout( () => {
-				// 	dc.close();
-				// }, 60000 );
 			}
 			dc.onclose = ( event ) => {
-				console.log( 'Data channel is now closed' );
-				console.log( event );
+				console.log( 'RTC: Data channel is now closed -', dc.label );
 			}
 			dc.onerror = ( event ) => {
-				console.log( 'Data channel erred', dc.label );
-				console.log( event );
+				console.log( 'RTC: Data channel is now in error state -', dc.label );
 			}
 		}
 		console.log( 'Peer connection is now created' );
