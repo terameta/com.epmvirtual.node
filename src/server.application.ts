@@ -140,8 +140,12 @@ export class EPMNode {
 			filter( i => ( !i && this.isNodeReceived ) )
 		).subscribe( async ( isNew ) => {
 			if ( this.node.rtc.offer ) { await this.handleRTCOffer(); }
-			Object.keys( this.node ).forEach( k => console.log( k ) );
+			if ( this.node.commands ) { await this.handleCommands(); }
 		} )
+	}
+
+	private handleCommands = async () => {
+
 	}
 
 	private handleRTCOffer = async () => {
