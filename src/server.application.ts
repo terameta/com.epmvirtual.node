@@ -141,7 +141,7 @@ export class EPMNode {
 		).subscribe( async ( isNew ) => {
 			if ( this.node.rtc.offer ) { await this.handleRTCOffer(); }
 			if ( this.node.commands ) { await this.handleCommands(); }
-		} )
+		} );
 	}
 
 	private handleCommands = async () => {
