@@ -11,7 +11,14 @@ export interface Node {
 	disk: NodeBlockDevicesData[],
 	poolAssignments: PoolAssignment,
 	poolWorkerAssignments: PoolWorkerAssignment,
-	rtc: any
+	rtc: any,
+	commands: NodeCommand[]
+}
+
+export interface NodeCommand {
+	date: any,
+	command: string,
+	dateValue?: Date
 }
 
 export interface PoolAssignment {
@@ -112,7 +119,8 @@ const baseNode: Node = {
 	disk: null,
 	poolAssignments: {},
 	poolWorkerAssignments: {},
-	rtc: null
+	rtc: null,
+	commands: []
 };
 
 export const defaultNode = (): Node => JSONDeepCopy( baseNode );
