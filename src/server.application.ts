@@ -1,7 +1,7 @@
 import { interval, BehaviorSubject, timer, Subject } from 'rxjs';
 import { filter, catchError, delay, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
 import * as si from 'systeminformation';
-import { defaultNode, Node } from '../models/node';
+import { defaultNode, Node, NodeCommand } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
@@ -24,6 +24,8 @@ export class EPMNode {
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
+
+	private commandQueue: NodeCommand[] = [];
 
 	constructor() {
 		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual Time:', new Date() ) );
