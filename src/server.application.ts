@@ -148,7 +148,7 @@ export class EPMNode {
 		console.log( 'There are commands to be run in the queue' );
 		console.log( this.node.commands.length );
 		if ( this.node.commands && this.node.commands.length > 0 ) {
-
+			this.node.commands.forEach( c => console.log( c ) );
 		}
 	}
 
