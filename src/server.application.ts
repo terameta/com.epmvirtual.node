@@ -149,7 +149,7 @@ export class EPMNode {
 	private handleCommands = async () => {
 		console.log( 'There are commands to be run in the queue' );
 		console.log( this.node.commands.length );
-		const cc = this.node.commands.splice( 0, 1 );
+		const cc = this.node.commands.splice( 0, 1 )[ 0 ];
 		console.log( cc );
 		await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( cc ) } ).catch( console.error );
 	}
