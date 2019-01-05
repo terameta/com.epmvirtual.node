@@ -27,6 +27,7 @@
 		"rxjs": "^6.3.3",
 		"systeminformation": "^3.54.0",
 		"uuid": "^3.3.2",
+		"uuid-time": "^1.0.0",
 		"wrtc": "^0.3.3"
 	},
 	"devDependencies": {
