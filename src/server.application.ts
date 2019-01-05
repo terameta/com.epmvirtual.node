@@ -141,17 +141,16 @@ export class EPMNode {
 		this.isThisaNewNode$.pipe(
 			filter( i => ( !i && this.isNodeReceived ) )
 		).subscribe( async ( isNew ) => {
-			if ( this.node.rtc.offer ) { await this.handleRTCOffer(); }
-			if ( this.node.commands ) { await this.handleCommands(); }
+			if ( this.node.rtc && this.node.rtc.offer ) { await this.handleRTCOffer(); }
+			if ( this.node.commands && this.node.commands.length > 0 ) { await this.handleCommands(); }
 		} );
 	}
 
 	private handleCommands = async () => {
 		console.log( 'There are commands to be run in the queue' );
 		console.log( this.node.commands.length );
-		if ( this.node.commands && this.node.commands.length > 0 ) {
-			this.node.commands.forEach( c => console.log( c ) );
-		}
+		const cc = this.node.commands.splice( 0, 1 );
+		await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( cc ) } ).catch( console.error );
 	}
 
 	private handleRTCOffer = async () => {
