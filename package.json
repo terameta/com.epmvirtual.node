@@ -23,7 +23,7 @@
 	"dependencies": {
 		"firebase": "^5.7.0",
 		"node-pty": "^0.7.8",
-		"rxfire": "^3.2.0",
+		"rxfire": "^3.2.2",
 		"rxjs": "^6.3.3",
 		"systeminformation": "^3.54.0",
 		"uuid": "^3.3.2",
