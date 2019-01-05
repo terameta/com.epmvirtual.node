@@ -15,20 +15,11 @@ export interface Node {
 	commands: NodeCommand[]
 }
 
-export interface NodeCommand {
-	date: any,
-	command: string,
-	dateValue?: Date
-}
+export interface NodeCommand { uuid: string, command: string }
 
-export interface PoolAssignment {
-	[ key: string ]: boolean
-}
+export interface PoolAssignment { [ key: string ]: boolean }
 
-export interface PoolWorkerAssignment {
-	[ key: string ]: boolean
-}
-
+export interface PoolWorkerAssignment { [ key: string ]: boolean }
 
 interface NodeNetworkInterfacesData {
 	iface: string;
