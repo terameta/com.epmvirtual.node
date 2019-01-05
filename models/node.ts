@@ -70,7 +70,7 @@ interface NodeCpuData {
 	speedmax: string;
 	cores: number;
 	cache: NodeCpuCacheData;
-	flags: string;
+	flags?: string;
 }
 
 interface NodeCpuCacheData {
