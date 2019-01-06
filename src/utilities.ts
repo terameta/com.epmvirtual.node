@@ -1,3 +1,6 @@
+import { v1 as utv1 } from 'uuid-time';
+
+
 export const waiter = ( timeout?: number ) => { return new Promise( ( resolve ) => { setTimeout( resolve, timeout || 5000 ); } ); }
 export function SortByName( e1: any, e2: any ) { if ( e1.name > e2.name ) { return 1; } else if ( e1.name < e2.name ) { return -1; } else { return 0; } }
 export function SortByDate( e1: any, e2: any ) { if ( e1.date > e2.date ) { return 1; } else if ( e1.date < e2.date ) { return -1; } else { return 0; } }
@@ -18,3 +21,4 @@ export const deleteKeyIfFunction = ( payload: any ) => {
 		if ( typeof payload[ k ] === 'function' ) delete payload[ k ];
 	} );
 }
+export function SortByUUID( e1: { uuid: string }, e2: { uuid: string } ) { if ( utv1( e1.uuid ) > utv1( e2.uuid ) ) { return 1; } else if ( utv1( e1.uuid ) < utv1( e2.uuid ) ) { return -1; } else { return 0; } }
