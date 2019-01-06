@@ -151,6 +151,7 @@ export class EPMNode {
 		console.log( this.node.commands.length );
 		const cc = this.node.commands.splice( 0, 1 )[ 0 ];
 		console.log( cc );
+
 		await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( cc ) } ).catch( console.error );
 	}
 
