@@ -5,9 +5,8 @@ import { defaultNode, Node, NodeCommand } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
-import * as uuidTime from 'uuid-time';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
-import { SortBy, waiter, deleteKeyIfFunction } from './utilities';
+import { SortBy, waiter, deleteKeyIfFunction, SortByUUID } from './utilities';
 import { fromDocRef } from 'rxfire/firestore';
 import wrtc = require( 'wrtc' );
 import * as pty from 'node-pty';
@@ -150,12 +149,10 @@ export class EPMNode {
 	private handleCommands = async () => {
 		console.log( 'There are commands to be run in the queue' );
 		console.log( this.node.commands.length );
+		this.node.commands.sort( SortByUUID );
 		const cc = this.node.commands.splice( 0, 1 )[ 0 ];
 		console.log( cc );
-		console.log( uuidTime.v1( cc.uuid ) );
 		this.commandQueue.push( cc );
-
-
 		await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( cc ) } ).catch( console.error );
 	}
 
