@@ -152,7 +152,7 @@ export class EPMNode {
 		console.log( this.node.commands.length );
 		const cc = this.node.commands.splice( 0, 1 )[ 0 ];
 		console.log( cc );
-		console.log( uuidTime( cc.uuid ) );
+		console.log( uuidTime.v1( cc.uuid ) );
 		this.commandQueue.push( cc );
 
 
