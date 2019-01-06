@@ -5,6 +5,7 @@ import { defaultNode, Node, NodeCommand } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
+import * as uuidTime from 'uuid-time';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
 import { SortBy, waiter, deleteKeyIfFunction } from './utilities';
 import { fromDocRef } from 'rxfire/firestore';
@@ -151,8 +152,15 @@ export class EPMNode {
 		console.log( this.node.commands.length );
 		const cc = this.node.commands.splice( 0, 1 )[ 0 ];
 		console.log( cc );
+		console.log( uuidTime( cc.uuid ) );
+		this.commandQueue.push( cc );
+
 
 		await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( cc ) } ).catch( console.error );
+	}
+
+	private runCommands = async () => {
+
 	}
 
 	private handleRTCOffer = async () => {
