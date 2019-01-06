@@ -149,6 +149,7 @@ export class EPMNode {
 	private handleCommands = async () => {
 		console.log( 'There are commands to be run in the queue' );
 		console.log( this.node.commands.length );
+		console.log( 'We will now sort by UUID' );
 		this.node.commands.sort( SortByUUID );
 		const cc = this.node.commands.splice( 0, 1 )[ 0 ];
 		console.log( cc );
