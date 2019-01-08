@@ -154,6 +154,7 @@ export class EPMNode {
 		const cc = this.node.commands.splice( 0, 1 )[ 0 ];
 		console.log( cc );
 		this.commandQueue.push( cc );
+		this.commandQueue.sort( SortByUUID );
 		await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( cc ) } ).catch( console.error );
 	}
 
