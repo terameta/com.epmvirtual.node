@@ -162,24 +162,15 @@ export class EPMNode {
 
 	private runCommands = async () => {
 		if ( !this.isCommandRunning ) {
-			const cc = this.commandQueue.splice( 0, 1 );
+			const cc = this.commandQueue.splice( 0, 1 )[ 0 ];
 			if ( cc ) {
-
+				this.isCommandRunning = true;
+				await this.executeCommandAction( cc.command );
+				this.isCommandRunning = false;
+				this.runCommands();
 			}
 		}
 	}
-	// 	private executeCommand = async ( command: NodeCommand ) => {
-	// 		// console.log( '===========================================' );
-	// 		// console.log( '===========================================' );
-	// 		// console.log( 'We sholud now execute below command' );
-	// 		// console.log( command );
-	// 		// console.log( '===========================================' );
-	// 		// console.log( 'Initiating execution now' );
-	// 		return await this.executeCommandAction( command.command );
-	// 		// console.log( '===========================================' );
-	// 		// console.log( 'Execution is now complete' );
-	// 		// console.log( '===========================================' );
-	// 	}
 
 	private executeCommandAction = ( command: string ): Promise<string> => {
 		return new Promise( ( resolve, reject ) => {
