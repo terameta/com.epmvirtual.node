@@ -28,7 +28,7 @@
 		"systeminformation": "^3.54.0",
 		"uuid": "^3.3.2",
 		"uuid-time": "^1.0.0",
-		"wrtc": "^0.3.3"
+		"wrtc": "^0.3.4"
 	},
 	"devDependencies": {
 		"@types/node": "^10.12.18",
