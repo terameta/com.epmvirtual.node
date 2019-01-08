@@ -161,9 +161,12 @@ export class EPMNode {
 	}
 
 	private runCommands = async () => {
+		console.log( 'runCommands called' );
 		if ( !this.isCommandRunning ) {
+			console.log( 'runCommands - !this.isCommandRunning' );
 			const cc = this.commandQueue.splice( 0, 1 )[ 0 ];
 			if ( cc ) {
+				console.log( 'runCommands - cc' );
 				this.isCommandRunning = true;
 				const result = await this.executeCommandAction( cc.command );
 				this.isCommandRunning = false;
