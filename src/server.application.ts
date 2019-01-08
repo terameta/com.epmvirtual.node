@@ -169,6 +169,7 @@ export class EPMNode {
 			if ( cc ) {
 				console.log( 'runCommands - cc' );
 				this.isCommandRunning = true;
+				await this.nodeReference.update( { currentCommand: cc.command } );
 				const result = await this.executeCommandAction( cc.command );
 				this.isCommandRunning = false;
 				await this.nodeReference.update( { currentCommand: '', lastCommand: cc.command, lastCommandResult: result } );
