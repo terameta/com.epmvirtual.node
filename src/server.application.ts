@@ -11,7 +11,7 @@ import { fromDocRef } from 'rxfire/firestore';
 import wrtc = require( 'wrtc' );
 import * as pty from 'node-pty';
 import { platform } from 'os';
-
+import { exec } from 'child_process';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -180,6 +180,19 @@ export class EPMNode {
 	// 		// console.log( 'Execution is now complete' );
 	// 		// console.log( '===========================================' );
 	// 	}
+
+	private executeCommandAction = ( command: string ): Promise<string> => {
+		return new Promise( ( resolve, reject ) => {
+			exec( command, ( error, stdout ) => {
+				if ( error ) {
+					// reject( error );
+					resolve( '!!!!!!!!!!!\n' + error.message + '\n!!!!!!!!!!!' );
+				} else {
+					resolve( stdout );
+				}
+			} );
+		} );
+	}
 
 	private handleRTCOffer = async () => {
 		console.log( 'RTC: Request received' );
@@ -375,18 +388,7 @@ export class EPMNode {
 
 
 
-// 	private executeCommandAction = ( command: string ): Promise<string> => {
-// 		return new Promise( ( resolve, reject ) => {
-// 			exec( command, ( error, stdout ) => {
-// 				if ( error ) {
-// 					// reject( error );
-// 					resolve( '!!!!!!!!!!!\n' + error.message + '\n!!!!!!!!!!!' );
-// 				} else {
-// 					resolve( stdout );
-// 				}
-// 			} );
-// 		} );
-// 	}
+
 
 // 	private getFirstInArray = ( items: any[] ) => {
 // 		items.forEach( i => i.dateValue = i.date.toDate() );
