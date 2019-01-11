@@ -152,7 +152,7 @@ export class EPMNode {
 	}
 
 	private handlePools = async () => {
-		if ( !this.poolsSubscription ) this.poolsSubscription = fromCollectionRef( this.poolsReference ).subscribe( console.log );
+		if ( !this.poolsSubscription ) this.poolsSubscription = fromCollectionRef( this.poolsReference ).subscribe( console.log, console.error );
 	}
 	private cancelPools = async () => {
 		if ( this.poolsSubscription ) this.poolsSubscription.unsubscribe();
