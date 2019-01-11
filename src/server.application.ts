@@ -158,7 +158,10 @@ export class EPMNode {
 		} );
 	}
 	private cancelPools = async () => {
-		if ( this.poolsSubscription ) this.poolsSubscription.unsubscribe();
+		if ( this.poolsSubscription ) {
+			this.poolsSubscription.unsubscribe();
+			this.poolsSubscription = null;
+		}
 	}
 
 	private handleCommands = async () => {
