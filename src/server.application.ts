@@ -157,12 +157,7 @@ export class EPMNode {
 			console.log( error.name, ':', error.message );
 		} );
 	}
-	private cancelPools = async () => {
-		if ( this.poolsSubscription ) {
-			this.poolsSubscription.unsubscribe();
-			this.poolsSubscription = null;
-		}
-	}
+	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
 
 	private handleCommands = async () => {
 		console.log( 'There are commands to be run in the queue' );
