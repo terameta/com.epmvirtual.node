@@ -142,11 +142,14 @@ export class EPMNode {
 		this.isThisaNewNode$.pipe(
 			filter( i => ( !i && this.isNodeReceived ) )
 		).subscribe( async ( isNew ) => {
+			if ( this.node.poolAssignments && Object.values( this.node.poolAssignments ).filter( v => v ).length > 0 ) { this.handlePools(); }
 			if ( this.node.rtc && this.node.rtc.offer ) { await this.handleRTCOffer(); }
 			if ( this.node.commands && this.node.commands.length > 0 ) { await this.handleCommands(); }
-			console.log( 'Pool Assignments:', this.node.poolAssignments, 'Should we take action', Object.values( this.node.poolAssignments ).filter( v => v ).length );
-			console.log( 'Pool Worker Assignments:', this.node.poolWorkerAssignments, 'SWTA:', Object.values( this.node.poolWorkerAssignments ).filter( v => v ).length );
 		} );
+	}
+
+	private handlePools = async () => {
+
 	}
 
 	private handleCommands = async () => {
