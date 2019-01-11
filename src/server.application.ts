@@ -152,10 +152,13 @@ export class EPMNode {
 	}
 
 	private handlePools = async () => {
-		if ( !this.poolsSubscription ) this.poolsSubscription = fromCollectionRef( this.poolsReference ).subscribe( console.log, ( error: FirebaseError ) => {
+		if ( !this.poolsSubscription ) this.poolsSubscription = fromCollectionRef( this.poolsReference ).subscribe( this.handlePoolsAction, ( error: FirebaseError ) => {
 			console.log( 'We are unable to subscribe to the storage pools' );
 			console.log( error.name, ':', error.message );
 		} );
+	}
+	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
+		poolsSnapshot.docs.forEach( d => console.log( d ) );
 	}
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
 
