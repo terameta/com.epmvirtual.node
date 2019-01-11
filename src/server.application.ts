@@ -142,7 +142,7 @@ export class EPMNode {
 		this.isThisaNewNode$.pipe(
 			filter( i => ( !i && this.isNodeReceived ) )
 		).subscribe( async ( isNew ) => {
-			if ( this.node.poolAssignments && Object.values( this.node.poolAssignments ).filter( v => v ).length > 0 ) { this.handlePools(); }
+			if ( this.node.poolAssignments && Object.values( this.node.poolAssignments ).filter( v => v ).length > 0 ) { this.handlePools(); } else { this.cancelPools(); }
 			if ( this.node.rtc && this.node.rtc.offer ) { await this.handleRTCOffer(); }
 			if ( this.node.commands && this.node.commands.length > 0 ) { await this.handleCommands(); }
 		} );
@@ -150,6 +150,9 @@ export class EPMNode {
 
 	private handlePools = async () => {
 		console.log( 'We are at the handle pools' );
+	}
+	private cancelPools = async () => {
+
 	}
 
 	private handleCommands = async () => {
