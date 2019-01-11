@@ -144,6 +144,8 @@ export class EPMNode {
 		).subscribe( async ( isNew ) => {
 			if ( this.node.rtc && this.node.rtc.offer ) { await this.handleRTCOffer(); }
 			if ( this.node.commands && this.node.commands.length > 0 ) { await this.handleCommands(); }
+			console.log( 'Pool Assignments:', this.node.poolAssignments );
+			console.log( 'Pool Worker Assignments:', this.node.poolWorkerAssignments );
 		} );
 	}
 
