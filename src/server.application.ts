@@ -53,7 +53,7 @@ export class EPMNode {
 		await this.connectToDatabase();
 		console.log( '*** Connected to firestore database' );
 		this.nodeReference = this.database.doc( 'nodes/' + this.node.id );
-		this.poolsReference = this.database.collection( 'pools' );
+		this.poolsReference = this.database.collection( 'storagepools' );
 		await waiter();
 		await this.identifyExistance();
 		await this.actOnNewNode();
