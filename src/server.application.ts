@@ -21,7 +21,7 @@ export class EPMNode {
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
 	private isNodeReceived = false;
-	private poolsReference: firestore.DocumentReference = null;
+	private poolsReference: firestore.CollectionReference = null;
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
