@@ -149,7 +149,7 @@ export class EPMNode {
 	}
 
 	private handlePools = async () => {
-
+		console.log( 'We are at the handle pools' );
 	}
 
 	private handleCommands = async () => {
