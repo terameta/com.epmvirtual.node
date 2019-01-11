@@ -1,4 +1,4 @@
-import { interval, BehaviorSubject, timer, Subject } from 'rxjs';
+import { interval, BehaviorSubject, timer, Subject, Subscription } from 'rxjs';
 import { filter, catchError, delay, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
 import * as si from 'systeminformation';
 import { defaultNode, Node, NodeCommand } from '../models/node';
@@ -22,6 +22,7 @@ export class EPMNode {
 	private nodeReference: firestore.DocumentReference = null;
 	private isNodeReceived = false;
 	private poolsReference: firestore.CollectionReference = null;
+	private poolsSubscription: Subscription = null;
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
