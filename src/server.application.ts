@@ -7,7 +7,7 @@ import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
 import { SortBy, waiter, deleteKeyIfFunction, SortByUUID } from './utilities';
-import { fromDocRef } from 'rxfire/firestore';
+import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
 import wrtc = require( 'wrtc' );
 import * as pty from 'node-pty';
 import { platform } from 'os';
@@ -152,10 +152,10 @@ export class EPMNode {
 	}
 
 	private handlePools = async () => {
-		console.log( 'We are at the handle pools' );
+		if ( !this.poolsSubscription ) this.poolsSubscription = fromCollectionRef( this.poolsReference ).subscribe( console.log );
 	}
 	private cancelPools = async () => {
-
+		if ( this.poolsSubscription ) this.poolsSubscription.unsubscribe();
 	}
 
 	private handleCommands = async () => {
