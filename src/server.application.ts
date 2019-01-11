@@ -5,7 +5,7 @@ import { defaultNode, Node, NodeCommand } from '../models/node';
 import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
-import { initializeApp, app, firestore, auth as firebaseAuth } from 'firebase';
+import { initializeApp, app, firestore, auth as firebaseAuth, FirebaseError } from 'firebase';
 import { SortBy, waiter, deleteKeyIfFunction, SortByUUID } from './utilities';
 import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
 import wrtc = require( 'wrtc' );
@@ -152,7 +152,10 @@ export class EPMNode {
 	}
 
 	private handlePools = async () => {
-		if ( !this.poolsSubscription ) this.poolsSubscription = fromCollectionRef( this.poolsReference ).subscribe( console.log, console.error );
+		if ( !this.poolsSubscription ) this.poolsSubscription = fromCollectionRef( this.poolsReference ).subscribe( console.log, ( error: FirebaseError ) => {
+			console.log( 'We are unable to subscribe to the storage pools' );
+			console.log( error.name, ':', error.message );
+		} );
 	}
 	private cancelPools = async () => {
 		if ( this.poolsSubscription ) this.poolsSubscription.unsubscribe();
