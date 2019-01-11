@@ -21,6 +21,7 @@ export class EPMNode {
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
 	private isNodeReceived = false;
+	private poolsReference: firestore.DocumentReference = null;
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
@@ -51,6 +52,7 @@ export class EPMNode {
 		await this.connectToDatabase();
 		console.log( '*** Connected to firestore database' );
 		this.nodeReference = this.database.doc( 'nodes/' + this.node.id );
+		this.poolsReference = this.database.collection( 'pools' );
 		await waiter();
 		await this.identifyExistance();
 		await this.actOnNewNode();
