@@ -12,6 +12,7 @@ import wrtc = require( 'wrtc' );
 import * as pty from 'node-pty';
 import { platform } from 'os';
 import { exec } from 'child_process';
+import { StoragePool } from 'models/storagepool.models';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -53,7 +54,7 @@ export class EPMNode {
 		await this.connectToDatabase();
 		console.log( '*** Connected to firestore database' );
 		this.nodeReference = this.database.doc( 'nodes/' + this.node.id );
-		this.poolsReference = this.database.collection( 'storagepools' );
+		this.poolsReference = this.database.collection<StoragePool>( 'storagepools' );
 		await waiter();
 		await this.identifyExistance();
 		await this.actOnNewNode();
