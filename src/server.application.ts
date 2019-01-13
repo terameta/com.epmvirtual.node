@@ -24,6 +24,7 @@ export class EPMNode {
 	private isNodeReceived = false;
 	private poolsReference: firestore.CollectionReference = null;
 	private poolsSubscription: Subscription = null;
+	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean } } = null;
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
