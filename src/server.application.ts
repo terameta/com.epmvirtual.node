@@ -158,6 +158,8 @@ export class EPMNode {
 		} );
 	}
 	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
+		console.log( this.node.poolAssignments );
+		console.log( this.node.poolWorkerAssignments );
 		poolsSnapshot.docs.forEach( d => console.log( d.id, d.data() ) );
 	}
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
