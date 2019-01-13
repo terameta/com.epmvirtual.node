@@ -24,7 +24,7 @@ export class EPMNode {
 	private isNodeReceived = false;
 	private poolsReference: firestore.CollectionReference = null;
 	private poolsSubscription: Subscription = null;
-	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean } } = null;
+	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean, subscription: Subscription } } = null;
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
@@ -160,6 +160,17 @@ export class EPMNode {
 		} );
 	}
 	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
+		if ( !this.pools ) {
+			this.pools = {};
+		} else {
+			Object.values( this.pools ).forEach( p => {
+				if ( p.subscription ) {
+					p.subscription.unsubscribe();
+					p.subscription = null;
+				}
+			} );
+			this.pools = {};
+		}
 		console.log( this.node.poolAssignments );
 		console.log( this.node.poolWorkerAssignments );
 		poolsSnapshot.docs.
@@ -168,7 +179,8 @@ export class EPMNode {
 				if ( this.node.poolAssignments[ p.id ] === true ) {
 					this.pools[ p.id ] = {
 						pool: p,
-						worker: this.node.poolWorkerAssignments[ p.id ]
+						worker: this.node.poolWorkerAssignments[ p.id ],
+						subscription: null
 					}
 				}
 			} );
