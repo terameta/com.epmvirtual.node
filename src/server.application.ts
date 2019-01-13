@@ -168,7 +168,7 @@ export class EPMNode {
 		// 		}
 		// 	} );
 		// }
-		this.pools = {};
+		if ( !this.pools ) this.pools = {};
 		console.log( this.node.poolAssignments );
 		console.log( this.node.poolWorkerAssignments );
 		poolsSnapshot.docs.
