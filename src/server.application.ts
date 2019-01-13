@@ -13,6 +13,7 @@ import * as pty from 'node-pty';
 import { platform } from 'os';
 import { exec } from 'child_process';
 import { StoragePool } from 'models/storagepool.models';
+import { returner } from './virsh/returner';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -169,7 +170,7 @@ export class EPMNode {
 		// 	} );
 		// }
 		if ( !this.pools ) this.pools = {};
-		console.log( await this.executeCommandAction( 'virsh pool-list --all' ) );
+		console.log( returner( await this.executeCommandAction( 'virsh pool-list --all' ) ) );
 		poolsSnapshot.docs.
 			map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
 			forEach( p => {
