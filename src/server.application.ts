@@ -169,6 +169,7 @@ export class EPMNode {
 		// 	} );
 		// }
 		if ( !this.pools ) this.pools = {};
+		console.log( await this.executeCommandAction( 'virsh pool-list --all' ) );
 		poolsSnapshot.docs.
 			map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
 			forEach( p => {
