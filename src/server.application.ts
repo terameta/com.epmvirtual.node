@@ -1,7 +1,7 @@
 import { interval, BehaviorSubject, timer, Subject, Subscription } from 'rxjs';
 import { filter, catchError, delay, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
 import * as si from 'systeminformation';
-import { defaultNode, Node, NodeCommand } from '../models/node';
+import { defaultNode, Node, NodeCommand } from '../models/node.models';
 import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
