@@ -164,7 +164,15 @@ export class EPMNode {
 		console.log( this.node.poolWorkerAssignments );
 		poolsSnapshot.docs.
 			map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
-			forEach( d => console.log( d ) );
+			forEach( p => {
+				if ( this.node.poolAssignments[ p.id ] === true ) {
+					this.pools[ p.id ] = {
+						pool: p,
+						worker: this.node.poolWorkerAssignments[ p.id ]
+					}
+				}
+			} );
+		console.log( this.pools );
 	}
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
 
