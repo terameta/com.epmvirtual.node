@@ -6,12 +6,8 @@ export const returner = async ( payload: string ) => {
 	const headerN = headers.length;
 	const indices = headers.map( h => lines[ 0 ].indexOf( h ) );
 	const toReturn: any[] = [];
-	console.log( '===========================================' );
-	console.log( headers );
-	console.log( indices );
-	console.log( '===========================================' );
 	lines.forEach( ( l, li ) => {
-		if ( li > 0 ) {
+		if ( li > 1 ) {
 			const toPush: any = {};
 			headers.forEach( ( h, hi ) => {
 				// if ( hi < ( headerN - 1 ) ) {
@@ -23,9 +19,6 @@ export const returner = async ( payload: string ) => {
 			toReturn.push( toPush );
 		}
 	} );
-	console.log( toReturn );
-	console.log( '===========================================' );
-	console.log( '===========================================' );
 	return toReturn;
 }
 /**
