@@ -1,17 +1,32 @@
 export const returner = async ( payload: string ) => {
 	payload = payload.trim();
-	const lines = payload.split( '\n' );
-	lines.forEach( line => line = line.trim() );
+	const lines = payload.split( '\n' ).map( l => l.trim() );
 	if ( lines.length === 0 ) throw new Error( 'Virsh returner payload is not valid' );
-	lines.forEach( l => console.log( '>>', l ) );
 	const headers = lines[ 0 ].split( ' ' ).filter( h => !!h && h !== '' );
+	const headerN = headers.length;
 	const indices = headers.map( h => lines[ 0 ].indexOf( h ) );
-	console.log( '===========================================' );
+	const toReturn: any[] = [];
 	console.log( '===========================================' );
 	console.log( headers );
 	console.log( indices );
 	console.log( '===========================================' );
+	lines.forEach( ( l, li ) => {
+		if ( li > 0 ) {
+			const toPush: any = {};
+			headers.forEach( ( h, hi ) => {
+				// if ( hi < ( headerN - 1 ) ) {
+				toPush[ h ] = l.substring( indices[ hi ], indices[ hi + 1 ] );
+				// } else {
+
+				// }
+			} );
+			toReturn.push( toPush );
+		}
+	} );
+	console.log( toReturn );
 	console.log( '===========================================' );
+	console.log( '===========================================' );
+	return toReturn;
 }
 /**
  *
