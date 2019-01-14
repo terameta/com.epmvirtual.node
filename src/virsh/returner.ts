@@ -4,6 +4,12 @@ export const returner = async ( payload: string ) => {
 	lines.forEach( line => line = line.trim() );
 	if ( lines.length === 0 ) throw new Error( 'Virsh returner payload is not valid' );
 	lines.forEach( l => console.log( l ) );
+	const headers = lines[ 0 ].split( ' ' );
+	console.log( '===========================================' );
+	console.log( '===========================================' );
+	console.log( headers );
+	console.log( '===========================================' );
+	console.log( '===========================================' );
 }
 /**
  *
