@@ -164,22 +164,22 @@ export class EPMNode {
 
 		if ( !this.pools ) this.pools = {};
 
-		poolsSnapshot.docs.
-			map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
-			forEach( p => {
-				if ( this.node.poolAssignments[ p.id ] === true ) {
-					this.pools[ p.id ] = {
-						pool: p,
-						worker: this.node.poolWorkerAssignments[ p.id ]
-					}
-				}
-			} );
-		console.log( this.pools );
+		const receivedPools = poolsSnapshot.docs.map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).filter( p => this.node.poolAssignments[ p.id ] === true )
+		// forEach( p => {
+		// 	if ( this.node.poolAssignments[ p.id ] === true ) {
+		// 		this.pools[ p.id ] = {
+		// 			pool: p,
+		// 			worker: this.node.poolWorkerAssignments[ p.id ]
+		// 		}
+		// 	}
+		// } );
+
 
 		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
 		const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
+		console.log( 'Received Pools:', receivedPools );
 		console.log( 'Existing Pools:', existingPools );
 		console.log( 'Existing Secrets:', existingSecrets );
 		console.log( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
