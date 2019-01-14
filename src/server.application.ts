@@ -1,4 +1,4 @@
-import { interval, BehaviorSubject, timer, Subject, Subscription } from 'rxjs';
+import { interval, BehaviorSubject, timer, Subject, Subscription, combineLatest } from 'rxjs';
 import { filter, catchError, delay, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
 import * as si from 'systeminformation';
 import { defaultNode, Node, NodeCommand } from '../models/node.models';
@@ -168,15 +168,6 @@ export class EPMNode {
 			map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
 			filter( p => this.node.poolAssignments[ p.id ] === true ).
 			map( p => ( { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } ) );
-		// forEach( p => {
-		// 	if ( this.node.poolAssignments[ p.id ] === true ) {
-		// 		this.pools[ p.id ] = {
-		// 			pool: p,
-		// 			worker: this.node.poolWorkerAssignments[ p.id ]
-		// 		}
-		// 	}
-		// } );
-
 
 		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
 		const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
