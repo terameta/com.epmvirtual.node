@@ -164,7 +164,10 @@ export class EPMNode {
 
 		if ( !this.pools ) this.pools = {};
 
-		const receivedPools = poolsSnapshot.docs.map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).filter( p => this.node.poolAssignments[ p.id ] === true )
+		const receivedPools = poolsSnapshot.docs.
+			map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
+			filter( p => this.node.poolAssignments[ p.id ] === true ).
+			map( p => ( { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } ) );
 		// forEach( p => {
 		// 	if ( this.node.poolAssignments[ p.id ] === true ) {
 		// 		this.pools[ p.id ] = {
