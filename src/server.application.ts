@@ -159,6 +159,7 @@ export class EPMNode {
 			console.log( 'We are unable to subscribe to the storage pools' );
 			console.log( error.name, ':', error.message );
 		} );
+		this.handlePoolsAction();
 	}
 	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
 
