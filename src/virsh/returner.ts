@@ -1,4 +1,6 @@
-export const returner = async ( payload: string ) => {
+import { keyBy } from 'lodash';
+
+export const returner = async ( payload: string, by = null ) => {
 	payload = payload.trim();
 	const lines = payload.split( '\n' ).map( l => l.trim() );
 	if ( lines.length === 0 ) throw new Error( 'Virsh returner payload is not valid' );
@@ -17,5 +19,9 @@ export const returner = async ( payload: string ) => {
 			toReturn.push( toPush );
 		}
 	} );
-	return toReturn;
+	if ( by ) {
+		return keyBy( toReturn, by );
+	} else {
+		return toReturn;
+	}
 }
