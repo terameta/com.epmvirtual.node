@@ -172,7 +172,7 @@ export class EPMNode {
 
 		if ( !this.pools ) this.pools = {};
 		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
-		const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ), 'Name' );
+		const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( 'Pools:', existingPools );
