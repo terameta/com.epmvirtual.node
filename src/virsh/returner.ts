@@ -5,9 +5,11 @@ export const returner = async ( payload: string ) => {
 	if ( lines.length === 0 ) throw new Error( 'Virsh returner payload is not valid' );
 	lines.forEach( l => console.log( l ) );
 	const headers = lines[ 0 ].split( ' ' ).filter( h => !!h && h !== '' );
+	const indices = headers.map( h => lines[ 0 ].indexOf( h ) );
 	console.log( '===========================================' );
 	console.log( '===========================================' );
 	console.log( headers );
+	console.log( indices );
 	console.log( '===========================================' );
 	console.log( '===========================================' );
 }
