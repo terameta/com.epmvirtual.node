@@ -229,8 +229,7 @@ export class EPMNode {
 		return new Promise( ( resolve, reject ) => {
 			exec( command, ( error, stdout ) => {
 				if ( error ) {
-					// reject( error );
-					resolve( '!!!!!!!!!!!\n' + error.message + '\n!!!!!!!!!!!' );
+					reject( error );
 				} else {
 					resolve( stdout );
 				}
