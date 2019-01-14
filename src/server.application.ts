@@ -161,14 +161,6 @@ export class EPMNode {
 		} );
 	}
 	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
-		// if ( this.pools ) {
-		// 	Object.values( this.pools ).forEach( p => {
-		// 		if ( p.subscription ) {
-		// 			p.subscription.unsubscribe();
-		// 			p.subscription = null;
-		// 		}
-		// 	} );
-		// }
 
 		if ( !this.pools ) this.pools = {};
 		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
