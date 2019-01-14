@@ -171,7 +171,7 @@ export class EPMNode {
 		// }
 
 		if ( !this.pools ) this.pools = {};
-		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ) );
+		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
 		const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
@@ -192,6 +192,7 @@ export class EPMNode {
 				}
 			} );
 		console.log( this.pools );
+
 	}
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
 
