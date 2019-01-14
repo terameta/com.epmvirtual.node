@@ -163,15 +163,6 @@ export class EPMNode {
 	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
 
 		if ( !this.pools ) this.pools = {};
-		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
-		const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
-		console.log( '===========================================' );
-		console.log( '===========================================' );
-		console.log( 'Pools:', existingPools );
-		console.log( 'Secrets:', existingSecrets );
-		console.log( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ) );
-		console.log( '===========================================' );
-		console.log( '===========================================' );
 
 		poolsSnapshot.docs.
 			map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
@@ -184,6 +175,16 @@ export class EPMNode {
 				}
 			} );
 		console.log( this.pools );
+
+		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
+		const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( 'Existing Pools:', existingPools );
+		console.log( 'Existing Secrets:', existingSecrets );
+		console.log( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ) );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
 
 	}
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
