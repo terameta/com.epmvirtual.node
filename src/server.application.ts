@@ -177,7 +177,7 @@ export class EPMNode {
 		console.log( '===========================================' );
 		console.log( 'Pools:', existingPools );
 		console.log( 'Secrets:', existingSecrets );
-		console.log( await this.executeCommandAction( 'virsh secret-list --all' ).catch( () => '' ) );
+		console.log( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ) );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 
