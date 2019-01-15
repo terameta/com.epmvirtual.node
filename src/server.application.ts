@@ -168,7 +168,7 @@ export class EPMNode {
 		}
 	}
 	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
-		console.log( '####We are at handle pools action' );
+		console.log( '#### We are at handle pools action' );
 		// if ( !this.pools ) this.pools = {};
 
 		// const receivedPools = poolsSnapshot.docs.
