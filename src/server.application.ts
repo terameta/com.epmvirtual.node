@@ -62,6 +62,7 @@ export class EPMNode {
 		await this.actOnNewNode();
 		await this.actOnExistingNode();
 		this.scheduledTasks();
+		this.isThisaNewNode$.subscribe( i => console.log( '#####Subscription of isThisaNewNode', i ) );
 	}
 
 	private identifySelf = async () => {
@@ -159,7 +160,7 @@ export class EPMNode {
 			console.log( 'We are unable to subscribe to the storage pools' );
 			console.log( error.name, ':', error.message );
 		} );
-		this.handlePoolsAction();
+		// this.handlePoolsAction();
 	}
 	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
 
