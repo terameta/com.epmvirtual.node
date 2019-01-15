@@ -181,14 +181,23 @@ export class EPMNode {
 		console.log( '===========================================' );
 		console.log( 'Extra Pools:', extraPools );
 		console.log( '===========================================' );
+		if ( extraPools.length > 0 ) {
+			console.log( '===========================================' );
+			console.log( 'Since there are extra pools, we will need to handle pool changes' );
+			extraPools.forEach( p => this.pools[ p.id ] = { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } );
+			console.log( 'Our Pools once considered the extra pools:' );
+			console.log( this.pools );
+			console.log( '===========================================' );
+			const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
+			const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
+
+		}
 
 		// const receivedPools = poolsSnapshot.docs.
 		// 	map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
 		// 	filter( p => this.node.poolAssignments[ p.id ] === true ).
 		// 	map( p => ( { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } ) );
 
-		// const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
-		// const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
 		// console.log( '===========================================' );
 		// console.log( '===========================================' );
 		// console.log( 'Received Pools:', receivedPools );
