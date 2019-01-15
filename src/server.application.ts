@@ -168,9 +168,16 @@ export class EPMNode {
 				} );
 		}
 	}
-	private handlePoolsAction = async ( receivedPools: StoragePool[] ) => {
-		console.log( '#### We are at handle pools action', receivedPools.length );
-		// if ( !this.pools ) this.pools = {};
+	private handlePoolsAction = async ( pools: StoragePool[] ) => {
+		console.log( '#### We are at handle pools action', pools.length );
+		if ( !this.pools ) this.pools = {};
+		const receivedPools = pools.filter( p => this.node.poolAssignments[ p.id ] === true );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( 'Our Pools in the Application:', this.pools );
+		console.log( '===========================================' );
+		console.log( 'Received Pools:', receivedPools );
+		console.log( '===========================================' );
 
 		// const receivedPools = poolsSnapshot.docs.
 		// 	map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
