@@ -1,5 +1,5 @@
 import { interval, BehaviorSubject, timer, Subject, Subscription, combineLatest } from 'rxjs';
-import { filter, catchError, delay, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
+import { filter, catchError, delay, map, retryWhen, tap, delayWhen, withLatestFrom } from 'rxjs/operators';
 import * as si from 'systeminformation';
 import { defaultNode, Node, NodeCommand } from '../models/node.models';
 import { SettingsWithCredentials } from 'models/settings';
@@ -61,8 +61,8 @@ export class EPMNode {
 		await this.identifyExistance();
 		await this.actOnNewNode();
 		await this.actOnExistingNode();
+		await this.handlePools();
 		this.scheduledTasks();
-		this.isThisaNewNode$.subscribe( i => console.log( '#####Subscription of isThisaNewNode', i ) );
 	}
 
 	private identifySelf = async () => {
@@ -156,31 +156,34 @@ export class EPMNode {
 	}
 
 	private handlePools = async () => {
-		if ( !this.poolsSubscription ) this.poolsSubscription = fromCollectionRef( this.poolsReference ).subscribe( this.handlePoolsAction, ( error: FirebaseError ) => {
-			console.log( 'We are unable to subscribe to the storage pools' );
-			console.log( error.name, ':', error.message );
-		} );
-		// this.handlePoolsAction();
+		if ( !this.poolsSubscription ) {
+			this.poolsSubscription = fromCollectionRef( this.poolsReference ).
+				pipe( withLatestFrom( this.isThisaNewNode$ ), map( ( [ a, b ] ) => ( a ) ) ).
+				subscribe( this.handlePoolsAction, ( error: FirebaseError ) => {
+					console.log( 'We are unable to subscribe to the storage pools' );
+					console.log( error.name, ':', error.message );
+				} );
+		}
 	}
 	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
+		console.log( '####We are at handle pools action' );
+		// if ( !this.pools ) this.pools = {};
 
-		if ( !this.pools ) this.pools = {};
+		// const receivedPools = poolsSnapshot.docs.
+		// 	map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
+		// 	filter( p => this.node.poolAssignments[ p.id ] === true ).
+		// 	map( p => ( { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } ) );
 
-		const receivedPools = poolsSnapshot.docs.
-			map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
-			filter( p => this.node.poolAssignments[ p.id ] === true ).
-			map( p => ( { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } ) );
-
-		const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
-		const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
-		console.log( '===========================================' );
-		console.log( '===========================================' );
-		console.log( 'Received Pools:', receivedPools );
-		console.log( 'Existing Pools:', existingPools );
-		console.log( 'Existing Secrets:', existingSecrets );
-		console.log( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
-		console.log( '===========================================' );
-		console.log( '===========================================' );
+		// const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
+		// const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
+		// console.log( '===========================================' );
+		// console.log( '===========================================' );
+		// console.log( 'Received Pools:', receivedPools );
+		// console.log( 'Existing Pools:', existingPools );
+		// console.log( 'Existing Secrets:', existingSecrets );
+		// console.log( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
+		// console.log( '===========================================' );
+		// console.log( '===========================================' );
 
 	}
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
