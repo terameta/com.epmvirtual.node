@@ -172,11 +172,14 @@ export class EPMNode {
 		console.log( '#### We are at handle pools action', pools.length );
 		if ( !this.pools ) this.pools = {};
 		const receivedPools = pools.filter( p => this.node.poolAssignments[ p.id ] === true );
+		const extraPools = receivedPools.filter( p => !this.pools[ p.id ] );
 		console.log( '===========================================' );
 		console.log( '===========================================' );
 		console.log( 'Our Pools in the Application:', this.pools );
 		console.log( '===========================================' );
 		console.log( 'Received Pools:', receivedPools );
+		console.log( '===========================================' );
+		console.log( 'Extra Pools:', extraPools );
 		console.log( '===========================================' );
 
 		// const receivedPools = poolsSnapshot.docs.
