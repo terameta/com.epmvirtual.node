@@ -168,8 +168,8 @@ export class EPMNode {
 				} );
 		}
 	}
-	private handlePoolsAction = async ( pools: StoragePool[] ) => {
-		console.log( '#### We are at handle pools action', pools.length );
+	private handlePoolsAction = async ( receivedPools: StoragePool[] ) => {
+		console.log( '#### We are at handle pools action', receivedPools.length );
 		// if ( !this.pools ) this.pools = {};
 
 		// const receivedPools = poolsSnapshot.docs.
