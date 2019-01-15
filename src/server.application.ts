@@ -23,7 +23,7 @@ export class EPMNode {
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
 	private isNodeReceived = false;
-	private nodeReceived$ = new BehaviorSubject<string>( 'false' );
+	private node$ = new BehaviorSubject<Node>( defaultNode() );
 	private poolsReference: firestore.CollectionReference = null;
 	private poolsSubscription: Subscription = null;
 	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean } } = null;
@@ -130,9 +130,9 @@ export class EPMNode {
 			) )
 		).subscribe( recNode => {
 			console.log( 'Node is now received' );
-			this.nodeReceived$.next( uuid() );
 			this.isNodeReceived = true;
 			this.node = { ...this.node, ...recNode.data() };
+			this.node$.next( this.node );
 			this.isThisaNewNode$.next( !recNode.data() );
 		} );
 	}
@@ -160,15 +160,16 @@ export class EPMNode {
 	private handlePools = async () => {
 		if ( !this.poolsSubscription ) {
 			this.poolsSubscription = fromCollectionRef( this.poolsReference ).
-				pipe( combineLatest( this.isThisaNewNode$ ), map( ( [ a, b ] ) => ( a ) ) ).
+				pipe( map( s => s.docs.map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ) ) ).
+				pipe( combineLatest( this.node$ ), map( ( [ a, b ] ) => ( a ) ) ).
 				subscribe( this.handlePoolsAction, ( error: FirebaseError ) => {
 					console.log( 'We are unable to subscribe to the storage pools' );
 					console.log( error.name, ':', error.message );
 				} );
 		}
 	}
-	private handlePoolsAction = async ( poolsSnapshot: firebase.firestore.QuerySnapshot ) => {
-		console.log( '#### We are at handle pools action' );
+	private handlePoolsAction = async ( pools: StoragePool[] ) => {
+		console.log( '#### We are at handle pools action', pools.length );
 		// if ( !this.pools ) this.pools = {};
 
 		// const receivedPools = poolsSnapshot.docs.
