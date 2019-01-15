@@ -1,5 +1,5 @@
-import { interval, BehaviorSubject, timer, Subject, Subscription, combineLatest } from 'rxjs';
-import { filter, catchError, delay, map, retryWhen, tap, delayWhen, withLatestFrom } from 'rxjs/operators';
+import { interval, BehaviorSubject, timer, Subject, Subscription } from 'rxjs';
+import { filter, catchError, delay, map, retryWhen, tap, delayWhen, combineLatest } from 'rxjs/operators';
 import * as si from 'systeminformation';
 import { defaultNode, Node, NodeCommand } from '../models/node.models';
 import { SettingsWithCredentials } from 'models/settings';
@@ -160,7 +160,7 @@ export class EPMNode {
 	private handlePools = async () => {
 		if ( !this.poolsSubscription ) {
 			this.poolsSubscription = fromCollectionRef( this.poolsReference ).
-				pipe( withLatestFrom( this.nodeReceived$ ), tap( ( [ a, b ] ) => ( console.log( b ) ) ), map( ( [ a, b ] ) => ( a ) ) ).
+				pipe( combineLatest( this.nodeReceived$ ), tap( ( [ a, b ] ) => ( console.log( b ) ) ), map( ( [ a, b ] ) => ( a ) ) ).
 				subscribe( this.handlePoolsAction, ( error: FirebaseError ) => {
 					console.log( 'We are unable to subscribe to the storage pools' );
 					console.log( error.name, ':', error.message );
