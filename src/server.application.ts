@@ -23,6 +23,7 @@ export class EPMNode {
 	private database: firestore.Firestore = null;
 	private nodeReference: firestore.DocumentReference = null;
 	private isNodeReceived = false;
+	private nodeReceived$ = new BehaviorSubject<string>( 'false' );
 	private poolsReference: firestore.CollectionReference = null;
 	private poolsSubscription: Subscription = null;
 	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean } } = null;
@@ -129,6 +130,7 @@ export class EPMNode {
 			) )
 		).subscribe( recNode => {
 			console.log( 'Node is now received' );
+			this.nodeReceived$.next( uuid() );
 			this.isNodeReceived = true;
 			this.node = { ...this.node, ...recNode.data() };
 			this.isThisaNewNode$.next( !recNode.data() );
@@ -158,7 +160,7 @@ export class EPMNode {
 	private handlePools = async () => {
 		if ( !this.poolsSubscription ) {
 			this.poolsSubscription = fromCollectionRef( this.poolsReference ).
-				pipe( withLatestFrom( this.isThisaNewNode$ ), map( ( [ a, b ] ) => ( a ) ) ).
+				pipe( withLatestFrom( this.nodeReceived$ ), tap( ( [ a, b ] ) => ( console.log( b ) ) ), map( ( [ a, b ] ) => ( a ) ) ).
 				subscribe( this.handlePoolsAction, ( error: FirebaseError ) => {
 					console.log( 'We are unable to subscribe to the storage pools' );
 					console.log( error.name, ':', error.message );
