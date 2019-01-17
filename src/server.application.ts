@@ -204,9 +204,10 @@ export class EPMNode {
 				const secretPath = '/tmp/' + scr.UUID + '.xml';
 				await promisers.writeFile( secretPath, secretXML );
 				await this.executeCommandAction( 'virsh secret-define --file ' + secretPath );
-				await this.executeCommandAction( 'virsh secret-set-value ' + scr.UUID + ' ' + scr.key );
 			}
-			console.log( '===========================================' );
+			for ( const pool of extraPools ) {
+				await this.executeCommandAction( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
+			}
 		}
 
 		receivedPools.forEach( async ( p ) => {
