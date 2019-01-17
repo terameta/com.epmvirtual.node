@@ -198,7 +198,6 @@ export class EPMNode {
 			console.log( 'Secrets to create:', secretsToCreate );
 			console.log( '===========================================' );
 
-
 		}
 
 		// const receivedPools = poolsSnapshot.docs.
