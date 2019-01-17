@@ -194,6 +194,7 @@ export class EPMNode {
 			console.log( '===========================================' );
 			console.log( '===========================================' );
 			console.log( await this.executeCommandAction( 'virsh secret-list' ) );
+			console.log( await this.executeCommandAction( 'whoami' ) );
 			console.log( '===========================================' );
 			console.log( '===========================================' );
 			const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ), 'Name' );
