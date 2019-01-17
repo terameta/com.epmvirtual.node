@@ -13,6 +13,18 @@ export const readFile = ( path: string, encoding: string = 'utf8' ) => {
 	} );
 };
 
+export const writeFile = ( path: string, content: any ) => {
+	return new Promise( ( resolve, reject ) => {
+		fs.writeFile( path, content, ( error ) => {
+			if ( error ) {
+				reject( error );
+			} else {
+				resolve();
+			}
+		} )
+	} );
+}
+
 export const xmlCompile = async ( payload: any, xmlPath: string, encoding: string = 'utf8' ) => {
 	const xml = await readFile( xmlPath, encoding );
 	const template = compile( xml );
