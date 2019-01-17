@@ -207,9 +207,14 @@ export class EPMNode {
 				await this.executeCommandAction( 'virsh secret-set-value ' + scr.UUID + ' ' + scr.key );
 			}
 			console.log( '===========================================' );
-
-
 		}
+
+		receivedPools.forEach( async ( p ) => {
+			if ( p.key !== this.pools[ p.id ].pool.key ) {
+				this.pools[ p.id ].pool.key = p.key;
+				await this.executeCommandAction( 'virsh secret-set-value ' + p.secretuuid + ' ' + p.key );
+			}
+		} );
 
 		// const receivedPools = poolsSnapshot.docs.
 		// 	map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
