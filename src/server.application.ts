@@ -206,6 +206,7 @@ export class EPMNode {
 				await this.executeCommandAction( 'virsh secret-define --file ' + secretPath );
 			}
 			for ( const pool of extraPools ) {
+				console.log( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
 				await this.executeCommandAction( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
 			}
 		}
