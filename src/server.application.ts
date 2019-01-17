@@ -15,6 +15,7 @@ import { exec } from 'child_process';
 import { StoragePool } from 'models/storagepool.models';
 import { returner } from './virsh/returner';
 import * as promisers from './utilities/promisers';
+import { join } from 'path';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -199,7 +200,7 @@ export class EPMNode {
 			console.log( 'Secrets to create:' );
 			secretsToCreate.forEach( s => console.log( s ) );
 			for ( const scr of secretsToCreate ) {
-				console.log()
+				console.log( await promisers.xmlCompile( scr, join( __dirname, './virsh/templates/secret.define.xml' ) ) );
 			}
 			console.log( '===========================================' );
 
