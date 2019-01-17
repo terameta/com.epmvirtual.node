@@ -213,6 +213,7 @@ export class EPMNode {
 			if ( p.key !== this.pools[ p.id ].pool.key ) {
 				this.pools[ p.id ].pool.key = p.key;
 				await this.executeCommandAction( 'virsh secret-set-value ' + p.secretuuid + ' ' + p.key );
+				console.log( 'Pools key has changed:', p.name, 'and re-set on virsh secret' );
 			}
 		} );
 
