@@ -203,6 +203,7 @@ export class EPMNode {
 				const secretXML = await promisers.xmlCompile( scr, join( __dirname, './virsh/templates/secret.define.xml' ) );
 				const secretPath = '/tmp/' + scr.UUID + '.xml';
 				await promisers.writeFile( secretPath, secretXML );
+				console.log( secretXML );
 				await this.executeCommandAction( 'virsh secret-define --file ' + secretPath );
 			}
 			console.log( '===========================================' );
