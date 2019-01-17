@@ -196,11 +196,11 @@ export class EPMNode {
 			console.log( 'existingPools:', existingPools );
 			console.log( '===========================================' );
 			console.log( 'We will now identify secrets to create' );
-			const secretsToCreate = Object.values( this.pools ).filter( p => !existingSecrets[ p.pool.secretuuid ] ).map( p => ( { UUID: p.pool.secretuuid, key: p.pool.key } ) );
+			const secretsToCreate = Object.values( this.pools ).filter( p => !existingSecrets[ p.pool.secretuuid ] ).map( p => ( { UUID: p.pool.secretuuid, key: p.pool.key, name: p.pool.rbdname || p.pool.name || p.pool.secretuuid } ) );
 			console.log( 'Secrets to create:' );
 			secretsToCreate.forEach( s => console.log( s ) );
 			for ( const scr of secretsToCreate ) {
-				const secretXML = await promisers.xmlCompile( scr, join( __dirname, './virsh/templates/secret.define.xml' ) );
+				const secretXML = await promisers.xmlCompile( { ...scr, name: }, join( __dirname, './virsh/templates/secret.define.xml' ) );
 			}
 			console.log( '===========================================' );
 
