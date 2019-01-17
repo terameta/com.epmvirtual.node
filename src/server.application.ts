@@ -14,6 +14,7 @@ import { platform } from 'os';
 import { exec } from 'child_process';
 import { StoragePool } from 'models/storagepool.models';
 import { returner } from './virsh/returner';
+import * as promisers from './utilities/promisers';
 
 export class EPMNode {
 	public node: Node = defaultNode();
@@ -197,6 +198,9 @@ export class EPMNode {
 			const secretsToCreate = Object.values( this.pools ).filter( p => !existingSecrets[ p.pool.secretuuid ] ).map( p => ( { UUID: p.pool.secretuuid, key: p.pool.key } ) );
 			console.log( 'Secrets to create:' );
 			secretsToCreate.forEach( s => console.log( s ) );
+			for ( const scr of secretsToCreate ) {
+				console.log()
+			}
 			console.log( '===========================================' );
 
 		}
