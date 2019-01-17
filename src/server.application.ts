@@ -200,8 +200,9 @@ export class EPMNode {
 			console.log( 'Secrets to create:' );
 			secretsToCreate.forEach( s => console.log( s ) );
 			for ( const scr of secretsToCreate ) {
-				const secretXML = await promisers.xmlCompile( { ...scr, name: }, join( __dirname, './virsh/templates/secret.define.xml' ) );
+				const secretXML = await promisers.xmlCompile( scr, join( __dirname, './virsh/templates/secret.define.xml' ) );
 				console.log( secretXML );
+				await promisers.writeFile( '/tmp/' + scr.UUID + '.xml', secretXML ); L
 			}
 			console.log( '===========================================' );
 
