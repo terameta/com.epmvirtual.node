@@ -195,7 +195,8 @@ export class EPMNode {
 			console.log( '===========================================' );
 			console.log( 'We will now identify secrets to create' );
 			const secretsToCreate = Object.values( this.pools ).filter( p => !existingSecrets[ p.pool.secretuuid ] ).map( p => ( { UUID: p.pool.secretuuid, key: p.pool.key } ) );
-			console.log( 'Secrets to create:', secretsToCreate );
+			console.log( 'Secrets to create:' );
+			secretsToCreate.forEach( s => console.log( s ) );
 			console.log( '===========================================' );
 
 		}
