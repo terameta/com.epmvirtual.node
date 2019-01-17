@@ -6,7 +6,7 @@ import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth, FirebaseError } from 'firebase';
-import { SortBy, waiter, deleteKeyIfFunction, SortByUUID } from './utilities';
+import { SortBy, waiter, deleteKeyIfFunction, SortByUUID } from './utilities/utilities';
 import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
 import wrtc = require( 'wrtc' );
 import * as pty from 'node-pty';
