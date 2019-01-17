@@ -205,6 +205,7 @@ export class EPMNode {
 				await promisers.writeFile( secretPath, secretXML );
 				await this.executeCommandAction( 'virsh secret-define --file ' + secretPath );
 				await this.executeCommandAction( 'virsh secret-set-value ' + scr.UUID + ' ' + scr.key );
+
 			}
 			console.log( '===========================================' );
 
