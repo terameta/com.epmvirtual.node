@@ -1,4 +1,4 @@
-import { JSONDeepCopy } from "../src/utilities";
+import { JSONDeepCopy } from "../src/utilities/utilities";
 
 export interface Node {
 	id: string,
