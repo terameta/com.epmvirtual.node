@@ -214,20 +214,6 @@ export class EPMNode {
 			}
 		} )
 
-		// const receivedPools = poolsSnapshot.docs.
-		// 	map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
-		// 	filter( p => this.node.poolAssignments[ p.id ] === true ).
-		// 	map( p => ( { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } ) );
-
-		// console.log( '===========================================' );
-		// console.log( '===========================================' );
-		// console.log( 'Received Pools:', receivedPools );
-		// console.log( 'Existing Pools:', existingPools );
-		// console.log( 'Existing Secrets:', existingSecrets );
-		// console.log( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ) );
-		// console.log( '===========================================' );
-		// console.log( '===========================================' );
-
 	}
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
 
