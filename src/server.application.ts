@@ -235,6 +235,12 @@ export class EPMNode {
 			}
 		} );
 
+		receivedPools.forEach( async ( p ) => {
+			if ( this.pools[ p.id ] ) {
+				await this.executeCommandAction( 'virsh pool-autostart ' + p.id );
+			}
+		} )
+
 		// const receivedPools = poolsSnapshot.docs.
 		// 	map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ).
 		// 	filter( p => this.node.poolAssignments[ p.id ] === true ).
