@@ -209,8 +209,8 @@ export class EPMNode {
 
 		receivedPools.forEach( async ( p ) => {
 			if ( this.pools[ p.id ] ) {
-				await this.executeCommandAction( 'virsh pool-autostart ' + p.id );
-				await this.executeCommandAction( 'virsh pool-start ' + p.id );
+				await this.executeCommandAction( 'virsh pool-autostart ' + p.id ).catch( () => () );
+				await this.executeCommandAction( 'virsh pool-start ' + p.id ).catch( () => () );
 			}
 		} )
 
