@@ -215,6 +215,10 @@ export class EPMNode {
 			}
 		}
 
+		for ( const p in this.pools ) {
+			console.log( '>>>', p );
+		}
+
 		receivedPools.forEach( async ( p ) => {
 			if ( p.key !== this.pools[ p.id ].pool.key ) {
 				this.pools[ p.id ].pool.key = p.key;
