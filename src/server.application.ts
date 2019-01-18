@@ -212,6 +212,12 @@ export class EPMNode {
 			for ( const pool of extraPools ) {
 				console.log( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
 				await this.executeCommandAction( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
+				console.log( '===========================================' );
+				console.log( '===========================================' );
+				console.log( 'We will now create the pool' );
+				const poolXML = await promisers.xmlCompile( pool, join( __dirname, '.virsh/templates/pool.define.xml' ) );
+				console.log( '===========================================' );
+				console.log( '===========================================' );
 			}
 		}
 

@@ -1,0 +1,12 @@
+<pool type='rbd'>
+	<name>{{ id }}</name>
+	<source>
+		<name>{{ rbdname}} </name>
+		{{#each source}}
+		<host name='{{this.address}}' port='{{this.port}}' />
+		{{/each}}
+		<auth username='{{username}}' type='ceph'>
+			<secret uuid='{{secretuuid}}' />
+		</auth>
+	</source>
+</pool>
