@@ -216,7 +216,7 @@ export class EPMNode {
 		}
 
 		for ( const p in this.pools ) {
-			console.log( '>>>', p );
+			console.log( '------------------->>>', p );
 		}
 
 		receivedPools.forEach( async ( p ) => {
