@@ -218,26 +218,18 @@ export class EPMNode {
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
 
 	private handleCommands = async () => {
-		console.log( 'There are commands to be run in the queue' );
-		console.log( this.node.commands.length );
-		console.log( 'We will now sort by UUID' );
 		this.node.commands.sort( SortByUUID );
 		const cc = this.node.commands.splice( 0, 1 )[ 0 ];
-		console.log( cc );
 		this.commandQueue.push( cc );
 		this.commandQueue.sort( SortByUUID );
-		console.log( this.commandQueue.length );
 		await this.nodeReference.update( { commands: firestore.FieldValue.arrayRemove( cc ) } ).catch( console.error );
 		this.runCommands();
 	}
 
 	private runCommands = async () => {
-		console.log( 'runCommands called' );
 		if ( !this.isCommandRunning ) {
-			console.log( 'runCommands - !this.isCommandRunning' );
 			const cc = this.commandQueue.splice( 0, 1 )[ 0 ];
 			if ( cc ) {
-				console.log( 'runCommands - cc' );
 				this.isCommandRunning = true;
 				await this.nodeReference.update( { currentCommand: cc.command } );
 				const result = await this.executeCommandAction( cc.command );
