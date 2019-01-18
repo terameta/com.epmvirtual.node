@@ -175,29 +175,11 @@ export class EPMNode {
 		if ( !this.pools ) this.pools = {};
 		const receivedPools = pools.filter( p => this.node.poolAssignments[ p.id ] === true );
 		const extraPools = receivedPools.filter( p => !this.pools[ p.id ] );
-		console.log( '===========================================' );
-		console.log( '===========================================' );
-		console.log( 'Our Pools in the Application:', this.pools );
-		console.log( '===========================================' );
-		console.log( 'Received Pools:', receivedPools );
-		console.log( '===========================================' );
-		console.log( 'Extra Pools:', extraPools );
-		console.log( '===========================================' );
 		if ( extraPools.length > 0 ) {
-			console.log( '===========================================' );
-			console.log( 'Since there are extra pools, we will need to handle pool changes' );
 			extraPools.forEach( p => this.pools[ p.id ] = { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } );
-			console.log( 'Our Pools once considered the extra pools:' );
-			console.log( this.pools );
-			console.log( '===========================================' );
 			const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
 			const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ), 'Name' );
-			console.log( 'existingSecrets:', existingSecrets );
-			console.log( 'existingPools:', existingPools );
-			console.log( '===========================================' );
-			console.log( 'We will now identify secrets to create' );
 			const secretsToCreate = Object.values( this.pools ).filter( p => !existingSecrets[ p.pool.secretuuid ] ).map( p => ( { UUID: p.pool.secretuuid, key: p.pool.key, name: p.pool.rbdname || p.pool.name || p.pool.secretuuid } ) );
-			console.log( 'Secrets to create:' );
 			secretsToCreate.forEach( s => console.log( s ) );
 			for ( const scr of secretsToCreate ) {
 				const secretXML = await promisers.xmlCompile( scr, join( __dirname, './virsh/templates/secret.define.xml' ) );
@@ -206,23 +188,14 @@ export class EPMNode {
 				await this.executeCommandAction( 'virsh secret-define --file ' + secretPath );
 			}
 			for ( const pool of extraPools ) {
-				console.log( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
 				await this.executeCommandAction( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
 
 				if ( !existingPools[ pool.id ] ) {
-					console.log( '===========================================' );
-					console.log( '===========================================' );
-					console.log( 'We will now create the pool' );
 					( pool as any ).source = pool.monitors.split( ',' ).map( s => s.trim() ).map( s => { const [ address, port ] = s.split( ':' ).map( t => t.trim() ); return { address, port }; } );
 					const poolXML = await promisers.xmlCompile( pool, join( __dirname, './virsh/templates/pool.define.xml' ) );
 					const poolPath = '/tmp/' + pool.id + '.xml';
 					await promisers.writeFile( poolPath, poolXML );
 					await this.executeCommandAction( 'virsh pool-define --file ' + poolPath );
-					console.log( poolXML );
-					console.log( '===========================================' );
-					console.log( pool );
-
-					console.log( '===========================================' );
 				}
 			}
 		}
