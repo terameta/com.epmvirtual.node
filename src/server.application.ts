@@ -212,19 +212,22 @@ export class EPMNode {
 			for ( const pool of extraPools ) {
 				console.log( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
 				await this.executeCommandAction( 'virsh secret-set-value ' + pool.secretuuid + ' ' + pool.key );
-				console.log( '===========================================' );
-				console.log( '===========================================' );
-				console.log( 'We will now create the pool' );
-				( pool as any ).source = pool.monitors.split( ',' ).map( s => s.trim() ).map( s => { const [ address, port ] = s.split( ':' ).map( t => t.trim() ); return { address, port }; } );
-				const poolXML = await promisers.xmlCompile( pool, join( __dirname, './virsh/templates/pool.define.xml' ) );
-				const poolPath = '/tmp/' + pool.id + '.xml';
-				await promisers.writeFile( poolPath, poolXML );
-				await this.executeCommandAction( 'virsh pool-define --file ' + poolPath );
-				console.log( poolXML );
-				console.log( '===========================================' );
-				console.log( pool );
 
-				console.log( '===========================================' );
+				if ( !existingPools[ pool.id ] ) {
+					console.log( '===========================================' );
+					console.log( '===========================================' );
+					console.log( 'We will now create the pool' );
+					( pool as any ).source = pool.monitors.split( ',' ).map( s => s.trim() ).map( s => { const [ address, port ] = s.split( ':' ).map( t => t.trim() ); return { address, port }; } );
+					const poolXML = await promisers.xmlCompile( pool, join( __dirname, './virsh/templates/pool.define.xml' ) );
+					const poolPath = '/tmp/' + pool.id + '.xml';
+					await promisers.writeFile( poolPath, poolXML );
+					await this.executeCommandAction( 'virsh pool-define --file ' + poolPath );
+					console.log( poolXML );
+					console.log( '===========================================' );
+					console.log( pool );
+
+					console.log( '===========================================' );
+				}
 			}
 		}
 
