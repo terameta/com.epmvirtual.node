@@ -215,7 +215,7 @@ export class EPMNode {
 				console.log( '===========================================' );
 				console.log( '===========================================' );
 				console.log( 'We will now create the pool' );
-				const poolXML = await promisers.xmlCompile( pool, join( __dirname, '.virsh/templates/pool.define.xml' ) );
+				const poolXML = await promisers.xmlCompile( pool, join( __dirname, './virsh/templates/pool.define.xml' ) );
 				console.log( poolXML );
 				console.log( '===========================================' );
 				console.log( '===========================================' );
