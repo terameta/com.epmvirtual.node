@@ -37,7 +37,10 @@ export class EPMNode {
 	private isCommandRunning = false;
 
 	constructor() {
-		interval( 10000 ).subscribe( () => console.log( 'EPMVirtual Time:', new Date() ) );
+		interval( 10000 ).subscribe( async () => {
+			console.log( 'EPMVirtual Time:', new Date() );
+			console.log( await this.executeCommandAction( 'virsh list-pools --all' ) );
+		} );
 
 		this.initiate().catch( e => {
 			console.log( '!!! There is an issue with the initialization' );
