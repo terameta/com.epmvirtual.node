@@ -39,7 +39,7 @@ export class EPMNode {
 	constructor() {
 		interval( 10000 ).subscribe( async () => {
 			console.log( 'EPMVirtual Time:', new Date() );
-			console.log( await this.executeCommandAction( 'virsh list-pools --all' ) );
+			console.log( await this.executeCommandAction( 'virsh pool-list --all' ) );
 		} );
 
 		this.initiate().catch( e => {
