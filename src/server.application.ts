@@ -215,6 +215,7 @@ export class EPMNode {
 				console.log( '===========================================' );
 				console.log( '===========================================' );
 				console.log( 'We will now create the pool' );
+				( pool as any ).source = pool.monitors.split( ',' ).map( s => s.trim() ).map( s => { const [ address, port ] = s.split( ':' ).map( t => t.trim() ); return { address, port }; } );
 				const poolXML = await promisers.xmlCompile( pool, join( __dirname, './virsh/templates/pool.define.xml' ) );
 				console.log( poolXML );
 				console.log( '===========================================' );
