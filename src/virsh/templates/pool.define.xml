@@ -5,7 +5,7 @@
 		{{#each source}}
 		<host name='{{this.address}}' port='{{this.port}}' />
 		{{/each}}
-		<auth username='{{username}}' type='ceph'>
+		<auth username='{{user}}' type='ceph'>
 			<secret uuid='{{secretuuid}}' />
 		</auth>
 	</source>

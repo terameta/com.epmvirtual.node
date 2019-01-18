@@ -218,6 +218,7 @@ export class EPMNode {
 				const poolXML = await promisers.xmlCompile( pool, join( __dirname, './virsh/templates/pool.define.xml' ) );
 				console.log( poolXML );
 				console.log( '===========================================' );
+				console.log( pool );
 				console.log( '===========================================' );
 			}
 		}
