@@ -28,7 +28,7 @@ export class EPMNode {
 	private node$ = new BehaviorSubject<Node>( defaultNode() );
 	private poolsReference: firestore.CollectionReference = null;
 	private poolsSubscription: Subscription = null;
-	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean, timer: any } } = null;
+	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } } = null;
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
@@ -216,11 +216,7 @@ export class EPMNode {
 
 
 		Object.values( this.pools ).forEach( async ( p ) => {
-			console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
-			console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
-			console.log( p );
-			console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
-			console.log( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' );
+			p.timer = setInterval( this.actAsPoolWorker, 3000 );
 		} );
 
 		console.log( '===========================================' );
