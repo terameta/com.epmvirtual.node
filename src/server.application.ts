@@ -215,12 +215,12 @@ export class EPMNode {
 		} );
 
 		Object.values( this.pools ).forEach( async ( p ) => {
-			if ( p.worker ) p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 300000 );
+			if ( p.worker ) p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 3000 );
 		} );
 	}
 
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
-		const volumes = await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id );
+		const volumes = await this.executeCommandAction( 'virsh vol-list --pool ' + payload.pool.id );
 		console.log( volumes );
 	}
 
