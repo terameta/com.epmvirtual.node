@@ -212,9 +212,20 @@ export class EPMNode {
 				await this.executeCommandAction( 'virsh pool-autostart ' + p.id ).catch( () => ( {} ) );
 				await this.executeCommandAction( 'virsh pool-start ' + p.id ).catch( () => ( {} ) );
 			}
-		} )
+		} );
+
+
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+		console.log( this.pools );
+		console.log( '===========================================' );
+		console.log( '===========================================' );
+	}
+
+	private actAsPoolWorker = async () => {
 
 	}
+
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
 
 	private handleCommands = async () => {
