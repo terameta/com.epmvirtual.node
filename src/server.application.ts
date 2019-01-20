@@ -28,7 +28,7 @@ export class EPMNode {
 	private node$ = new BehaviorSubject<Node>( defaultNode() );
 	private poolsReference: firestore.CollectionReference = null;
 	private poolsSubscription: Subscription = null;
-	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean } } = null;
+	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean, timer: any } } = null;
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
@@ -176,7 +176,7 @@ export class EPMNode {
 		const receivedPools = pools.filter( p => this.node.poolAssignments[ p.id ] === true );
 		const extraPools = receivedPools.filter( p => !this.pools[ p.id ] );
 		if ( extraPools.length > 0 ) {
-			extraPools.forEach( p => this.pools[ p.id ] = { pool: p, worker: this.node.poolWorkerAssignments[ p.id ] } );
+			extraPools.forEach( p => this.pools[ p.id ] = { pool: p, worker: this.node.poolWorkerAssignments[ p.id ], timer: null } );
 			const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
 			const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ), 'Name' );
 			const secretsToCreate = Object.values( this.pools ).filter( p => !existingSecrets[ p.pool.secretuuid ] ).map( p => ( { UUID: p.pool.secretuuid, key: p.pool.key, name: p.pool.rbdname || p.pool.name || p.pool.secretuuid } ) );
@@ -232,7 +232,7 @@ export class EPMNode {
 	}
 
 	private actAsPoolWorker = async () => {
-
+		console.log( '>>> We are at actAsPoolWorker' );
 	}
 
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
