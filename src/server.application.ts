@@ -214,11 +214,14 @@ export class EPMNode {
 			}
 		} );
 
-		Object.values( this.pools ).forEach( async ( p ) => { p.timer = setInterval( this.actAsPoolWorker, 3000 ); } );
+		Object.values( this.pools ).forEach( async ( p ) => {
+			if ( p.worker ) p.timer = setInterval( this.actAsPoolWorker, 3000 );
+		} );
 	}
 
-	private actAsPoolWorker = async () => {
-		console.log( '>>> We are at actAsPoolWorker' );
+	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
+		const volumes = await this.executeCommandAction( 'virsh vol-list --pool ' + payload.pool.id );
+		console.log( volumes );
 	}
 
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
