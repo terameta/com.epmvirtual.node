@@ -35,19 +35,6 @@ export const returner = async ( payload: string, by: string = null ) => {
 /**
 function prepare(result, command){
 	var deferred = Q.defer();
-	var headers = ''; 		//What to Expect
-	if(command == 'list'){			headers = ['Id', 'Name', 'State'];																					}
-	if(command == 'vol-list'){		headers = ['Name', 'Path', 'Type', 'Capacity', 'Allocation'];												}
-	if(command == 'domblklist'){	headers = ['Type', 'Device', 'Target', 'Source'];																}
-	if(command == 'secret-list'){	headers = ['UUID', 'Usage'];																							}
-	if(command == 'pool-list'){	headers = ['Name', 'State', 'Autostart', 'Persistent', 'Capacity', 'Allocation', 'Available'];	}
-
-	result = result.trim();
-
-	var lines = result.split('\n');
-	for( var cl = 0; cl < lines.length; cl++ ){
-		lines[cl] = lines[cl].trim();
-	}
 
 	if(lines.length == 0){
 		deferred.reject("Result is not valid");
