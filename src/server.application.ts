@@ -171,7 +171,6 @@ export class EPMNode {
 		}
 	}
 	private handlePoolsAction = async ( pools: StoragePool[] ) => {
-		console.log( '#### We are at handle pools action', pools.length );
 		if ( !this.pools ) this.pools = {};
 		const receivedPools = pools.filter( p => this.node.poolAssignments[ p.id ] === true );
 		const extraPools = receivedPools.filter( p => !this.pools[ p.id ] );
@@ -180,7 +179,6 @@ export class EPMNode {
 			const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
 			const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ), 'Name' );
 			const secretsToCreate = Object.values( this.pools ).filter( p => !existingSecrets[ p.pool.secretuuid ] ).map( p => ( { UUID: p.pool.secretuuid, key: p.pool.key, name: p.pool.rbdname || p.pool.name || p.pool.secretuuid } ) );
-			secretsToCreate.forEach( s => console.log( s ) );
 			for ( const scr of secretsToCreate ) {
 				const secretXML = await promisers.xmlCompile( scr, join( __dirname, './virsh/templates/secret.define.xml' ) );
 				const secretPath = '/tmp/' + scr.UUID + '.xml';
