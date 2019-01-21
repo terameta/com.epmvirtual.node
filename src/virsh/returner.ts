@@ -13,7 +13,7 @@ export const returner = async ( payload: string, by: string = null ) => {
 			const toPush: any = {};
 			headers.forEach( ( h, hi ) => {
 				// if ( hi < ( headerN - 1 ) ) {
-				toPush[ h ] = l.substring( indices[ hi ], indices[ hi + 1 ] ).trim();
+				toPush[ h ] = l.substring( indices[ hi ], indices[ hi + 1 ] - 1 ).trim();
 				// } else {}
 			} );
 			toReturn.push( toPush );
