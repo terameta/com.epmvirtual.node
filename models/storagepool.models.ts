@@ -13,7 +13,8 @@ export interface StoragePool {
 export interface StoragePoolFile {
 	name: string,
 	size: number,
-	actualsize: number
+	actualsize: number,
+	lastCheck: Date
 }
 
 export const defaultStoragePool = (): StoragePool => ( {
