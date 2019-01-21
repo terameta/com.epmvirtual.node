@@ -23,7 +23,10 @@ export const returner = async ( payload: string, by: string = null ) => {
 	} );
 
 	const toReturn = lines.filter( ( l, li ) => li > 1 ).map( line => {
-		return line.trim();
+		// return line.trim();
+		return headers.map( ( h, hi ) => {
+			return line.substring( h.index, headers[ hi + 1 ].index - 1 );
+		} );
 	} );
 
 	console.log( '===========================================' );
@@ -51,22 +54,7 @@ function prepare(result, command){
 	} else {
 		var toReturn = [];
 		var places = [];
-		for( var i = 0; i < headers.length; i++ ){
-			places[i] = lines[0].indexOf(headers[i]);
-			var shouldIterate = true;
-			while(shouldIterate){
-				var isEmpty = true;
 
-				for( var clc = 2; clc < lines.length; clc++ ){
-					if(places[i] > 0){
-						if( lines[clc][places[i] - 1] != ' ') isEmpty = false;
-					}
-				}
-
-				if(isEmpty) shouldIterate = false;
-				if(shouldIterate) places[i] = places[i] - 1;
-			}
-		}
 
 		var curPlace = 0;
 		var nexPlace = 0;
