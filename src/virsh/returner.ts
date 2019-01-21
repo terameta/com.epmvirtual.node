@@ -27,8 +27,9 @@ export const returner = async ( payload: string, by: string = null ) => {
 	} );
 
 	console.log( '===========================================' );
+	console.log( payload );
+	console.log( '===========================================' );
 	console.log( headers );
-
 	console.log( '===========================================' );
 	console.log( toReturn );
 	console.log( '===========================================' );
