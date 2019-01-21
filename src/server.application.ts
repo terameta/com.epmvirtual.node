@@ -220,7 +220,7 @@ export class EPMNode {
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
 		console.log( 'We are at actAsPoolWorker' );
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --pool ' + payload.pool.id ) );
-		console.log( volumes );
+		console.table( volumes );
 	}
 
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
