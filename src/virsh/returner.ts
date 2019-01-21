@@ -24,13 +24,18 @@ export const returner = async ( payload: string, by: string = null ) => {
 
 	const toReturn = lines.filter( ( l, li ) => li > 1 ).map( line => {
 		// return line.trim();
-		return headers.map( ( h, hi ) => {
+		const values = headers.map( ( h, hi ) => {
 			if ( headers[ hi + 1 ] ) {
 				return line.substring( h.index, headers[ hi + 1 ].index - 1 );
 			} else {
 				return line.substring( h.index );
 			}
 		} );
+		const tuple: any = {};
+		headers.forEach( ( h, hi ) => {
+			tuple[ h.label ] = values[ hi ];
+		} );
+		return tuple;
 	} );
 
 	console.log( '===========================================' );
