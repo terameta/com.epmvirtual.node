@@ -13,7 +13,7 @@ export interface StoragePool {
 export interface StoragePoolFile {
 	name: string,
 	size: number,
-	actualsize: number,
+	actualSize: number,
 	lastCheck: Date
 }
 
