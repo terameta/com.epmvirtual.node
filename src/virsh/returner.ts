@@ -25,7 +25,7 @@ export const returner = async ( payload: string, by: string = null ) => {
 	const toReturn = lines.filter( ( l, li ) => li > 1 ).map( line => {
 		// return line.trim();
 		return headers.map( ( h, hi ) => {
-			return line.substring( h.index, headers[ hi + 1 ] ? headers[ hi + 1 ].index - 1 : null );
+			return line.substring( h.index, headers[ hi + 1 ] ? headers[ hi + 1 ].index - 1 : -1 );
 		} );
 	} );
 
