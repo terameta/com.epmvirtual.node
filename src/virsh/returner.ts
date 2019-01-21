@@ -1,7 +1,7 @@
 import { keyBy } from 'lodash';
 
 export const returner = async ( payload: string, by: string = null ) => {
-	const lines = payload.split( '\n' ).map( l => l.trim() );
+	const lines = payload.trim().split( '\n' ).map( l => l.trim() );
 	if ( lines.length === 0 ) throw new Error( 'Virsh returner payload is not valid' );
 	const headers = lines[ 0 ].split( ' ' ).filter( h => !!h && h !== '' );
 	const headerN = headers.length;
