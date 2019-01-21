@@ -33,7 +33,7 @@ export const returner = async ( payload: string, by: string = null ) => {
 		} );
 		const tuple: any = {};
 		headers.forEach( ( h, hi ) => {
-			tuple[ h.label ] = values[ hi ];
+			tuple[ h.label ] = values[ hi ].trim();
 		} );
 		return tuple;
 	} );
@@ -47,11 +47,11 @@ export const returner = async ( payload: string, by: string = null ) => {
 	console.log( '===========================================' );
 	console.log( '===========================================' );
 
-	// if ( by ) {
-	// 	return keyBy( toReturn, by );
-	// } else {
-	// 	return toReturn;
-	// }
+	if ( by ) {
+		return keyBy( toReturn, by );
+	} else {
+		return toReturn;
+	}
 }
 
 /**
