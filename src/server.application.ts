@@ -221,7 +221,7 @@ export class EPMNode {
 
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
 		console.log( 'We are at actAsPoolWorker' );
-		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --pool ' + payload.pool.id ).catch( console.log ), 'Name' ).catch( console.log );
+		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --pool ' + payload.pool.id ), 'Name' );
 		console.log( volumes );
 	}
 
