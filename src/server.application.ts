@@ -177,7 +177,7 @@ export class EPMNode {
 		if ( extraPools.length > 0 ) {
 			extraPools.forEach( p => this.pools[ p.id ] = { pool: p, worker: this.node.poolWorkerAssignments[ p.id ], timer: null } );
 			const existingSecrets = await returner( await this.executeCommandAction( 'virsh secret-list' ).catch( () => '' ), 'UUID' );
-			const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --all' ).catch( () => '' ), 'Name' );
+			const existingPools = await returner( await this.executeCommandAction( 'virsh pool-list --details --all' ).catch( () => '' ), 'Name' );
 			const secretsToCreate = Object.values( this.pools ).filter( p => !existingSecrets[ p.pool.secretuuid ] ).map( p => ( { UUID: p.pool.secretuuid, key: p.pool.key, name: p.pool.rbdname || p.pool.name || p.pool.secretuuid } ) );
 			for ( const scr of secretsToCreate ) {
 				const secretXML = await promisers.xmlCompile( scr, join( __dirname, './virsh/templates/secret.define.xml' ) );
