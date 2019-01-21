@@ -22,6 +22,16 @@ export const returner = async ( payload: string, by: string = null ) => {
 		}
 	} );
 
+	const toReturn = lines.filter( ( l, li ) => li > 1 ).map( line => {
+
+	} );
+
+	console.log( '===========================================' );
+	console.log( '===========================================' );
+	console.log( toReturn );
+	console.log( '===========================================' );
+	console.log( '===========================================' );
+
 	// if ( by ) {
 	// 	return keyBy( toReturn, by );
 	// } else {
