@@ -23,7 +23,6 @@ export const returner = async ( payload: string, by: string = null ) => {
 	} );
 
 	const toReturn = lines.filter( ( l, li ) => li > 1 ).map( line => {
-		// return line.trim();
 		const values = headers.map( ( h, hi ) => {
 			if ( headers[ hi + 1 ] ) {
 				return line.substring( h.index, headers[ hi + 1 ].index - 1 );
@@ -44,44 +43,3 @@ export const returner = async ( payload: string, by: string = null ) => {
 		return toReturn;
 	}
 }
-
-/**
-function prepare(result, command){
-	var deferred = Q.defer();
-
-	if(lines.length == 0){
-		deferred.reject("Result is not valid");
-	} else {
-		var toReturn = [];
-		var places = [];
-
-
-		var curPlace = 0;
-		var nexPlace = 0;
-
-		var curObject = {};
-
-		for( var l = 2; l < lines.length; l++ ){
-			curObject = {};
-
-			for( var p = 0; p < places.length; p++ ){
-				curPlace = 0;
-				nexPlace = 0;
-				curPlace = places[p];
-				if(p != (places.length -1) ) nexPlace = nexPlace = places[p+1];
-				var curProp = '';
-				if(nexPlace > 0){
-					curProp = lines[l].substring(curPlace,nexPlace).trim();
-				} else {
-					curProp = lines[l].substring(curPlace).trim();
-				}
-				//console.log(p, headers[p], curProp);
-				curObject[headers[p]] = curProp;
-			}
-			toReturn.push(curObject);
-		}
-		deferred.resolve(toReturn);
-	}
-	return deferred.promise;
-}
- */
