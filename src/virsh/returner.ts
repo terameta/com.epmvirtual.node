@@ -23,7 +23,7 @@ export const returner = async ( payload: string, by: string = null ) => {
 	} );
 
 	const toReturn = lines.filter( ( l, li ) => li > 1 ).map( line => {
-
+		return line.trim();
 	} );
 
 	console.log( '===========================================' );
