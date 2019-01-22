@@ -7,7 +7,7 @@ export interface StoragePool {
 	user: string,
 	secretuuid: string,
 	key: string,
-	files: StoragePoolFile[]
+	files: { [ key: string ]: StoragePoolFile }
 }
 
 export interface StoragePoolFile {
@@ -26,5 +26,5 @@ export const defaultStoragePool = (): StoragePool => ( {
 	user: '',
 	secretuuid: '',
 	key: '',
-	files: []
+	files: {}
 } );
