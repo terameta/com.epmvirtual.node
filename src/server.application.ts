@@ -221,7 +221,7 @@ export class EPMNode {
 		console.log( 'We are at actAsPoolWorker' );
 		if ( !payload.pool.files ) payload.pool.files = {};
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
-		volumes.forEach( v => console.log( v.name, !!payload.pool.files[ v.name ] ) );
+		volumes.forEach( v => console.log( v.Name, !!payload.pool.files[ v.Name ] ) );
 
 		// this.database( `storagepools/${payload.pool.id}` ).update()
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
