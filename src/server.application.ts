@@ -219,15 +219,15 @@ export class EPMNode {
 
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
 		console.log( 'We are at actAsPoolWorker' );
-		if ( !payload.pool.files ) payload.pool.files = {};
-		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
-		volumes.forEach( v => console.log( v.Name, !!payload.pool.files[ v.Name ], Object.keys( v ) ) );
+		// if ( !payload.pool.files ) payload.pool.files = {};
+		// const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
+		// volumes.forEach( v => console.log( v.Name, !!payload.pool.files[ v.Name ], Object.keys( v ) ) );
 
-		this.database.doc( `storagepools/${payload.pool.id}` ).update( {
-			'files."kav_rescue_10\.iso"': {
-				name: 'kav_rescue_10.iso'
-			}
-		} );
+		// this.database.doc( `storagepools/${payload.pool.id}` ).update( {
+		// 	'files."kav_rescue_10\.iso"': {
+		// 		name: 'kav_rescue_10.iso'
+		// 	}
+		// } );
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
 	}
 
