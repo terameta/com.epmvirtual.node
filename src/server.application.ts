@@ -219,11 +219,12 @@ export class EPMNode {
 
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
 		console.log( 'We are at actAsPoolWorker' );
+		if ( !payload.pool.files ) payload.pool.files = {};
 		// const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ), 'Name' );
 		// console.table( volumes );
 
 		// this.database( `storagepools/${payload.pool.id}` ).update()
-		console.log( 'Number of registered files:', Object.keys( payload.pool.files || {} ).length );
+		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
 	}
 
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
