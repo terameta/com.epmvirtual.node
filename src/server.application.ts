@@ -213,15 +213,15 @@ export class EPMNode {
 		} );
 
 		Object.values( this.pools ).forEach( async ( p ) => {
-			if ( p.worker ) p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 3000 );
+			if ( p.worker ) p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 10000 );
 		} );
 	}
 
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
 		console.log( 'We are at actAsPoolWorker' );
 		if ( !payload.pool.files ) payload.pool.files = {};
-		// const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ), 'Name' );
-		// console.table( volumes );
+		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
+		volumes.forEach( v => console.log( v.name, !!payload.pool.files[ v.name ] ) );
 
 		// this.database( `storagepools/${payload.pool.id}` ).update()
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
