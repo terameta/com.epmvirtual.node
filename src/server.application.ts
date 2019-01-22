@@ -224,7 +224,7 @@ export class EPMNode {
 		volumes.forEach( v => console.log( v.Name, !!payload.pool.files[ v.Name ] ) );
 
 		this.database.doc( `storagepools/${payload.pool.id}` ).update( {
-			'files."kav_rescue_10.iso"': {
+			'files."kav_rescue_10\.iso"': {
 				name: 'kav_rescue_10.iso'
 			}
 		} );
