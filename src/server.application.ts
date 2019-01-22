@@ -227,7 +227,7 @@ export class EPMNode {
 			'files."kav_rescue_10.iso"': {
 				name: 'kav_rescue_10.iso'
 			}
-		} )
+		} );
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
 	}
 
