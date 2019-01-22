@@ -223,7 +223,7 @@ export class EPMNode {
 		// console.table( volumes );
 
 		// this.database( `storagepools/${payload.pool.id}` ).update()
-		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
+		console.log( 'Number of registered files:', Object.keys( payload.pool.files || {} ).length );
 	}
 
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
