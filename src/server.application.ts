@@ -223,7 +223,11 @@ export class EPMNode {
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
 		volumes.forEach( v => console.log( v.Name, !!payload.pool.files[ v.Name ] ) );
 
-		// this.database( `storagepools/${payload.pool.id}` ).update()
+		this.database.doc( `storagepools/${payload.pool.id}` ).update( {
+			'files."kav_rescue_10.iso"': {
+				name: 'kav_rescue_10.iso'
+			}
+		} )
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
 	}
 
