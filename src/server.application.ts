@@ -219,7 +219,7 @@ export class EPMNode {
 
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
 		console.log( 'We are at actAsPoolWorker' );
-		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ), 'Name' );
+		// const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ), 'Name' );
 		// console.table( volumes );
 		// this.database( `storagepools/${payload.pool.id}` ).update()
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
