@@ -227,7 +227,7 @@ export class EPMNode {
 			console.log(
 				volume.Name,
 				volume.id,
-				'isFileRegistered', isFileRegistered;
+				'isFileRegistered', isFileRegistered,
 				// !!payload.pool.files[ v.Name ],
 				// Object.keys( v )
 			)
