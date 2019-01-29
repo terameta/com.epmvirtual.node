@@ -98,7 +98,7 @@ export class EPMNode {
 		if ( !this.settings.firebase.authDomain || this.settings.firebase.authDomain === '' ) throw new Error( 'Settings json should have an authDomain item' );
 		if ( !this.settings.firebase.databaseURL || this.settings.firebase.databaseURL === '' ) throw new Error( 'Settings json should have an databaseURL item' );
 		if ( !this.settings.firebase.projectId || this.settings.firebase.projectId === '' ) throw new Error( 'Settings json should have an projectId item' );
-		this.settings.firebase.timestampsInSnapshots = true;
+		// this.settings.firebase.timestampsInSnapshots = true;
 		if ( existsSync( './nodeid.json' ) ) {
 			const { nodeid } = JSON.parse( readFileSync( 'nodeid.json', 'utf8' ) );
 			this.settings.nodeid = nodeid;
