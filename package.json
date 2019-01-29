@@ -25,7 +25,7 @@
 		"handlebars": "^4.0.12",
 		"lodash": "^4.17.11",
 		"node-pty": "^0.8.0",
-		"rxfire": "^3.2.3",
+		"rxfire": "^3.3.1",
 		"rxjs": "^6.3.3",
 		"systeminformation": "^3.54.0",
 		"uuid": "^3.3.2",
