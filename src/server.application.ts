@@ -223,7 +223,7 @@ export class EPMNode {
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
 		volumes.forEach( ( v: any ) => v.id = Buffer.from( v.Name ).toString( 'base64' ) );
 		for ( const volume of ( volumes as any[] ) ) {
-			const isFileRegistered = !!payload.pool.files[ v.id ];
+			const isFileRegistered = !!payload.pool.files[ volume.id ];
 			console.log(
 				volume.Name,
 				volume.id,
