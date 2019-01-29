@@ -231,13 +231,12 @@ export class EPMNode {
 				// !!payload.pool.files[ v.Name ],
 				// Object.keys( v )
 			)
+			if ( !isFileRegistered ) {
+				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + volume.id ]: volume } );
+			}
 		}
 
-		// this.database.doc( `storagepools/${payload.pool.id}` ).update( {
-		// 	'files."kav_rescue_10\.iso"': {
-		// 		name: 'kav_rescue_10.iso'
-		// 	}
-		// } );
+
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
 	}
 
