@@ -204,11 +204,6 @@ export class EPMNode {
 				await this.executeCommandAction( 'virsh secret-set-value ' + p.secretuuid + ' ' + p.key );
 			}
 			let shouldFilesOverWrite = false;
-			console.log( '===========================================' );
-			console.log( '===========================================' );
-			console.log( p.files );
-			console.log( '===========================================' );
-			console.log( '===========================================' );
 			if ( p.files ) {
 				Object.keys( p.files ).forEach( f => {
 					if ( !this.pools[ p.id ].pool.files || !this.pools[ p.id ].pool.files[ f ] ) shouldFilesOverWrite = true;
