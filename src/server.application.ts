@@ -203,6 +203,11 @@ export class EPMNode {
 				this.pools[ p.id ].pool.key = p.key;
 				await this.executeCommandAction( 'virsh secret-set-value ' + p.secretuuid + ' ' + p.key );
 			}
+			let shouldFilesOverWrite = false;
+			Object.keys( p.files ).forEach( f => {
+				if ( !this.pools[ p.id ].pool.files || !this.pools[ p.id ].pool.files[ f ] ) shouldFilesOverWrite = true;
+			} );
+			if ( shouldFilesOverWrite ) this.pools[ p.id ].pool.files = p.files;
 		} );
 
 		receivedPools.forEach( async ( p ) => {
