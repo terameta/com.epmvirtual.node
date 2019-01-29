@@ -30,7 +30,7 @@
 		"systeminformation": "^3.54.0",
 		"uuid": "^3.3.2",
 		"uuid-time": "^1.0.0",
-		"wrtc": "^0.3.4"
+		"wrtc": "^0.3.5"
 	},
 	"devDependencies": {
 		"@types/handlebars": "^4.0.40",
