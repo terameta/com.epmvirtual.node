@@ -220,10 +220,11 @@ export class EPMNode {
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
 		// console.log( 'We are at actAsPoolWorker' );
 		if ( !payload.pool.files ) payload.pool.files = {};
+		const files = this.pools[ payload.pool.id ].pool.files;
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
 		volumes.forEach( ( v: any ) => v.id = Buffer.from( v.Name ).toString( 'base64' ) );
 		for ( const volume of ( volumes as any[] ) ) {
-			const isFileRegistered = !!payload.pool.files[ volume.id ];
+			const isFileRegistered = !!files[ volume.id ];
 			console.log(
 				volume.Name,
 				volume.id,
