@@ -224,6 +224,7 @@ export class EPMNode {
 		volumes.forEach( ( v: any ) => {
 			console.log(
 				v.Name,
+				Buffer.from( v.Name ).toString( 'base64' )
 				// !!payload.pool.files[ v.Name ],
 				// Object.keys( v )
 			)
