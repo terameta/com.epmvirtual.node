@@ -221,7 +221,13 @@ export class EPMNode {
 		// console.log( 'We are at actAsPoolWorker' );
 		// if ( !payload.pool.files ) payload.pool.files = {};
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
-		volumes.forEach( v => console.log( v.Name, !!payload.pool.files[ v.Name ], Object.keys( v ) ) );
+		volumes.forEach( ( v: any ) => {
+			console.log(
+				v.Name,
+				// !!payload.pool.files[ v.Name ],
+				// Object.keys( v )
+			)
+		} );
 
 		// this.database.doc( `storagepools/${payload.pool.id}` ).update( {
 		// 	'files."kav_rescue_10\.iso"': {
