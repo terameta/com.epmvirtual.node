@@ -222,14 +222,14 @@ export class EPMNode {
 		if ( !payload.pool.files ) payload.pool.files = {};
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
 		volumes.forEach( ( v: any ) => v.id = Buffer.from( v.Name ).toString( 'base64' ) );
-		volumes.forEach( ( v: any ) => {
+		for ( const volume of ( volumes as any[] ) ) {
 			console.log(
-				v.Name,
-				v.id,
+				volume.Name,
+				volume.id,
 				// !!payload.pool.files[ v.Name ],
 				// Object.keys( v )
 			)
-		} );
+		}
 
 		// this.database.doc( `storagepools/${payload.pool.id}` ).update( {
 		// 	'files."kav_rescue_10\.iso"': {
