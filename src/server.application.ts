@@ -213,6 +213,7 @@ export class EPMNode {
 		} );
 
 		Object.values( this.pools ).forEach( async ( p ) => {
+			console.log( 'Heke keke fiki' );
 			if ( !p.worker ) p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 10000 );
 		} );
 	}
