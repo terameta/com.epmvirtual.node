@@ -244,6 +244,7 @@ export class EPMNode {
 		if ( filesArti === 0 ) {
 			console.log( 'We are here A' );
 			for ( const registeredFile of Object.values( payload.pool.files ) ) {
+				console.log( '>>>', volumes.find( v => v.id === registeredFile.id ).id );
 				if ( !files[ registeredFile.id ] ) {
 					console.log( 'We are here B' );
 					filesEksi++;
