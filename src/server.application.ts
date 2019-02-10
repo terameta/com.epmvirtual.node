@@ -172,6 +172,7 @@ export class EPMNode {
 		}
 	}
 	private handlePoolsAction = async ( pools: StoragePool[] ) => {
+		console.log( 'We are at the handlePoolsAction' );
 		if ( !this.pools ) this.pools = {};
 		const receivedPools = pools.filter( p => this.node.poolAssignments[ p.id ] === true );
 		const extraPools = receivedPools.filter( p => !this.pools[ p.id ] );
