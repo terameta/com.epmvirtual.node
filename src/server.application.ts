@@ -241,6 +241,9 @@ export class EPMNode {
 		}
 		for ( const registeredFile of Object.values( payload.pool.files ) ) {
 			console.log( registeredFile );
+			if ( !files[ registeredFile.id ] ) {
+				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + registeredFile.id ]: firestore.FieldValue.delete() } );
+			}
 		}
 
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations );
