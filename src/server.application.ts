@@ -242,8 +242,10 @@ export class EPMNode {
 			}
 		}
 		if ( filesArti === 0 ) {
+			console.log( 'We are here A' );
 			for ( const registeredFile of Object.values( payload.pool.files ) ) {
 				if ( !files[ registeredFile.id ] ) {
+					console.log( 'We are here B' );
 					filesEksi++;
 					await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + registeredFile.id ]: firestore.FieldValue.delete() } );
 				}
