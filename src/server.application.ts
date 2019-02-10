@@ -236,8 +236,7 @@ export class EPMNode {
 		const volumes: { [ key: string ]: StoragePoolFile } = {};
 		const volArray = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
 		volArray.forEach( ( v: any ) => { v.id = Buffer.from( v.Name ).toString( 'base64' ); volumes[ v.id ] = v; } );
-
-		for ( const volume of ( volumes as any[] ) ) {
+		for ( const volume of ( volArray as any[] ) ) {
 			if ( !files[ volume.id ] ) {
 				filesArti++;
 				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + volume.id ]: volume } );
@@ -246,8 +245,7 @@ export class EPMNode {
 		if ( filesArti === 0 ) {
 			console.log( 'We are here A' );
 			for ( const registeredFile of Object.values( payload.pool.files ) ) {
-				console.log( '>>>', volumes.find( v => v.id === registeredFile.id ).id );
-				if ( !files[ registeredFile.id ] ) {
+				if ( !volumes[ registeredFile.id ] ) {
 					console.log( 'We are here B' );
 					filesEksi++;
 					await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + registeredFile.id ]: firestore.FieldValue.delete() } );
