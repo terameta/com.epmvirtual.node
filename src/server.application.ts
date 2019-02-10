@@ -205,13 +205,10 @@ export class EPMNode {
 				this.pools[ p.id ].pool.key = p.key;
 				await this.executeCommandAction( 'virsh secret-set-value ' + p.secretuuid + ' ' + p.key );
 			}
-			let shouldFilesOverWrite = false;
 			if ( p.files ) {
-				Object.keys( p.files ).forEach( f => {
-					if ( !this.pools[ p.id ].pool.files || !this.pools[ p.id ].pool.files[ f ] || Object.keys( this.pools[ p.id ].pool.files ).length !== Object.keys( p.files ).length ) shouldFilesOverWrite = true;
-				} );
-				console.log( 'ShouldFilesOverWrite:', shouldFilesOverWrite, Object.keys( this.pools[ p.id ].pool.files ).length, Object.keys( p.files ).length );
-				if ( shouldFilesOverWrite ) this.pools[ p.id ].pool.files = p.files;
+				this.pools[ p.id ].pool.files = p.files;
+			} else {
+				this.pools[ p.id ].pool.files = {};
 			}
 		} );
 
