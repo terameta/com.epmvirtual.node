@@ -11,6 +11,7 @@ export interface StoragePool {
 }
 
 export interface StoragePoolFile {
+	id: string,
 	name: string,
 	size: number,
 	actualSize: number,
