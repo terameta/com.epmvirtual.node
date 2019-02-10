@@ -29,6 +29,7 @@ export class EPMNode {
 	private poolsReference: firestore.CollectionReference = null;
 	private poolsSubscription: Subscription = null;
 	private pools: { [ key: string ]: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } } = null;
+	private numberofWorkerRegistrations = 0;
 
 	private shell = platform() === 'win32' ? 'powershell.exe' : 'bash';
 	private ptyProcess: pty.IPty = null;
@@ -221,7 +222,10 @@ export class EPMNode {
 
 		Object.values( this.pools ).forEach( async ( p ) => {
 			console.log( 'P.Worker:', p.worker, 'P.Timer:', !!p.timer );
-			if ( !p.timer && p.worker ) p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 10000 );
+			if ( !p.timer && p.worker ) {
+				p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 10000 );
+				this.numberofWorkerRegistrations++;
+			}
 		} );
 	}
 
@@ -237,7 +241,7 @@ export class EPMNode {
 			}
 		}
 
-		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length );
+		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations );
 	}
 
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
