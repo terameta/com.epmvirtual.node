@@ -210,6 +210,7 @@ export class EPMNode {
 				Object.keys( p.files ).forEach( f => {
 					if ( !this.pools[ p.id ].pool.files || !this.pools[ p.id ].pool.files[ f ] || Object.keys( this.pools[ p.id ].pool.files ).length !== Object.keys( p.files ).length ) shouldFilesOverWrite = true;
 				} );
+				console.log( 'ShouldFilesOverWrite:', shouldFilesOverWrite, Object.keys( this.pools[ p.id ].pool.files ).length, Object.keys( p.files ).length );
 				if ( shouldFilesOverWrite ) this.pools[ p.id ].pool.files = p.files;
 			}
 		} );
@@ -222,6 +223,7 @@ export class EPMNode {
 		} );
 
 		Object.values( this.pools ).forEach( async ( p ) => {
+			console.log( 'P.Worker:', p.worker, 'P.Timer:', !!p.timer );
 			if ( !p.timer && p.worker ) {
 				p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 10000 );
 				this.numberofWorkerRegistrations++;
@@ -230,6 +232,7 @@ export class EPMNode {
 	}
 
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
+		console.log( 'We are at actAsPoolWorker' );
 		if ( !payload.pool.files ) payload.pool.files = {};
 		const files = this.pools[ payload.pool.id ].pool.files;
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
