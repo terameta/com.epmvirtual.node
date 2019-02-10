@@ -220,7 +220,6 @@ export class EPMNode {
 		} );
 
 		Object.values( this.pools ).forEach( async ( p ) => {
-			console.log( 'P.Worker:', p.worker, 'P.Timer:', !!p.timer );
 			if ( !p.timer && p.worker ) {
 				p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 10000 );
 				this.numberofWorkerRegistrations++;
