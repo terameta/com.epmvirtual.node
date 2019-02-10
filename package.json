@@ -27,7 +27,7 @@
 		"node-pty": "^0.8.1",
 		"rxfire": "^3.3.2",
 		"rxjs": "^6.4.0",
-		"systeminformation": "^3.54.0",
+		"systeminformation": "^4.0.10",
 		"uuid": "^3.3.2",
 		"uuid-time": "^1.0.0",
 		"wrtc": "^0.3.5"

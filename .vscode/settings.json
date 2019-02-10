@@ -12,5 +12,6 @@
 	"breadcrumbs.enabled": true,
 	"zenMode.hideStatusBar": false,
 	"zenMode.centerLayout": false,
-	"zenMode.hideTabs": false
+	"zenMode.hideTabs": false,
+	"typescript.tsdk": "node_modules\\typescript\\lib"
 }
