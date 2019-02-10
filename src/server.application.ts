@@ -230,22 +230,25 @@ export class EPMNode {
 
 	private actAsPoolWorker = async ( payload: { pool: StoragePool, worker: boolean, timer: NodeJS.Timeout } ) => {
 		console.log( 'We are at actAsPoolWorker' );
+		let filesArti = 0;
+		let filesEksi = 0;
 		if ( !payload.pool.files ) payload.pool.files = {};
 		const files = this.pools[ payload.pool.id ].pool.files;
 		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
 		volumes.forEach( ( v: any ) => v.id = Buffer.from( v.Name ).toString( 'base64' ) );
 		for ( const volume of ( volumes as any[] ) ) {
 			if ( !files[ volume.id ] ) {
+				filesArti++;
 				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + volume.id ]: volume } );
 			}
 		}
 		for ( const registeredFile of Object.values( payload.pool.files ) ) {
 			if ( !files[ registeredFile.id ] ) {
+				filesEksi++;
 				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + registeredFile.id ]: firestore.FieldValue.delete() } );
 			}
 		}
-
-		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations );
+		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
 	}
 
 	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
