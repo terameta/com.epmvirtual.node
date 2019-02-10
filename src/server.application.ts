@@ -241,10 +241,12 @@ export class EPMNode {
 				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + volume.id ]: volume } );
 			}
 		}
-		for ( const registeredFile of Object.values( payload.pool.files ) ) {
-			if ( !files[ registeredFile.id ] ) {
-				filesEksi++;
-				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + registeredFile.id ]: firestore.FieldValue.delete() } );
+		if ( filesArti === 0 ) {
+			for ( const registeredFile of Object.values( payload.pool.files ) ) {
+				if ( !files[ registeredFile.id ] ) {
+					filesEksi++;
+					await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + registeredFile.id ]: firestore.FieldValue.delete() } );
+				}
 			}
 		}
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
