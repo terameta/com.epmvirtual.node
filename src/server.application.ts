@@ -210,6 +210,7 @@ export class EPMNode {
 				Object.keys( p.files ).forEach( f => {
 					if ( !this.pools[ p.id ].pool.files || !this.pools[ p.id ].pool.files[ f ] || this.pools[ p.id ].pool.files.length !== p.files.length ) shouldFilesOverWrite = true;
 				} );
+				console.log( 'ShouldFilesOverWrite:', shouldFilesOverWrite, this.pools[ p.id ].pool.files.length, p.files.length );
 				if ( shouldFilesOverWrite ) this.pools[ p.id ].pool.files = p.files;
 			}
 		} );
