@@ -12,7 +12,7 @@ import wrtc = require( 'wrtc' );
 import * as pty from 'node-pty';
 import { platform } from 'os';
 import { exec } from 'child_process';
-import { StoragePool } from 'models/storagepool.models';
+import { StoragePool, StoragePoolFile } from 'models/storagepool.models';
 import { returner } from './virsh/returner';
 import * as promisers from './utilities/promisers';
 import { join } from 'path';
@@ -233,8 +233,10 @@ export class EPMNode {
 		let filesEksi = 0;
 		if ( !payload.pool.files ) payload.pool.files = {};
 		const files = this.pools[ payload.pool.id ].pool.files;
-		const volumes = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
-		volumes.forEach( ( v: any ) => v.id = Buffer.from( v.Name ).toString( 'base64' ) );
+		const volumes: { [ key: string ]: StoragePoolFile } = {};
+		const volArray = await returner( await this.executeCommandAction( 'virsh vol-list --details --pool ' + payload.pool.id ) );
+		volArray.forEach( ( v: any ) => { v.id = Buffer.from( v.Name ).toString( 'base64' ); volumes[ v.id ] = v; } );
+
 		for ( const volume of ( volumes as any[] ) ) {
 			if ( !files[ volume.id ] ) {
 				filesArti++;
