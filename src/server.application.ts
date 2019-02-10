@@ -239,6 +239,9 @@ export class EPMNode {
 				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + volume.id ]: volume } );
 			}
 		}
+		for ( const registeredFile of Object.values( payload.pool.files ) ) {
+			console.log( registeredFile );
+		}
 
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations );
 	}
