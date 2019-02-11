@@ -251,7 +251,9 @@ export class EPMNode {
 			}
 		}
 		for ( const volume of ( volArray as any[] ) ) {
-			console.log( files[ volume.id ] );
+			const file = files[ volume.id ] || ( {} as StoragePoolFile );
+			if ( !file.lastCheck ) file.lastCheck = new Date();
+			console.log( file.id, file.lastCheck );
 
 		}
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
