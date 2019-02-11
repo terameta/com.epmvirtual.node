@@ -250,10 +250,15 @@ export class EPMNode {
 				}
 			}
 		}
+		for ( const volume of ( volArray as any[] ) ) {
+			console.log( files[ volume.id ] );
+		}
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
 	}
 
-	private cancelPools = async () => { if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; } }
+	private cancelPools = async () => {
+		if ( this.poolsSubscription ) { this.poolsSubscription.unsubscribe(); this.poolsSubscription = null; }
+	}
 
 	private handleCommands = async () => {
 		this.node.commands.sort( SortByUUID );
@@ -301,14 +306,14 @@ export class EPMNode {
 			if ( pc.iceConnectionState === 'failed' ) {
 				if ( iceCandidateSub ) iceCandidateSub.unsubscribe();
 			}
-		}
+		};
 		pc.onicecandidate = ( candidate ) => {
 			if ( candidate.candidate ) {
 				this.nodeReference.update( {
 					'rtc.answerice': firestore.FieldValue.arrayUnion( JSON.stringify( { ice: candidate.candidate } ) )
-				} )
+				} );
 			}
-		}
+		};
 		const iceCandidateSub = fromDocRef( this.nodeReference ).subscribe( ( a ) => {
 			const n = ( a.data() ).rtc;
 			if ( n ) {
@@ -316,7 +321,7 @@ export class EPMNode {
 					if ( Array.isArray( n.offerice ) ) {
 						n.offerice.forEach( ic => {
 							pc.addIceCandidate( ( JSON.parse( ic ) ).ice );
-						} )
+						} );
 					}
 				}
 			}
@@ -327,18 +332,18 @@ export class EPMNode {
 			dc.onopen = () => {
 				console.log( 'RTC: Data channel is now open -', dc.label );
 				if ( dc.label === 'console' ) this.handleConsoleRequest( dc );
-			}
-			dc.onclose = ( event ) => {
+			};
+			dc.onclose = ( closeEvent ) => {
 				console.log( 'RTC: Data channel is now closed -', dc.label );
 				this.ptyProcess.kill();
 				this.ptyProcess = null;
-			}
-			dc.onerror = ( event ) => {
+			};
+			dc.onerror = ( errorEvent ) => {
 				console.log( 'RTC: Data channel is now in error state -', dc.label );
 				this.ptyProcess.kill();
 				this.ptyProcess = null;
-			}
-		}
+			};
+		};
 		await pc.setRemoteDescription( new wrtc.RTCSessionDescription( offer ) );
 		const answer = await pc.createAnswer();
 		await pc.setLocalDescription( answer );
@@ -354,7 +359,7 @@ export class EPMNode {
 			const data = JSON.parse( event.data );
 			if ( data.type === 'key' ) this.ptyProcess.write( data.key );
 			if ( data.type === 'resize' ) this.ptyProcess.resize( data.cols, data.rows );
-		}
+		};
 	}
 
 	private scheduledTasks = async () => {
@@ -371,6 +376,6 @@ export class EPMNode {
 	}
 	private reportLoad = async () => {
 		// si.mem().then( console.log ); // This will print the current memory usage and state
-		// si.currentLoad().then( console.log ); // This will print the current cpu usage and state	
+		// si.currentLoad().then( console.log ); // This will print the current cpu usage and state
 	}
 }

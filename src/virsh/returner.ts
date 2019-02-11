@@ -42,4 +42,4 @@ export const returner = async ( payload: string, by: string = null ) => {
 	} else {
 		return toReturn;
 	}
-}
+};
