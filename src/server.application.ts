@@ -255,7 +255,6 @@ export class EPMNode {
 			filter( v => !!files[ v.id ] ).
 			map( v => files[ v.id ] ).
 			map( v => {
-				console.log( v.Name, v.lastCheck );
 				if ( !v.lastCheck ) v.lastCheck = addDays( new Date(), -365 );
 				if ( ( v.lastCheck as any ).toDate ) v.lastCheck = ( v.lastCheck as any ).toDate();
 				return v;
