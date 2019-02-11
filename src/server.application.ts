@@ -250,18 +250,19 @@ export class EPMNode {
 				}
 			}
 		}
-		for ( const volume of ( volArray as any[] ) ) {
+		for ( const volume of ( volArray as any[] ).map( v => { v.lastCheck = v.lastCheck || addDays( new Date(), -365 ); return v; } ).filter( v => v.lastCheck < addDays( new Date(), -7 ) ).filter( ( v, vi ) => ( vi < 1 ) ) ) {
 			const file = files[ volume.id ] || ( {} as StoragePoolFile );
-			const dateThreshold = addDays( new Date(), -7 );
-			if ( !file.lastCheck ) file.lastCheck = addDays( new Date(), -365 );
-			if ( file.lastCheck < dateThreshold ) {
-				console.log( 'We should check the size of the file:', file.Name, file.id );
-				const result = await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) );
-				console.log( result );
-				const newSize: string = ( result )[ 0 ].USED;
-				console.log( 'We checked the size of the file:', file.Name, file.id, file.Allocation, file.Capacity, newSize );
-				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + file.id + '.Allocation' ]: newSize, [ 'files.' + file.id + '.lastCheck' ]: ( new Date() ) } );
-			}
+			console.log( 'We should check the size of the file:', file.Name, file.id );
+			const result = await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) );
+			console.log( result );
+			const newSize: string = ( result )[ 0 ].USED || '0';
+			const newCapacity: string = ( result )[ 0 ].PROVISIONED || '0';
+			console.log( 'We checked the size of the file:', file.Name, file.id, file.Allocation, file.Capacity, newSize );
+			await this.database.doc( `storagepools/${payload.pool.id}` ).update( {
+				[ 'files.' + file.id + '.Allocation' ]: newSize,
+				[ 'files.' + file.id + '.Capacity' ]: newCapacity,
+				[ 'files.' + file.id + '.lastCheck' ]: ( new Date() )
+			} );
 		}
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
 	}
