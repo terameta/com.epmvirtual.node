@@ -362,6 +362,7 @@ export class EPMNode {
 			if ( data.type === 'resize' ) this.ptyProcess.resize( data.cols, data.rows );
 		};
 	}
+
 	private scheduledTasks = async () => {
 		interval( 30000 ).subscribe( async () => {
 			this.checkNetwork();
