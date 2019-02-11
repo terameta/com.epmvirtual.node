@@ -2,10 +2,11 @@ import { keyBy } from 'lodash';
 
 export const returner = async ( payload: string, by: string = null ) => {
 	const lines = payload.trim().split( '\n' ).map( l => l.trim() );
+	console.log( lines[ 1 ] );
 	if ( lines.length === 0 ) throw new Error( 'Virsh returner payload is not valid' );
 	const headers = lines[ 0 ].split( ' ' ).filter( h => !!h && h !== '' ).map( h => ( { label: h, index: 0 } ) );
-	const headerN = headers.length;
-	const places = [];
+	// const headerN = headers.length;
+	// const places = [];
 
 	headers.forEach( header => {
 		header.index = lines[ 0 ].indexOf( header.label );
