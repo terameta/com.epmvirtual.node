@@ -256,8 +256,8 @@ export class EPMNode {
 			if ( !file.lastCheck ) file.lastCheck = addDays( new Date(), -365 );
 			if ( file.lastCheck < dateThreshold ) {
 				console.log( 'We should check the size of the file:', file.Name, file.id );
-				console.log( await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) ) );
-				console.log( await this.executeCommandAction( 'rbd du ' + file.Name ) );
+				const newSize: string = ( await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) ) )[ 0 ].USED;
+				console.log( 'We checked the size of the file:', file.Name, file.id, newSize );
 			}
 		}
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
