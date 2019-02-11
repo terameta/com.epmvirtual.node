@@ -6,7 +6,7 @@ import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth, FirebaseError } from 'firebase';
-import { SortBy, waiter, deleteKeyIfFunction, SortByUUID } from './utilities/utilities';
+import { SortBy, waiter, deleteKeyIfFunction, SortByUUID, addDays } from './utilities/utilities';
 import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
 import wrtc = require( 'wrtc' );
 import * as pty from 'node-pty';
@@ -253,7 +253,7 @@ export class EPMNode {
 		for ( const volume of ( volArray as any[] ) ) {
 			const file = files[ volume.id ] || ( {} as StoragePoolFile );
 			if ( !file.lastCheck ) file.lastCheck = new Date();
-			console.log( file.id, file.lastCheck, ( new Date() ).setDate( file.lastCheck.getDate() - 365 ) );
+			console.log( file.id, file.lastCheck, addDays( file.lastCheck, -365 ) );
 
 		}
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
