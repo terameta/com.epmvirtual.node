@@ -8,7 +8,7 @@
 		"autocommit": "nodemon -w ./ -e ts,json --exec npm run gitall",
 		"gitall": "git add -A -- & git commit -m \"Regular Commit\" & git push origin master",
 		"gitallold": "npm run gitadd & npm run gitcommit & npm run gitpush",
-		"gitadd": "git add -A --",
+		"gitadd": "git add -A -- ",
 		"gitcommit": "git commit -m \"Regular Commit\"",
 		"gitpush": "git push",
 		"test": "echo \"Error: no test specified\" && exit 1"
