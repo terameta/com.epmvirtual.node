@@ -258,6 +258,7 @@ export class EPMNode {
 				console.log( 'We should check the size of the file:', file.Name, file.id );
 				const newSize: string = ( await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) ) )[ 0 ].USED;
 				console.log( 'We checked the size of the file:', file.Name, file.id, file.Allocation, file.Capacity, newSize );
+				await this.database.doc( `storagepools/${payload.pool.id}` ).update( { [ 'files.' + file.id + '.Allocation' ]: newSize } );
 			}
 		}
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
