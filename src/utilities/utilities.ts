@@ -31,5 +31,4 @@ export function addDays( date: Date, days: number ) {
 }
 export function removeDuplicateCharacters( payload: string ) {
 	return payload.split( '' ).filter( ( item, pos, self ) => self.indexOf( item ) === pos ).join( '' );
-
 }
