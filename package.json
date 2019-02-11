@@ -9,7 +9,7 @@
 		"gitall": "npm run gitadd & npm run gitcommit & npm run gitpush",
 		"gitadd": "git add -A --",
 		"gitcommit": "git commit -m \"Regular Commit\"",
-		"gitpush": "git push origin master",
+		"gitpush": "git push",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"private": true,
