@@ -1,9 +1,10 @@
 import { keyBy } from 'lodash';
+import { removeDuplicateCharacters } from 'src/utilities/utilities';
 
 export const returner = async ( payload: string, by: string = null ) => {
 	const lines = payload.trim().split( '\n' ).map( l => l.trim() );
-	console.log( lines[ 1 ] );
 	if ( lines.length === 0 ) throw new Error( 'Virsh returner payload is not valid' );
+	if ( removeDuplicateCharacters( lines[ 1 ] ) !== '-' && removeDuplicateCharacters( lines[ 1 ] ) !== '=' ) lines.splice( 1, 0, '' );
 	const headers = lines[ 0 ].split( ' ' ).filter( h => !!h && h !== '' ).map( h => ( { label: h, index: 0 } ) );
 	// const headerN = headers.length;
 	// const places = [];
