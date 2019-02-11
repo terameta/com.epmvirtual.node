@@ -220,10 +220,13 @@ export class EPMNode {
 		} );
 
 		Object.values( this.pools ).forEach( async ( p ) => {
-			if ( !p.timer && p.worker ) {
+			if ( p.worker ) {
 				this.actAsPoolWorker( p );
-				p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 300000 );
-				this.numberofWorkerRegistrations++;
+				if ( !p.timer ) {
+					this.actAsPoolWorker( p );
+					p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 300000 );
+					this.numberofWorkerRegistrations++;
+				}
 			}
 		} );
 	}
