@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "nodemon -w ./ -e ts,json --exec ts-node src/server.ts",
 		"autocommit": "nodemon -w ./ -e ts,json --exec npm run gitall",
-		"gitall": "npm run gitadd & npm run gitcommit & npm run gitpush",
+		"gitall": "git add -A -- & git commit -m \"Regular Commit\" & git push origin master",
+		"gitallold": "npm run gitadd & npm run gitcommit & npm run gitpush",
 		"gitadd": "git add -A --",
 		"gitcommit": "git commit -m \"Regular Commit\"",
 		"gitpush": "git push",
