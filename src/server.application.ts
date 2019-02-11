@@ -6,7 +6,7 @@ import { SettingsWithCredentials } from 'models/settings';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as uuid from 'uuid/v1';
 import { initializeApp, app, firestore, auth as firebaseAuth, FirebaseError } from 'firebase';
-import { SortBy, waiter, deleteKeyIfFunction, SortByUUID, addDays } from './utilities/utilities';
+import { SortBy, waiter, deleteKeyIfFunction, SortByUUID, addDays, SortById } from './utilities/utilities';
 import { fromDocRef, fromCollectionRef } from 'rxfire/firestore';
 import wrtc = require( 'wrtc' );
 import * as pty from 'node-pty';
@@ -250,7 +250,7 @@ export class EPMNode {
 				}
 			}
 		}
-		for ( const volume of ( volArray as any[] ).map( v => { v.lastCheck = v.lastCheck || addDays( new Date(), -365 ); return v; } ).filter( v => v.lastCheck < addDays( new Date(), -7 ) ).filter( ( v, vi ) => ( vi < 1 ) ) ) {
+		for ( const volume of ( volArray as any[] ).sort( SortById ).map( v => { v.lastCheck = v.lastCheck || addDays( new Date(), -365 ); return v; } ).filter( v => v.lastCheck < addDays( new Date(), -7 ) ).filter( ( v, vi ) => ( vi < 1 ) ) ) {
 			const file = files[ volume.id ] || ( {} as StoragePoolFile );
 			console.log( 'We should check the size of the file:', file.Name, file.id );
 			const result = await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) );
