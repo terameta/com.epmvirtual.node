@@ -254,6 +254,7 @@ export class EPMNode {
 			sort( SortById ).
 			filter( v => !!files[ v.id ] ).
 			map( v => files[ v.id ] ).
+			map( v => { console.log( v.lastCheck ); return v; } ).
 			map( v => { v.lastCheck = v.lastCheck ? ( v.lastCheck as any ).toDate() : addDays( new Date(), -365 ); return v; } ).
 			filter( v => v.lastCheck < addDays( new Date(), -7 ) ).
 			filter( ( v, vi ) => ( vi < 1 ) ) ) {
