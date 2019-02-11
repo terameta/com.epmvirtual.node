@@ -257,7 +257,7 @@ export class EPMNode {
 			console.log( result );
 			const newSize: string = ( result )[ 0 ].USED || '0';
 			const newCapacity: string = ( result )[ 0 ].PROVISIONED || '0';
-			console.log( 'We checked the size of the file:', file.Name, file.id, file.Allocation, file.Capacity, newSize );
+			console.log( 'We checked the size of the file:', file.Name, file.id, file.Allocation, file.Capacity, newSize, file.lastCheck );
 			await this.database.doc( `storagepools/${payload.pool.id}` ).update( {
 				[ 'files.' + file.id + '.Allocation' ]: newSize,
 				[ 'files.' + file.id + '.Capacity' ]: newCapacity,
