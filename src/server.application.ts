@@ -223,7 +223,6 @@ export class EPMNode {
 			if ( p.worker ) {
 				this.actAsPoolWorker( p );
 				if ( !p.timer ) {
-					this.actAsPoolWorker( p );
 					p.timer = setInterval( () => { this.actAsPoolWorker( p ); }, 300000 );
 					this.numberofWorkerRegistrations++;
 				}
