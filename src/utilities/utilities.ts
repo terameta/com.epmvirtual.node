@@ -22,5 +22,5 @@ export const deleteKeyIfFunction = ( payload: any ) => {
 		if ( typeof payload[ k ] === 'object' ) deleteKeyIfFunction( payload[ k ] );
 		if ( typeof payload[ k ] === 'function' ) delete payload[ k ];
 	} );
-}
+};
 export function SortByUUID( e1: { uuid: string }, e2: { uuid: string } ) { if ( utv1( e1.uuid ) > utv1( e2.uuid ) ) { return 1; } else if ( utv1( e1.uuid ) < utv1( e2.uuid ) ) { return -1; } else { return 0; } }
