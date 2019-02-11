@@ -252,8 +252,10 @@ export class EPMNode {
 		}
 		for ( const volume of ( volArray as any[] ) ) {
 			const file = files[ volume.id ] || ( {} as StoragePoolFile );
+			const dateThreshold = addDays( new Date(), -7 );
 			if ( !file.lastCheck ) file.lastCheck = new Date();
-			console.log( file.id, file.lastCheck, addDays( file.lastCheck, -365 ), file.lastCheck.getDate() );
+
+			console.log( file.id, file.lastCheck, dateThreshold, 'Should we Check:', file.lastCheck < dateThreshold );
 
 		}
 		console.log( 'Number of registered files:', Object.keys( payload.pool.files ).length, '#WorkerRegistrations:', this.numberofWorkerRegistrations, 'FilesArti:', filesArti, 'FilesEksi:', filesEksi );
