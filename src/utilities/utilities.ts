@@ -29,3 +29,7 @@ export function addDays( date: Date, days: number ) {
 	result.setDate( result.getDate() + days );
 	return result;
 }
+export function removeDuplicateCharacters( payload: string ) {
+	return payload.split( '' ).filter( ( item, pos, self ) => self.indexOf( item ) === pos ).join( '' );
+
+}
