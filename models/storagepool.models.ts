@@ -16,6 +16,7 @@ export interface StoragePoolFile {
 	Capacity: string,
 	Name: string,
 	Path: string,
+	Type: string,
 	lastCheck: Date
 }
 
