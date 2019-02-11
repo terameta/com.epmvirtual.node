@@ -1,5 +1,5 @@
 import { keyBy } from 'lodash';
-import { removeDuplicateCharacters } from 'src/utilities/utilities';
+import { removeDuplicateCharacters } from '../../src/utilities/utilities';
 
 export const returner = async ( payload: string, by: string = null ) => {
 	const lines = payload.trim().split( '\n' ).map( l => l.trim() );
