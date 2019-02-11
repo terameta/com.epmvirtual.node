@@ -250,8 +250,13 @@ export class EPMNode {
 				}
 			}
 		}
-		for ( const volume of ( volArray as any[] ).sort( SortById ).map( v => { v.lastCheck = v.lastCheck || addDays( new Date(), -365 ); return v; } ).filter( v => v.lastCheck < addDays( new Date(), -7 ) ).filter( ( v, vi ) => ( vi < 1 ) ) ) {
-			const file = files[ volume.id ] || ( {} as StoragePoolFile );
+		for ( const file of ( volArray as any[] ).
+			sort( SortById ).
+			filter( v => !!files[ v.id ] ).
+			map( v => files[ v.id ] ).
+			map( v => { v.lastCheck = v.lastCheck || addDays( new Date(), -365 ); return v; } ).
+			filter( v => v.lastCheck < addDays( new Date(), -7 ) ).
+			filter( ( v, vi ) => ( vi < 1 ) ) ) {
 			console.log( 'We should check the size of the file:', file.Name, file.id );
 			const result = await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) );
 			console.log( result );
