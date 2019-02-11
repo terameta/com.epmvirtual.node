@@ -253,7 +253,7 @@ export class EPMNode {
 		for ( const volume of ( volArray as any[] ) ) {
 			const file = files[ volume.id ] || ( {} as StoragePoolFile );
 			const dateThreshold = addDays( new Date(), -7 );
-			if ( !file.lastCheck ) file.lastCheck = new Date();
+			if ( !file.lastCheck ) file.lastCheck = addDays( new Date(), -365 );
 
 			console.log( file.id, file.lastCheck, dateThreshold, 'Should we Check:', file.lastCheck < dateThreshold );
 
