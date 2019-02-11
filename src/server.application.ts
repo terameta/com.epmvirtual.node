@@ -115,7 +115,7 @@ export class EPMNode {
 	private connectToDatabase = async () => {
 		this.databaseApp = initializeApp( this.settings.firebase );
 		this.database = this.databaseApp.firestore();
-		this.database.settings( { timestampsInSnapshots: true } );
+		// this.database.settings( { timestampsInSnapshots: true } );
 		await firebaseAuth().signInWithEmailAndPassword( this.settings.firebaseUser, this.settings.firebasePass ); // .catch( e => { throw e } );
 	}
 
@@ -254,7 +254,8 @@ export class EPMNode {
 			sort( SortById ).
 			filter( v => !!files[ v.id ] ).
 			map( v => files[ v.id ] ).
-			map( v => { console.log( v.Name, v.lastCheck, typeof v.lastCheck ); v.lastCheck = v.lastCheck ? ( v.lastCheck as any ).toDate() : addDays( new Date(), -365 ); return v; } ).
+			map( v => { console.log( v.Name, v.lastCheck ); return v; } ).
+			map( v => { v.lastCheck = v.lastCheck ? ( v.lastCheck as any ).toDate() : addDays( new Date(), -365 ); return v; } ).
 			filter( v => v.lastCheck < addDays( new Date(), -7 ) ).
 			filter( ( v, vi ) => ( vi < 1 ) ) ) {
 			const result = await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) );
