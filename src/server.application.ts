@@ -254,6 +254,10 @@ export class EPMNode {
 			const file = files[ volume.id ] || ( {} as StoragePoolFile );
 			const dateThreshold = addDays( new Date(), -7 );
 			if ( !file.lastCheck ) file.lastCheck = addDays( new Date(), -365 );
+			if ( file.lastCheck < dateThreshold ) {
+				console.log( 'We should check the size of the file:', file.Name, file.id );
+				console.log( await returner( await this.executeCommandAction( 'rbd du ' + file.Name ) ) );
+			}
 
 			console.log( file.id, file.lastCheck, dateThreshold, 'Should we Check:', file.lastCheck < dateThreshold );
 
