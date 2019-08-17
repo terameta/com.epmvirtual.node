@@ -1,5 +1,6 @@
 import { interval, BehaviorSubject, timer, Subject, Subscription } from 'rxjs';
-import { filter, catchError, delay, map, retryWhen, tap, delayWhen, combineLatest } from 'rxjs/operators';
+import { filter, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 import * as si from 'systeminformation';
 import { defaultNode, Node, NodeCommand } from '../models/node.models';
 import { SettingsWithCredentials } from 'models/settings';
@@ -162,9 +163,12 @@ export class EPMNode {
 
 	private handlePools = async () => {
 		if ( !this.poolsSubscription ) {
-			this.poolsSubscription = fromCollectionRef( this.poolsReference ).
-				pipe( map( s => s.docs.map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ) ) ).
-				pipe( combineLatest( this.node$ ), map( ( [ a, b ] ) => ( a ) ) ).
+			this.poolsSubscription = combineLatest( [
+				fromCollectionRef( this.poolsReference ).pipe( map( s => s.docs.map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ) ) ),
+				this.node$
+			] ).pipe( map( ( [ a, b ] ) => ( a ) ) ).
+				// this.poolsSubscription = .
+				// 	pipe( combineLatest( this.node$ ), map( ( [ a, b ] ) => ( a ) ) ).
 				subscribe( this.handlePoolsAction, ( error: FirebaseError ) => {
 					console.log( 'We are unable to subscribe to the storage pools' );
 					console.log( error.name, ':', error.message );
@@ -324,6 +328,7 @@ export class EPMNode {
 		pc.oniceconnectionstatechange = () => {
 			console.log( 'RTC: Connection state changed -', pc.iceConnectionState );
 			if ( pc.iceConnectionState === 'failed' ) {
+				// tslint:disable-next-line: no-use-before-declare
 				if ( iceCandidateSub ) iceCandidateSub.unsubscribe();
 			}
 		};
