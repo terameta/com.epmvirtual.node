@@ -167,8 +167,6 @@ export class EPMNode {
 				fromCollectionRef( this.poolsReference ).pipe( map( s => s.docs.map( d => ( <StoragePool>{ id: d.id, ...d.data() } ) ) ) ),
 				this.node$
 			] ).pipe( map( ( [ a, b ] ) => ( a ) ) ).
-				// this.poolsSubscription = .
-				// 	pipe( combineLatest( this.node$ ), map( ( [ a, b ] ) => ( a ) ) ).
 				subscribe( this.handlePoolsAction, ( error: FirebaseError ) => {
 					console.log( 'We are unable to subscribe to the storage pools' );
 					console.log( error.name, ':', error.message );
